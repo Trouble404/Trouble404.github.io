@@ -1,20 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title><![CDATA[Hello World]]></title>
-    <url>%2F2018%2F04%2F26%2Fhello-world%2F</url>
-    <content type="text"><![CDATA[Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick StartCreate a new post1$ hexo new "My New Post" More info: Writing Run server1$ hexo server More info: Server Generate static files1$ hexo generate More info: Generating Deploy to remote sites1$ hexo deploy More info: Deployment]]></content>
-  </entry>
-  <entry>
-    <title><![CDATA[LogBook]]></title>
-    <url>%2F2018%2F04%2F26%2FLogBook%2F</url>
-    <content type="text"></content>
+    <title><![CDATA[Using Machine Learning in NBA]]></title>
+    <url>%2F2018%2F01%2F31%2FMachine%20Learning%20in%20NBA%2F</url>
+    <content type="text"><![CDATA[Fan-map plotting Obtain the game data in 2000~2017 in NBA Obtain the follwers of 2015~2017 NBA rookies by twittR package Obtain location information and plot the fan-map by Tableau Machine learning applyall-star players in 2017 prediction PCA 主成份分析 in all-star player prediction Keras是一个高层神经网络API，Keras由纯Python编写而成并基Tensorflow后端 All-star players in 2017 prediction Tensorboard is used to compare and choose better model. Best rookies in 2017 prediction PCA 主成份分析 in best rookies prediction Keras是一个高层神经网络API，Keras由纯Python编写而成并基Tensorflow后端 Best rookies in 2017 prediction First and Second rookies in 2017 prediction Muti-classes classification application Tensorboard is used to compare and choose better model. Potential all-star players in 2015~16 prediction PCA 主成份分析 in potential rookies prediction Keras是一个高层神经网络API，Keras由纯Python编写而成并基Tensorflow后端 Potential rookies in 2015~16 prediction Tensorboard is used to compare and choose better model. ResultWebsite: 2017 NBA ALL-STAR AND BEST ROOKIES PREDICTION WITH FAN-MAPexample: Neural network model 2D PCA (linear unseparable) Tensorboard check]]></content>
       <categories>
-        <category>Msc Project</category>
+        <category>Machine Learning</category>
       </categories>
       <tags>
-        <tag>Deep Learning</tag>
-        <tag>Object Detection</tag>
+        <tag>Machine Learning</tag>
+        <tag>NBA</tag>
       </tags>
   </entry>
 </search>
