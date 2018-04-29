@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[LogBook]]></title>
+    <url>%2F2018%2F04%2F26%2FLogBook%2F</url>
+    <content type="text"></content>
+      <categories>
+        <category>Msc Project</category>
+      </categories>
+      <tags>
+        <tag>Deep Learning</tag>
+        <tag>Object Detection</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[Using Machine Learning in NBA]]></title>
     <url>%2F2018%2F01%2F31%2FMachine%20Learning%20in%20NBA%2F</url>
     <content type="text"><![CDATA[Fan-map plotting Obtain the game data in 2000~2017 in NBA Obtain the follwers of 2015~2017 NBA rookies by twittR package Obtain location information and plot the fan-map by Tableau Machine learning applyall-star players in 2017 prediction PCA 主成份分析 in all-star player prediction Keras是一个高层神经网络API，Keras由纯Python编写而成并基Tensorflow后端 All-star players in 2017 prediction Tensorboard is used to compare and choose better model. Best rookies in 2017 prediction PCA 主成份分析 in best rookies prediction Keras是一个高层神经网络API，Keras由纯Python编写而成并基Tensorflow后端 Best rookies in 2017 prediction First and Second rookies in 2017 prediction Muti-classes classification application Tensorboard is used to compare and choose better model. Potential all-star players in 2015~16 prediction PCA 主成份分析 in potential rookies prediction Keras是一个高层神经网络API，Keras由纯Python编写而成并基Tensorflow后端 Potential rookies in 2015~16 prediction Tensorboard is used to compare and choose better model. ResultWebsite: 2017 NBA ALL-STAR AND BEST ROOKIES PREDICTION WITH FAN-MAPexample: Neural network model 2D PCA (linear unseparable) Tensorboard check]]></content>
