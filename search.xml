@@ -24,4 +24,15 @@
         <tag>NBA</tag>
       </tags>
   </entry>
+  <entry>
+    <title><![CDATA[IT salary in USA]]></title>
+    <url>%2F2018%2F01%2F28%2FIT%20salary%20in%20USA%2F</url>
+    <content type="text"><![CDATA[ResultChart with Anlysis Website: SALARY DISTRIBUTION OF DIFFERENT JOBS IN USA Data processDatasets used to anlysis U.S. Technology Jobs on Dice.com Found in Kaggle US jobs on Monster.com Found in KaggleData Clean Obtain salay and coresspoding states information in US jos on Monster.com clean process Obtain salay and coresspoding cities information in US jos on Monster.com clean process Obtain skills information in U.S Technology Jobs on Dice.com clean process Chart PlottingChart 1: Map chart of average salay of 3 types jobsTableau address Chart 2: Bubble chart of average salay of 3 types jobsTableau address Chart 3 : Cloud words chart of skills used in IT-jobsCloud words tool]]></content>
+      <categories>
+        <category>Data Visualisation</category>
+      </categories>
+      <tags>
+        <tag>data analysis</tag>
+      </tags>
+  </entry>
 </search>
