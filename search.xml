@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[(Logbook) -- Object Detection System Based on CNN and Capsule Network]]></title>
+    <url>%2F2018%2F05%2F25%2FLogBook%2F</url>
+    <content type="text"><![CDATA[Gantt chart Check list 1) preparation 1.1) Familiarization with develop tools 1.1.1) Keras 1.1.2) Pythrch 1.2) Presentation 1.2.1) Poster conference 2) Create image database 2.1) Confirmation of detected objects 2.2) Collect and generate the dataset 3) Familiarization with CNN based object detection methods 3.1) R-CNN 3.2) SPP-net 3.3) Fast R-CNN 3.4) Faster R-CNN 4) Implement object detection system based on one chosen CNN method 4.1) Pre-processing of images 4.2) Extracting features 4.3) Mode architecture 4.4) Train model and optimization 4.5) Models ensemble 5) Implement object detection system based on Capsule network 5.1) Investigate and familiarisation with the principle of Capsule network. 5.2) Building and testing mode 6) Analysis work 6.1) Evaluation of detection result of two methods. 6.2) Analyse the difference between two methods. 7) Paperwork and bench inspection 7.1) Logbook 7.2) Write the thesis 7.3) Project video 7.4) Speech and ppt of bench inspection MayJuneJulyAugustSeptember]]></content>
+      <categories>
+        <category>Msc Project</category>
+      </categories>
+      <tags>
+        <tag>Deep Learning</tag>
+        <tag>Object Detection</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[四月は君の嘘]]></title>
     <url>%2F2018%2F04%2F30%2FApri%2F</url>
     <content type="text"><![CDATA[YouTube Source【四月是你的謊言AMV】你還會記得嗎？四月は君の嘘 Your Lie in April BiliBili Source【四月是你的谎言】你还会记得吗 4月的最后一天了呢与你相遇的四月就要来了「君と出会った四月が来ているから」没有你的四月就要来了「君のいない四月は来ないで」]]></content>
