@@ -103,7 +103,9 @@
 <meta property="og:description" content="Gantt chart  Check list  1) preparation  1.1) Familiarization with develop tools  1.1.1) Keras  1.1.2) Pythrch  1.2) Presentation  1.2.1) Poster conference  2) Create image database  2.1) Confirmation">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://raw.githubusercontent.com/Trouble404/Object-Detection-System-Based-on-CNN-and-Capsule-Network/master/Project%20Plan/gantt%20chart%20of%20project.PNG">
-<meta property="og:updated_time" content="2018-05-26T23:27:52.322Z">
+<meta property="og:image" content="https://raw.githubusercontent.com/Trouble404/Object-Detection-System-Based-on-CNN-and-Capsule-Network/master/Learned%20skills/jupyter%20_setting.PNG">
+<meta property="og:image" content="https://raw.githubusercontent.com/Microsoft/MMdnn/master/docs/supported.jpg">
+<meta property="og:updated_time" content="2018-06-03T21:50:53.807Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="(Logbook) -- Object Detection System Based on CNN and Capsule Network">
 <meta name="twitter:description" content="Gantt chart  Check list  1) preparation  1.1) Familiarization with develop tools  1.1.1) Keras  1.1.2) Pythrch  1.2) Presentation  1.2.1) Poster conference  2) Create image database  2.1) Confirmation">
@@ -423,7 +425,7 @@
                   <span class="post-meta-item-text">字数统计</span>
                 
                 <span title="字数统计">
-                  182
+                  1,335
                 </span>
               
 
@@ -453,8 +455,8 @@
 <h2 id="Check-list"><a href="#Check-list" class="headerlink" title="Check list"></a>Check list</h2><ul>
 <li style="list-style: none"><input type="checkbox"> <strong>1) preparation</strong></li>
 <li style="list-style: none"><input type="checkbox"> <strong><em>1.1) Familiarization with develop tools</em></strong></li>
-<li style="list-style: none"><input type="checkbox"> 1.1.1) Keras</li>
-<li style="list-style: none"><input type="checkbox"> 1.1.2) Pythrch</li>
+<li style="list-style: none"><input type="checkbox" checked> 1.1.1) Keras</li>
+<li style="list-style: none"><input type="checkbox" checked> 1.1.2) Pythrch</li>
 <li style="list-style: none"><input type="checkbox"> <strong><em>1.2) Presentation</em></strong></li>
 <li style="list-style: none"><input type="checkbox"> 1.2.1) Poster conference</li>
 <li style="list-style: none"><input type="checkbox"> <strong>2) Create image database</strong></li>
@@ -484,7 +486,112 @@
 <li style="list-style: none"><input type="checkbox"> 7.4) Speech and ppt of bench inspection</li>
 </ul>
 <hr>
-<h2 id="May"><a href="#May" class="headerlink" title="May"></a>May</h2><h2 id="June"><a href="#June" class="headerlink" title="June"></a>June</h2><h2 id="July"><a href="#July" class="headerlink" title="July"></a>July</h2><h2 id="August"><a href="#August" class="headerlink" title="August"></a>August</h2><h2 id="September"><a href="#September" class="headerlink" title="September"></a>September</h2>
+<h2 id="May"><a href="#May" class="headerlink" title="May"></a>May</h2><h3 id="28-05-2018"><a href="#28-05-2018" class="headerlink" title="28/05/2018"></a>28/05/2018</h3><p>Keras is a high-level neural networks API, written in Python and capable of running on top of <a href="https://github.com/tensorflow/tensorflow" target="_blank" rel="noopener">TensorFlow</a>, CNTK, or Theano.</p>
+<ul>
+<li><p><strong><a href="https://keras.io/" target="_blank" rel="noopener">Keras document</a></strong></p>
+</li>
+<li><p><strong><a href="https://keras-cn.readthedocs.io/en/latest/#keraspython" target="_blank" rel="noopener">Keras 文档</a></strong></p>
+</li>
+</ul>
+<hr>
+<h4 id="Installation"><a href="#Installation" class="headerlink" title="Installation"></a>Installation</h4><ul>
+<li><p><strong>TensorFlow</strong><br><a href="https://www.visualstudio.com/zh-hans/vs/older-downloads/" target="_blank" rel="noopener">Microsoft Visual Studio 2015</a><br><a href="http://docs.nvidia.com/cuda/cuda-installation-guide-microsoft-windows/" target="_blank" rel="noopener">CUDA 9.0</a><br><a href="https://developer.nvidia.com/cudnn" target="_blank" rel="noopener">cuDNN7</a><br><a href="https://www.anaconda.com/download/" target="_blank" rel="noopener">Anaconda</a></p>
+<ul>
+<li>Step 1: Install VS2015</li>
+<li>Step 2: Install CUDA 9.0 并添加环境变量</li>
+<li>Step 3: Install cuDNN7 解压后把cudnn目录下的bin目录加到PATH环境变量里</li>
+<li>Step 4: Install Anaconda 把安装路径添加到PATH里去, 在这里我用了 <strong>Python 3.5</strong></li>
+<li>Step 5: 使用Anaconda的命令行 新建一个虚拟环境,激活并且关联到jupyterbook<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">conda create  --name tensorflow python=3.5</span><br><span class="line">activate tensorflow</span><br><span class="line">conda install nb_conda</span><br></pre></td></tr></table></figure></li>
+<li>Step 6: Install GPU version TensorFlow.<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install -i https://pypi.tuna.tsinghua.edu.cn/simple --ignore-installed --upgrade tensorflow-gpu </span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p><strong>Keras</strong></p>
+<ul>
+<li>Step 1: 启动之前的 虚拟环境， 并且安装Keras GPU 版本<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">activate tensorflow</span><br><span class="line">pip install --upgrade tensorflow-gpu</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="在硕士学习过程中，使用Keras的项目"><a href="#在硕士学习过程中，使用Keras的项目" class="headerlink" title="在硕士学习过程中，使用Keras的项目**"></a>在硕士学习过程中，使用Keras的项目**</h4><ul>
+<li><strong><a href="https://github.com/Trouble404/NBA-with-Machine-Learning" target="_blank" rel="noopener">NBA with Machine Learning</a></strong></li>
+<li><strong><a href="https://github.com/Trouble404/kaggle-Job-Salary-Prediction" target="_blank" rel="noopener">Kaggle- Job salary prediction</a></strong></li>
+</ul>
+<h4 id="TensorFlow-CPU-切换"><a href="#TensorFlow-CPU-切换" class="headerlink" title="TensorFlow CPU 切换"></a>TensorFlow CPU 切换</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf  </span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> keras.backend.tensorflow_backend <span class="keyword">as</span> KTF  </span><br><span class="line"></span><br><span class="line">os.environ[<span class="string">"CUDA_VISIBLE_DEVICES"</span>] = <span class="string">"0"</span>  <span class="comment">#设置需要使用的GPU的编号</span></span><br><span class="line">config = tf.ConfigProto()</span><br><span class="line">config.gpu_options.per_process_gpu_memory_fraction = <span class="number">0.4</span> <span class="comment">#设置使用GPU容量占GPU总容量的比例</span></span><br><span class="line">sess = tf.Session(config=config)</span><br><span class="line">KTF.set_session(sess)</span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> tf.device(<span class="string">'/cpu:0'</span>):</span><br></pre></td></tr></table></figure>
+<p>这样可以在GPU版本的虚拟环境里面使用CPU计算</p>
+<h4 id="Jupyter-Notebook-工作目录设置"><a href="#Jupyter-Notebook-工作目录设置" class="headerlink" title="Jupyter Notebook 工作目录设置"></a>Jupyter Notebook 工作目录设置</h4><p>启动命令行，切换至预设的工作目录， 运行：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jupyter notebook --generate-config</span><br></pre></td></tr></table></figure></p>
+<p><img src="https://raw.githubusercontent.com/Trouble404/Object-Detection-System-Based-on-CNN-and-Capsule-Network/master/Learned%20skills/jupyter%20_setting.PNG" alt="image"></p>
+<h2 id="June"><a href="#June" class="headerlink" title="June"></a>June</h2><h3 id="01-06-2018"><a href="#01-06-2018" class="headerlink" title="01/06/2018"></a>01/06/2018</h3><p><strong><a href="https://pytorch.org/about/" target="_blank" rel="noopener">PyTorch</a></strong> is a python package that provides two high-level features:</p>
+<ul>
+<li>Tensor computation (like numpy) with strong GPU acceleration</li>
+<li>Deep Neural Networks built on a tape-based autodiff system</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Package</th>
+<th style="text-align:left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">torch</td>
+<td style="text-align:left">a Tensor library like NumPy, with strong GPU support</td>
+</tr>
+<tr>
+<td style="text-align:left">torch.autograd</td>
+<td style="text-align:left">a tape based automatic differentiation library that supports all differentiable Tensor operations in torch</td>
+</tr>
+<tr>
+<td style="text-align:left">torch.nn</td>
+<td style="text-align:left">a neural networks library deeply integrated with autograd designed for maximum flexibility</td>
+</tr>
+<tr>
+<td style="text-align:left">torch.optim</td>
+<td style="text-align:left">an optimization package to be used with torch.nn with standard optimization methods such as SGD, RMSProp, LBFGS, Adam etc.</td>
+</tr>
+<tr>
+<td style="text-align:left">torch.multiprocessing</td>
+<td style="text-align:left">python multiprocessing, but with magical memory sharing of torch Tensors across processes. Useful for data loading and hogwild training.</td>
+</tr>
+<tr>
+<td style="text-align:left">torch.utils</td>
+<td style="text-align:left">DataLoader, Trainer and other utility functions for convenience</td>
+</tr>
+<tr>
+<td style="text-align:left">torch.legacy(.nn/.optim)</td>
+<td style="text-align:left">legacy code that has been ported over from torch for backward compatibility reasons</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h4 id="Installation-1"><a href="#Installation-1" class="headerlink" title="Installation"></a>Installation</h4><ul>
+<li>Step 1: 使用Anaconda的命令行 新建一个虚拟环境,激活并且关联到jupyterbook<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">conda create  --name pytorch python=3.5</span><br><span class="line">activate pytorch</span><br><span class="line">conda install nb_conda</span><br></pre></td></tr></table></figure></li>
+<li>Step 2: Install GPU version PyTorch.<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">conda install pytorch cuda90 -c pytorch </span><br><span class="line">pip install torchvision</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="Understanding-of-PyTorch"><a href="#Understanding-of-PyTorch" class="headerlink" title="Understanding of PyTorch"></a>Understanding of PyTorch</h4><ul>
+<li><p><strong>Tensors</strong><br>Tensors和numpy中的ndarrays较为相似, 与此同时Tensor也能够使用GPU来加速运算</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> __future__ <span class="keyword">import</span> print_function</span><br><span class="line"><span class="keyword">import</span> torch</span><br><span class="line">x = torch.Tensor(<span class="number">5</span>, <span class="number">3</span>)  <span class="comment"># 构造一个未初始化的5*3的矩阵</span></span><br><span class="line">x = torch.rand(<span class="number">5</span>, <span class="number">3</span>)  <span class="comment"># 构造一个随机初始化的矩阵</span></span><br><span class="line">x <span class="comment"># 此处在notebook中输出x的值来查看具体的x内容</span></span><br><span class="line">x.size()</span><br><span class="line"></span><br><span class="line"><span class="comment">#<span class="doctag">NOTE:</span> torch.Size 事实上是一个tuple, 所以其支持相关的操作*</span></span><br><span class="line">y = torch.rand(<span class="number">5</span>, <span class="number">3</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#此处 将两个同形矩阵相加有两种语法结构</span></span><br><span class="line">x + y <span class="comment"># 语法一</span></span><br><span class="line">torch.add(x, y) <span class="comment"># 语法二</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 另外输出tensor也有两种写法</span></span><br><span class="line">result = torch.Tensor(<span class="number">5</span>, <span class="number">3</span>) <span class="comment"># 语法一</span></span><br><span class="line">torch.add(x, y, out=result) <span class="comment"># 语法二</span></span><br><span class="line">y.add_(x) <span class="comment"># 将y与x相加</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 特别注明：任何可以改变tensor内容的操作都会在方法名后加一个下划线'_'</span></span><br><span class="line"><span class="comment"># 例如：x.copy_(y), x.t_(), 这俩都会改变x的值。</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#另外python中的切片操作也是资次的。</span></span><br><span class="line">x[:,<span class="number">1</span>] <span class="comment">#这一操作会输出x矩阵的第二列的所有值</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>Numpy桥</strong><br>将Torch的Tensor和numpy的array相互转换简，注意Torch的Tensor和numpy的array会共享他们的存储空间，修改一个会导致另外的一个也被修改。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 此处演示tensor和numpy数据结构的相互转换</span></span><br><span class="line">a = torch.ones(<span class="number">5</span>)</span><br><span class="line">b = a.numpy()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 此处演示当修改numpy数组之后,与之相关联的tensor也会相应的被修改</span></span><br><span class="line">a.add_(<span class="number">1</span>)</span><br><span class="line">print(a)</span><br><span class="line">print(b)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 将numpy的Array转换为torch的Tensor</span></span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line">a = np.ones(<span class="number">5</span>)</span><br><span class="line">b = torch.from_numpy(a)</span><br><span class="line">np.add(a, <span class="number">1</span>, out=a)</span><br><span class="line">print(a)</span><br><span class="line">print(b)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 另外除了CharTensor之外，所有的tensor都可以在CPU运算和GPU预算之间相互转换</span></span><br><span class="line"><span class="comment"># 使用CUDA函数来将Tensor移动到GPU上</span></span><br><span class="line"><span class="comment"># 当CUDA可用时会进行GPU的运算</span></span><br><span class="line"><span class="keyword">if</span> torch.cuda.is_available():</span><br><span class="line">    x = x.cuda()</span><br><span class="line">    y = y.cuda()</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>使用PyTorch设计一个CIFAR10数据集的分类模型</strong><br><strong><a href="https://github.com/Trouble404/Object-Detection-System-Based-on-CNN-and-Capsule-Network/blob/master/Learned%20skills/pytorch.ipynb" target="_blank" rel="noopener">code</a></strong></p>
+</li>
+<li><p><strong>MMdnn</strong><br>MMdnn is a set of tools to help users inter-operate among different deep learning frameworks. E.g. model conversion and visualization. Convert models between Caffe, Keras, MXNet, Tensorflow, CNTK, PyTorch Onnx and CoreML.</p>
+<p><img src="https://raw.githubusercontent.com/Microsoft/MMdnn/master/docs/supported.jpg" alt="iamge"></p>
+<p>MMdnn主要有以下特征：</p>
+<ul>
+<li>模型文件转换器，不同的框架间转换DNN模型</li>
+<li>模型代码片段生成器，生成适合不同框架的代码</li>
+<li>模型可视化，DNN网络结构和框架参数可视化</li>
+<li>模型兼容性测试（正在进行中）</li>
+</ul>
+<p><strong><a href="https://github.com/Microsoft/MMdnn" target="_blank" rel="noopener">Github</a></strong></p>
+</li>
+</ul>
+<h2 id="July"><a href="#July" class="headerlink" title="July"></a>July</h2><h2 id="August"><a href="#August" class="headerlink" title="August"></a>August</h2><h2 id="September"><a href="#September" class="headerlink" title="September"></a>September</h2>
       
     </div>
     
@@ -760,7 +867,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Gantt-chart"><span class="nav-number">1.</span> <span class="nav-text">Gantt chart</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Check-list"><span class="nav-number">2.</span> <span class="nav-text">Check list</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#May"><span class="nav-number">3.</span> <span class="nav-text">May</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#June"><span class="nav-number">4.</span> <span class="nav-text">June</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#July"><span class="nav-number">5.</span> <span class="nav-text">July</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#August"><span class="nav-number">6.</span> <span class="nav-text">August</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#September"><span class="nav-number">7.</span> <span class="nav-text">September</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Gantt-chart"><span class="nav-number">1.</span> <span class="nav-text">Gantt chart</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Check-list"><span class="nav-number">2.</span> <span class="nav-text">Check list</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#May"><span class="nav-number">3.</span> <span class="nav-text">May</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#28-05-2018"><span class="nav-number">3.1.</span> <span class="nav-text">28/05/2018</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Installation"><span class="nav-number">3.1.1.</span> <span class="nav-text">Installation</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#在硕士学习过程中，使用Keras的项目"><span class="nav-number">3.1.2.</span> <span class="nav-text">在硕士学习过程中，使用Keras的项目**</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#TensorFlow-CPU-切换"><span class="nav-number">3.1.3.</span> <span class="nav-text">TensorFlow CPU 切换</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Jupyter-Notebook-工作目录设置"><span class="nav-number">3.1.4.</span> <span class="nav-text">Jupyter Notebook 工作目录设置</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#June"><span class="nav-number">4.</span> <span class="nav-text">June</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#01-06-2018"><span class="nav-number">4.1.</span> <span class="nav-text">01/06/2018</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Installation-1"><span class="nav-number">4.1.1.</span> <span class="nav-text">Installation</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Understanding-of-PyTorch"><span class="nav-number">4.1.2.</span> <span class="nav-text">Understanding of PyTorch</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#July"><span class="nav-number">5.</span> <span class="nav-text">July</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#August"><span class="nav-number">6.</span> <span class="nav-text">August</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#September"><span class="nav-number">7.</span> <span class="nav-text">September</span></a></li></ol></div>
             
 
           </div>
