@@ -106,7 +106,10 @@
 <meta property="og:image" content="https://raw.githubusercontent.com/Trouble404/Object-Detection-System-Based-on-CNN-and-Capsule-Network/master/Learned%20skills/jupyter%20_setting.PNG">
 <meta property="og:image" content="https://raw.githubusercontent.com/Microsoft/MMdnn/master/docs/supported.jpg">
 <meta property="og:image" content="https://raw.githubusercontent.com/Trouble404/Object-Detection-System-Based-on-CNN-and-Capsule-Network/master/Poster/poster.png">
-<meta property="og:updated_time" content="2018-06-13T15:37:30.799Z">
+<meta property="og:image" content="https://raw.githubusercontent.com/Trouble404/Object-Detection-System-Based-on-CNN-and-Capsule-Network/master/Research%20Review/LaTex/1.PNG">
+<meta property="og:image" content="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/FYP/SPP-NET.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/FYP/fast-rcnn.png">
+<meta property="og:updated_time" content="2018-06-18T13:41:04.689Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="(Logbook) -- Object Detection System Based on CNN and Capsule Network">
 <meta name="twitter:description" content="Gantt chart  Check list  1) preparation  1.1) Familiarization with develop tools  1.1.1) Keras  1.1.2) Pythrch  1.2) Presentation  1.2.1) Poster conference  2) Create image database  2.1) Confirmation">
@@ -426,7 +429,7 @@
                   <span class="post-meta-item-text">字数统计</span>
                 
                 <span title="字数统计">
-                  2,277
+                  3,818
                 </span>
               
 
@@ -627,6 +630,67 @@
 <p><strong>注意：在一个<code>&lt;object/&gt;</code>中，<code>&lt;name/&gt;</code> 标签要放在前面，否则的话，目标检测的一个重要工程实现SSD会出现解析数据集错误（另一个重要工程实现py-faster-rcnn则不会）。</strong></p>
 <h3 id="07-06-2018"><a href="#07-06-2018" class="headerlink" title="07/06/2018"></a>07/06/2018</h3><h4 id="Poster-conference"><a href="#Poster-conference" class="headerlink" title="Poster conference"></a><strong>Poster conference</strong></h4><p><img src="https://raw.githubusercontent.com/Trouble404/Object-Detection-System-Based-on-CNN-and-Capsule-Network/master/Poster/poster.png" alt="iamge"></p>
 <p>5 People in one group to present their object.<br>I present this object to my supervisor in this conference.</p>
+<h3 id="11-06-2018"><a href="#11-06-2018" class="headerlink" title="11/06/2018"></a>11/06/2018</h3><h4 id="R-CNN"><a href="#R-CNN" class="headerlink" title="R-CNN"></a><strong>R-CNN</strong></h4><p>Paper: <a href="https://arxiv.org/abs/1311.2524" target="_blank" rel="noopener">Rich feature hierarchies for accurate object detection and semantic segmentation</a></p>
+<p>【<strong>论文主要特点</strong>】（相对传统方法的改进）</p>
+<ul>
+<li>速度： 经典的目标检测算法使用滑动窗法依次判断所有可能的区域。本文则(采用Selective Search方法)预先提取一系列较可能是物体的候选区域，之后仅在这些候选区域上(采用CNN)提取特征，进行判断。</li>
+<li>训练集： 经典的目标检测算法在区域中提取人工设定的特征。本文则采用深度网络进行特征提取。使用两个数据库： 一个较大的识别库   （ImageNet ILSVC 2012）：标定每张图片中物体的类别。一千万图像，1000类。 一个较小的检测库（PASCAL VOC 2007）：标定每张   图片中，物体的类别和位置，一万图像，20类。 本文使用识别库进行预训练得到CNN（有监督预训练），而后用检测库调优参数，最后在   检测库上评测。</li>
+</ul>
+<p>【<strong>流程</strong>】</p>
+<ol>
+<li>候选区域生成： 一张图像生成1K~2K个候选区域 （采用Selective Search 方法）</li>
+<li>特征提取： 对每个候选区域，使用深度卷积网络提取特征 （CNN） </li>
+<li>类别判断： 特征送入每一类的SVM 分类器，判别是否属于该类</li>
+<li>位置精修： 使用回归器精细修正候选框位置<center><img src="https://raw.githubusercontent.com/Trouble404/Object-Detection-System-Based-on-CNN-and-Capsule-Network/master/Research%20Review/LaTex/1.PNG" alt="image"></center>
+
+</li>
+</ol>
+<p>【<strong><a href="https://www.koen.me/research/pub/uijlings-ijcv2013-draft.pdf" target="_blank" rel="noopener">Selective Search</a></strong>】</p>
+<ol>
+<li>使用一种过分割手段，将图像分割成小区域 (1k~2k 个)</li>
+<li>查看现有小区域，按照合并规则合并可能性最高的相邻两个区域。重复直到整张图像合并成一个区域位置</li>
+<li>输出所有曾经存在过的区域，所谓候选区域<br>其中合并规则如下： 优先合并以下四种区域：<ul>
+<li>颜色（颜色直方图）相近的</li>
+<li>纹理（梯度直方图）相近的</li>
+<li>合并后总面积小的： 保证合并操作的尺度较为均匀，避免一个大区域陆续“吃掉”其他小区域 （例：设有区域a-b-c-d-e-f-g-h。较好的合并方式是：ab-cd-ef-gh -&gt; abcd-efgh -&gt; abcdefgh。 不好的合并方法是：ab-c-d-e-f-g-h -&gt;abcd-e-f-g-h -&gt;abcdef-gh -&gt; abcdefgh）</li>
+<li>合并后，总面积在其BBOX中所占比例大的： 保证合并后形状规则。</li>
+</ul>
+</li>
+</ol>
+<h3 id="12-06-2018"><a href="#12-06-2018" class="headerlink" title="12/06/2018"></a>12/06/2018</h3><h4 id="SPP-CNN"><a href="#SPP-CNN" class="headerlink" title="SPP-CNN"></a><strong>SPP-CNN</strong></h4><p>Paper: <a href="https://arxiv.org/abs/1406.4729" target="_blank" rel="noopener">Spatial Pyramid Pooling in Deep Convolutional Networks for Visual Recognition</a></p>
+<p>【<strong>论文主要特点</strong>】（相对传统方法的改进）</p>
+<p>RCNN使用CNN作为特征提取器，首次使得目标检测跨入深度学习的阶段。但是RCNN对于每一个区域候选都需要首先将图片放缩到固定的尺寸（224*224），然后为每个区域候选提取CNN特征。容易看出这里面存在的一些性能瓶颈：</p>
+<ul>
+<li>速度瓶颈：重复为每个region proposal提取特征是极其费时的，Selective Search对于每幅图片产生2K左右个region proposal，也就是意味着一幅图片需要经过2K次的完整的CNN计算得到最终的结果。</li>
+<li>性能瓶颈：对于所有的region proposal防缩到固定的尺寸会导致我们不期望看到的几何形变，而且由于速度瓶颈的存在，不可能采用多尺度或者是大量的数据增强去训练模型。</li>
+</ul>
+<p>【<strong>流程</strong>】</p>
+<ol>
+<li>首先通过selective search产生一系列的region proposal</li>
+<li>然后训练多尺寸识别网络用以提取区域特征，其中处理方法是每个尺寸的最短边大小在尺寸集合中：<br>$s \in S = {480,576,688,864,1200}$<br>训练的时候通过上面提到的多尺寸训练方法，也就是在每个epoch中首先训练一个尺寸产生一个model，然后加载这个model并训练第二个尺寸，直到训练完所有的尺寸。空间金字塔池化使用的尺度为：1*1，2*2，3*3，6*6，一共是50个bins。</li>
+<li>在测试时，每个region proposal选择能使其包含的像素个数最接近224*224的尺寸，提取相 应特征。</li>
+<li>训练SVM，BoundingBox回归.<center><img src="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/FYP/SPP-NET.jpg" alt="image"></center>
+
+
+</li>
+</ol>
+<h3 id="13-06-2018"><a href="#13-06-2018" class="headerlink" title="13/06/2018"></a>13/06/2018</h3><h4 id="FAST-R-CNN"><a href="#FAST-R-CNN" class="headerlink" title="FAST R-CNN"></a><strong>FAST R-CNN</strong></h4><p>Paper: <a href="https://arxiv.org/abs/1504.08083" target="_blank" rel="noopener">Fast R-CNN</a></p>
+<p>【<strong>论文主要特点</strong>】（相对传统方法的改进）</p>
+<ul>
+<li>测试时速度慢：RCNN一张图像内候选框之间大量重叠，提取特征操作冗余。本文将整张图像归一化后直接送入深度网络。在邻接时，才加入候选框信息，在末尾的少数几层处理每个候选框。</li>
+<li>训练时速度慢 ：原因同上。在训练时，本文先一张图像送入网络，紧接着送入从这幅图像上提取出的候选区域。这些候选区域的前几层特征不需要再重复计算。</li>
+<li>训练所需空间大: RCNN中独立的分类器和回归器需要大量特征作为训练样本。本文把类别判断和位置精调统一用深度网络实现，不再需要额外存储。</li>
+</ul>
+<p>【<strong>流程</strong>】</p>
+<ol>
+<li>网络首先用几个卷积层（conv）和最大池化层处理整个图像以产生conv特征图。</li>
+<li>然后，对于每个对象建议框（object proposals ），感兴趣区域（region of interest——RoI）池层从特征图提取固定长度的特征向量。</li>
+<li>每个特征向量被输送到分支成两个同级输出层的全连接（fc）层序列中：<br>其中一层进行分类，对 目标关于K个对象类（包括全部“背景background”类）产生softmax概率估计，即输出每一个RoI的概率分布；<br>另一层进行bbox regression，输出K个对象类中每一个类的四个实数值。每4个值编码K个类中的每个类的精确边界盒（bounding-box）位置，即输出每一个种类的的边界盒回归偏差。整个结构是使用多任务损失的端到端训练（trained end-to-end with a multi-task loss）。<center><img src="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/FYP/fast-rcnn.png" alt="image"></center>
+
+</li>
+</ol>
+<h3 id="14-15-06-2018"><a href="#14-15-06-2018" class="headerlink" title="14~15/06/2018"></a>14~15/06/2018</h3><h4 id="FASTER-R-CNN"><a href="#FASTER-R-CNN" class="headerlink" title="FASTER R-CNN"></a><strong>FASTER R-CNN</strong></h4><p>I want to use <strong>Faster R-cnn</strong> as the first method to implement object detection system.</p>
+<p>Paper: <a href="https://arxiv.org/abs/1506.01497" target="_blank" rel="noopener">Faster R-CNN: Towards Real-Time Object Detection with Region Proposal Networks</a></p>
 <h2 id="July"><a href="#July" class="headerlink" title="July"></a>July</h2><h2 id="August"><a href="#August" class="headerlink" title="August"></a>August</h2><h2 id="September"><a href="#September" class="headerlink" title="September"></a>September</h2>
       
     </div>
@@ -903,7 +967,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Gantt-chart"><span class="nav-number">1.</span> <span class="nav-text">Gantt chart</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Check-list"><span class="nav-number">2.</span> <span class="nav-text">Check list</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#May"><span class="nav-number">3.</span> <span class="nav-text">May</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#28-05-2018"><span class="nav-number">3.1.</span> <span class="nav-text">28/05/2018</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Installation"><span class="nav-number">3.1.1.</span> <span class="nav-text">Installation</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#在硕士学习过程中，使用Keras的项目"><span class="nav-number">3.1.2.</span> <span class="nav-text">在硕士学习过程中，使用Keras的项目**</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#TensorFlow-CPU-切换"><span class="nav-number">3.1.3.</span> <span class="nav-text">TensorFlow CPU 切换</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Jupyter-Notebook-工作目录设置"><span class="nav-number">3.1.4.</span> <span class="nav-text">Jupyter Notebook 工作目录设置</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#June"><span class="nav-number">4.</span> <span class="nav-text">June</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#01-06-2018"><span class="nav-number">4.1.</span> <span class="nav-text">01/06/2018</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Installation-1"><span class="nav-number">4.1.1.</span> <span class="nav-text">Installation</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Understanding-of-PyTorch"><span class="nav-number">4.1.2.</span> <span class="nav-text">Understanding of PyTorch</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#04-06-2018"><span class="nav-number">4.2.</span> <span class="nav-text">04/06/2018</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Dataset"><span class="nav-number">4.2.1.</span> <span class="nav-text">Dataset:</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Introduce"><span class="nav-number">4.2.2.</span> <span class="nav-text">Introduce:</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Detection-Task"><span class="nav-number">4.2.3.</span> <span class="nav-text">Detection Task</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#XML标注格式"><span class="nav-number">4.2.4.</span> <span class="nav-text">XML标注格式</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#07-06-2018"><span class="nav-number">4.3.</span> <span class="nav-text">07/06/2018</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Poster-conference"><span class="nav-number">4.3.1.</span> <span class="nav-text">Poster conference</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#July"><span class="nav-number">5.</span> <span class="nav-text">July</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#August"><span class="nav-number">6.</span> <span class="nav-text">August</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#September"><span class="nav-number">7.</span> <span class="nav-text">September</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Gantt-chart"><span class="nav-number">1.</span> <span class="nav-text">Gantt chart</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Check-list"><span class="nav-number">2.</span> <span class="nav-text">Check list</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#May"><span class="nav-number">3.</span> <span class="nav-text">May</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#28-05-2018"><span class="nav-number">3.1.</span> <span class="nav-text">28/05/2018</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Installation"><span class="nav-number">3.1.1.</span> <span class="nav-text">Installation</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#在硕士学习过程中，使用Keras的项目"><span class="nav-number">3.1.2.</span> <span class="nav-text">在硕士学习过程中，使用Keras的项目**</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#TensorFlow-CPU-切换"><span class="nav-number">3.1.3.</span> <span class="nav-text">TensorFlow CPU 切换</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Jupyter-Notebook-工作目录设置"><span class="nav-number">3.1.4.</span> <span class="nav-text">Jupyter Notebook 工作目录设置</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#June"><span class="nav-number">4.</span> <span class="nav-text">June</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#01-06-2018"><span class="nav-number">4.1.</span> <span class="nav-text">01/06/2018</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Installation-1"><span class="nav-number">4.1.1.</span> <span class="nav-text">Installation</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Understanding-of-PyTorch"><span class="nav-number">4.1.2.</span> <span class="nav-text">Understanding of PyTorch</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#04-06-2018"><span class="nav-number">4.2.</span> <span class="nav-text">04/06/2018</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Dataset"><span class="nav-number">4.2.1.</span> <span class="nav-text">Dataset:</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Introduce"><span class="nav-number">4.2.2.</span> <span class="nav-text">Introduce:</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Detection-Task"><span class="nav-number">4.2.3.</span> <span class="nav-text">Detection Task</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#XML标注格式"><span class="nav-number">4.2.4.</span> <span class="nav-text">XML标注格式</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#07-06-2018"><span class="nav-number">4.3.</span> <span class="nav-text">07/06/2018</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Poster-conference"><span class="nav-number">4.3.1.</span> <span class="nav-text">Poster conference</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#11-06-2018"><span class="nav-number">4.4.</span> <span class="nav-text">11/06/2018</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#R-CNN"><span class="nav-number">4.4.1.</span> <span class="nav-text">R-CNN</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#12-06-2018"><span class="nav-number">4.5.</span> <span class="nav-text">12/06/2018</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#SPP-CNN"><span class="nav-number">4.5.1.</span> <span class="nav-text">SPP-CNN</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#13-06-2018"><span class="nav-number">4.6.</span> <span class="nav-text">13/06/2018</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#FAST-R-CNN"><span class="nav-number">4.6.1.</span> <span class="nav-text">FAST R-CNN</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#14-15-06-2018"><span class="nav-number">4.7.</span> <span class="nav-text">14~15/06/2018</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#FASTER-R-CNN"><span class="nav-number">4.7.1.</span> <span class="nav-text">FASTER R-CNN</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#July"><span class="nav-number">5.</span> <span class="nav-text">July</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#August"><span class="nav-number">6.</span> <span class="nav-text">August</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#September"><span class="nav-number">7.</span> <span class="nav-text">September</span></a></li></ol></div>
             
 
           </div>
