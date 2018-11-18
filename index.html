@@ -327,196 +327,6 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/15/LInux/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Junming Zhang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="KAMISAMA'S SPACE">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/11/15/LInux/" itemprop="url">Ubuntu</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-15T20:04:14+08:00">
-                2018-11-15
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/System/" itemprop="url" rel="index">
-                    <span itemprop="name">System</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2018/11/15/LInux/" class="leancloud_visitors" data-flag-title="Ubuntu">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  196
-                </span>
-              
-
-              
-
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-          Ubuntu 配置Anaconda3官网下载安装包For Linux Installer
-打开命令行
-
-/path/filename 替换为安装包路径123sha256sum /path/filename```  2. 安装
-
-
-bash ~/path/filename1233. 安装过程中出现说明以及选择的地方选择YES4. 修改环境变量
-vim ~/.bashrc1按&quot;i&quot;进入编辑模式，在最后一行添加
-export PATH=~/anaconda3/bin:$PATH1然后重启环境变量
-source ~/.bashrc125. 配置完成，命令行输入
-anaconda-navigator123456. 启动### Anaconda环境管理**断开VPN!!!**1. 创建新环境
-conda create -n pytorch python=3.512. 启动环境
-so
-          ...
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/11/15/LInux/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/12/MalongTech-Learning/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -639,41 +449,208 @@ so
 
       
         
-          
-          Object detection
-
-
-
-one-stage系
-two-stage系
-
-
-
-
-YOLO V1,V2,V3
-FPN
-
-
-SSD
-RFCN
-
-
-RetinalNet
-LIghthead
-
-
-
-One StageYOLO V1 You only look once unified real-time object detection
-PAPER ADDRESS
-作者在YOLO算法中把物体检测（object detection）问题处理成回归问题，用一个卷积神经网络结构就可以从输入图像直接预测bounding box和类别概率。
-优点: 
-
-YOLO的速度非常快。在Titan X GPU上的速度是45 fps, 加速版155 fps。
-YOLO是基于图像的全局信息进行预测的。这一点和基于sliding window以及region proposal等检测算法不一样。与Fast R-C
-          ...
+          <h1 id="Object-detection"><a href="#Object-detection" class="headerlink" title="Object detection"></a>Object detection</h1><p><img src="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Object-detection-learning/14.png" alt="image"></p>
+<table>
+<thead>
+<tr>
+<th>one-stage系</th>
+<th>two-stage系</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>YOLO V1,V2,V3</td>
+<td>FPN</td>
+</tr>
+<tr>
+<td>SSD</td>
+<td>RFCN</td>
+</tr>
+<tr>
+<td>RetinalNet</td>
+<td>LIghthead</td>
+</tr>
+</tbody>
+</table>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2018/11/12/MalongTech-Learning/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/12/LInux/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Junming Zhang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="KAMISAMA'S SPACE">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/11/12/LInux/" itemprop="url">Ubuntu</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-12T09:04:14+08:00">
+                2018-11-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/System/" itemprop="url" rel="index">
+                    <span itemprop="name">System</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/11/12/LInux/" class="leancloud_visitors" data-flag-title="Ubuntu">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  196
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="Ubuntu-配置"><a href="#Ubuntu-配置" class="headerlink" title="Ubuntu 配置"></a>Ubuntu 配置</h2><h3 id="Anaconda3"><a href="#Anaconda3" class="headerlink" title="Anaconda3"></a>Anaconda3</h3><p><a href="https://www.anaconda.com/download/#linux" target="_blank" rel="noopener">官网下载安装包</a><br><strong>For Linux Installer</strong>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/11/12/LInux/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -820,7 +797,7 @@ YOLO是基于图像的全局信息进行预测的。这一点和基于sliding wi
                   <span class="post-meta-item-text">字数统计</span>
                 
                 <span title="字数统计">
-                  27,367
+                  27,242
                 </span>
               
 
@@ -846,67 +823,7 @@ YOLO是基于图像的全局信息进行预测的。这一点和基于sliding wi
 
       
         
-          
-          Trained resultProject1All train img in one epoch with img enhance
-
-
-
-Total Loss
-Epoch
-
-
-
-
-1.743324379847884
-12
-
-
-1.5072093828280135
-24
-
-
-1.3486772867425474
-36
-
-
-1.2357182289692246
-48
-
-
-1.1492798939480167
-60
-
-
-1.0805550744736634
-72
-
-
-1.03589542202155
-84
-
-
-0.9788277305399328
-96
-
-
-
-
-Project1000 train img in one epoch with img enhance and class balance
-
-
-
-Total Loss
-Epoch
-
-
-
-
-1.9702390517051935
-140
-
-
-
-          ...
+          <h2 id="Gantt-chart"><a href="#Gantt-chart" class="headerlink" title="Gantt chart"></a>Gantt chart</h2><p><img src="https://raw.githubusercontent.com/Trouble404/Object-Detection-System-Based-on-CNN-and-Capsule-Network/master/Project%20Plan/gantt%20chart%20of%20project.PNG" alt="image"></p>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2018/05/25/LogBook/#more" rel="contents">
@@ -1082,24 +999,13 @@ Epoch
 
       
         
-          
-          YouTube Source【四月是你的謊言AMV】你還會記得嗎？四月は君の嘘 Your Lie in April
+          <h2 id="YouTube-Source"><a href="#YouTube-Source" class="headerlink" title="YouTube Source"></a>YouTube Source</h2><p><a href="https://www.youtube.com/watch?v=-fFqguvUmwM" target="_blank" rel="noopener">【四月是你的謊言AMV】你還會記得嗎？四月は君の嘘 Your Lie in April</a></p>
+<iframe width="731" height="411" src="https://www.youtube.com/embed/-fFqguvUmwM" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 
+<h2 id="BiliBili-Source"><a href="#BiliBili-Source" class="headerlink" title="BiliBili Source"></a>BiliBili Source</h2><p><a href="https://www.bilibili.com/video/av2113169/" target="_blank" rel="noopener">【四月是你的谎言】你还会记得吗</a></p>
+<h2 id="4月的最后一天了呢"><a href="#4月的最后一天了呢" class="headerlink" title="4月的最后一天了呢"></a>4月的最后一天了呢</h2><center><br>与你相遇的四月就要来了「<strong>君と出会った四月が来ているから</strong>」<br>没有你的四月就要来了「<strong>君のいない四月は来ないで</strong>」<br><br></center>
 
-BiliBili Source【四月是你的谎言】你还会记得吗
-4月的最后一天了呢与你相遇的四月就要来了「君と出会った四月が来ているから」没有你的四月就要来了「君のいない四月は来ないで」
-
-
-
-
-
-
-
-
-
-
-
-          
+<p><img src="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/YourLieInApril/1.png" alt="image"><br>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2018/04/30/Apri/#more" rel="contents">
@@ -1275,19 +1181,10 @@ BiliBili Source【四月是你的谎言】你还会记得吗
 
       
         
-          
-          Fan-map plotting
-Obtain the game data in 2000~2017 in NBA
-Obtain the follwers of 2015~2017 NBA rookies by twittR package
-Obtain location information and plot the fan-map by Tableau
-
-
-Machine learning applyall-star players in 2017 prediction
-PCA 主成份分析 in all-star player prediction
-Keras是一个高层神经网络API，Keras由纯Python编写而成并基Tensorflow后端
-All-star players in 2017 prediction
-Tensorboard is used to compare an
-          ...
+          <h2 id="Fan-map-plotting"><a href="#Fan-map-plotting" class="headerlink" title="Fan-map plotting"></a>Fan-map plotting</h2><ul>
+<li>Obtain the game data in 2000~2017 in NBA</li>
+<li>Obtain the follwers of 2015~2017 NBA rookies by <a href="https://www.rdocumentation.org/packages/twitteR/versions/1.1.9" target="_blank" rel="noopener">twittR</a> package</li>
+<li>Obtain location information and plot the fan-map by <a href="https://www.tableau.com/zh-cn" target="_blank" rel="noopener">Tableau</a>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2018/01/31/Machine Learning in NBA/#more" rel="contents">
@@ -1463,29 +1360,15 @@ Tensorboard is used to compare an
 
       
         
-          
-          MXnet GPU version configuration (Windows 10. GTX960M)Tools
-Microsoft Visual Studio 2015
-CUDA 9.0
-cuDNN7
-CMake
-OpenCV3.0
-OpenBLAS
-Anaconda
-Graphviz
-
-
-Methods
-Step 1: Install VS2015
-
-Step 2: Install CUDA 9.0
-
-Step 3: Install cuDNN7 解压后把cudnn目录下的bin目录加到PATH环境变量里
-
-Step 4: Install Opencv 下载并解压，然后创建环境变量OpenCV_DIR，把opencv/build目录添加进去,把\opencv\build\x64\vc12\bin和\opencv\build\x86\vc12\bin添加到PATH路径
-
-Step 5
-          ...
+          <h1 id="MXnet-GPU-version-configuration-Windows-10-GTX960M"><a href="#MXnet-GPU-version-configuration-Windows-10-GTX960M" class="headerlink" title="MXnet GPU version configuration (Windows 10. GTX960M)"></a>MXnet GPU version configuration (Windows 10. GTX960M)</h1><h2 id="Tools"><a href="#Tools" class="headerlink" title="Tools"></a>Tools</h2><ul>
+<li><a href="https://www.visualstudio.com/zh-hans/vs/older-downloads/" target="_blank" rel="noopener">Microsoft Visual Studio 2015</a></li>
+<li><a href="http://docs.nvidia.com/cuda/cuda-installation-guide-microsoft-windows/" target="_blank" rel="noopener">CUDA 9.0</a></li>
+<li><a href="https://developer.nvidia.com/cudnn" target="_blank" rel="noopener">cuDNN7</a></li>
+<li><a href="https://cmake.org/" target="_blank" rel="noopener">CMake</a></li>
+<li><a href="https://sourceforge.net/projects/opencvlibrary/files/opencv-win/3.0.0/opencv-3.0.0.exe/download" target="_blank" rel="noopener">OpenCV3.0</a></li>
+<li><a href="https://sourceforge.net/projects/openblas/files/v0.2.14/" target="_blank" rel="noopener">OpenBLAS</a></li>
+<li><a href="https://www.anaconda.com/download/" target="_blank" rel="noopener">Anaconda</a></li>
+<li><a href="https://graphviz.gitlab.io/_pages/Download/Download_windows.html" target="_blank" rel="noopener">Graphviz</a>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2018/01/28/MXnet_Config/#more" rel="contents">
@@ -1661,18 +1544,9 @@ Step 5
 
       
         
-          
-          ResultChart with Anlysis
-Website: SALARY DISTRIBUTION OF DIFFERENT JOBS IN USA
-
-
-Data processDatasets used to anlysis
-U.S. Technology Jobs on Dice.com  Found in Kaggle
-US jobs on Monster.com  Found in KaggleData Clean
-Obtain salay and coresspoding states information in US jos on Monster.com  clean process
-Obtain salay and coresspoding cities information in US jos on Monster.com  clean process
-Obta
-          ...
+          <h2 id="Result"><a href="#Result" class="headerlink" title="Result"></a>Result</h2><p><strong>Chart with Anlysis</strong></p>
+<p><strong>Website: SALARY DISTRIBUTION OF DIFFERENT JOBS IN USA</strong></p>
+<p><img src="https://raw.githubusercontent.com/Trouble404/IT-Salary-in-USA/master/readme_add_pic/page1.PNG" alt="image">
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2018/01/28/IT salary in USA/#more" rel="contents">
@@ -1891,7 +1765,7 @@ Obta
 
         
 <div class="busuanzi-count">
-  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js%22%E3%80%82"></script>
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 
   
     <span class="site-uv">
