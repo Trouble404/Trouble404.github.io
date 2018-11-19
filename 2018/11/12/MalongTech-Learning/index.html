@@ -121,6 +121,9 @@
 <meta property="og:image" content="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Object-detection-learning/17.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Object-detection-learning/18.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Object-detection-learning/20.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Object-detection-learning/32.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Object-detection-learning/33.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Object-detection-learning/34.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Object-detection-learning/19.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Object-detection-learning/21.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Object-detection-learning/22.png">
@@ -133,10 +136,12 @@
 <meta property="og:image" content="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Object-detection-learning/29.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Object-detection-learning/30.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Object-detection-learning/31.png">
-<meta property="og:image" content="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Object-detection-learning/32.png">
-<meta property="og:image" content="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Object-detection-learning/33.png">
-<meta property="og:image" content="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Object-detection-learning/34.png">
-<meta property="og:updated_time" content="2018-11-18T17:24:40.316Z">
+<meta property="og:image" content="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Object-detection-learning/35.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Object-detection-learning/36.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Object-detection-learning/38.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Object-detection-learning/39.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Object-detection-learning/37.png">
+<meta property="og:updated_time" content="2018-11-19T16:06:39.491Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MalongTech 学习内容">
 <meta name="twitter:description" content="Object detection    one-stage系 two-stage系     YOLO V1,V2,V3 FPN   SSD RFCN   RetinalNet LIghthead">
@@ -461,7 +466,7 @@
                   <span class="post-meta-item-text">字数统计</span>
                 
                 <span title="字数统计">
-                  8,212
+                  8,521
                 </span>
               
 
@@ -624,50 +629,6 @@
 <li><strong>小目标数据增强</strong>： 将图像随机放置在填充了平均值的原始图像大小为16x的画布上，然后再进行任意的随机裁剪操作。因为通过引入这个新的“扩展”数据增强技巧，有更多的训练图像，所以必须将训练迭代次数加倍。</li>
 </ol>
 <p><strong>优劣</strong>:<br>SSD对类似的目标类别（特别是对于动物）有更多的混淆，部分原因是共享多个类别的位置。SSD对边界框大小非常敏感。换句话说，它在较小目标上比在较大目标上的性能要差得多。这并不奇怪，因为这些小目标甚至可能在顶层没有任何信息。增加输入尺寸（例如从300×300到512×512）可以帮助改进检测小目标，但仍然有很大的改进空间。积极的一面，SSD在大型目标上的表现非常好。而且对于不同长宽比的目标，它是非常鲁棒的，因为使用每个特征映射位置的各种长宽比的默认框。</p>
-<h3 id="R-FCN-Object-Detection-via-Region-based-Fully-Convolutional-Networks"><a href="#R-FCN-Object-Detection-via-Region-based-Fully-Convolutional-Networks" class="headerlink" title="R-FCN Object Detection via Region-based Fully Convolutional Networks"></a>R-FCN Object Detection via Region-based Fully Convolutional Networks</h3><p><a href="https://link.jianshu.com/?t=https%3A%2F%2Farxiv.org%2Fpdf%2F1605.06409.pdf" target="_blank" rel="noopener">论文地址</a></p>
-<p>R-FCN 通过添加 Position-sensitive score map 解决了把 ROI pooling 放到网络最后一层降低平移可变性的问题，以此改进了 Faster R-CNN 中检测速度慢的问题。</p>
-<p>PS: </p>
-<ul>
-<li><p>分类需要特征具有平移不变性，检测则要求对目标的平移做出准确响应。论文中作者给了测试的数据：ROI放在ResNet-101的conv5后，mAP是68.9%；ROI放到conv5前（就是标准的Faster R-CNN结构）的mAP是76.4%，差距是巨大的，这能证明平移可变性对目标检测的重要性。</p>
-</li>
-<li><p>Faster R-CNN检测速度慢的问题，速度慢是因为ROI层后的结构对不同的proposal是不共享的，试想下如果有300个proposal，ROI后的全连接网络就要计算300次, 非常耗时。</p>
-</li>
-</ul>
-<p><strong>模型</strong>：<br><img src="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Object-detection-learning/19.png" alt="image"></p>
-<ul>
-<li>Backbone architecture: ResNet-101有100个卷积层，后面是全局平均池化和1000类的全连接层。删除了平均池化层和全连接层，只使用卷积层来计算特征映射。最后一个卷积块是2048维，附加一个随机初始化的1024维的1×1卷积层来降维</li>
-<li>$k^{2}(C+1)$Conv: ResNet101的输出是W*H*1024，用$k^{2}(C+1)$个1024*1*1的卷积核去卷积即可得到$k^{2}(C+1)$个大小为W*H的position sensitive的score map。这步的卷积操作就是在做prediction。k = 3，表示把一个ROI划分成3*3，对应的9个位置</li>
-<li>ROI pooling: 一层的SPP结构。主要用来将不同大小的ROI对应的feature map映射成同样维度的特征<img src="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Object-detection-learning/21.png" alt="image"></li>
-<li>Vote:k*k个bin直接进行求和（每个类单独做）得到每一类的score，并进行softmax得到每类的最终得分，并用于计算损失<img src="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Object-detection-learning/22.png" alt="image"></li>
-</ul>
-<p><strong>训练</strong>:</p>
-<ul>
-<li>损失函数： $L(s,t_{x,y,w,h})=L_{cls}(s_{c^{\star}}+ \lambda [c^{\star}&gt;0]L_{reg}(t,t^{\star})$<br>将正样本定义为与真实边界框IOU至少为0.5的ROI，否则为负样本</li>
-<li>在线难例挖掘（<strong>OHEM</strong>): 其主要考虑训练样本集总是包含较多easy examples而相对较少hard examples，而自动选择困难样本能够使得训练更为有效，此外还有：S-OHEM: Stratified Online Hard Example Mining for Object Detection. <strong>S-OHEM</strong> 利用OHEM和stratified sampling技术。其主要考虑OHEM训练过程忽略了不同损失分布的影响，因此S-OHEM根据分布抽样训练样本。A-Fast-RCNN: Hard positive generation via adversary for object detection从更好的利用数据的角度出发，OHEM和S-OHEM都是发现困难样本，而A-Fast-RCNN的方法则是通过<strong>GAN</strong>的方式在特征空间产生具有部分遮挡和形变的困难样本。</li>
-<li><strong>空洞和步长</strong>:我们的全卷积架构享有FCN广泛使用的语义分割的网络修改的好处。特别的是，将ResNet-101的有效步长从32像素降低到了16像素，增加了分数图的分辨率。第一个conv5块中的stride=2操作被修改为stride=1，并且conv5阶段的所有卷积滤波器都被“hole algorithm” 修改来弥补减少的步幅.</li>
-</ul>
-<p><strong>位置敏感分数图</strong>：<br>我们可以想想一下这种情况，M 是一个 5*5 大小，有一个蓝色的正方形物体在其中的特征图，我们将方形物体平均分割成 3*3 的区域。现在我们从 M 中创建一个新的特征图并只用其来检测方形区域的左上角。这个新的特征图如下右图，只有黄色网格单元被激活<img src="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Object-detection-learning/23.png" alt="image"></p>
-<p>因为我们将方形分为了 9 个部分，我们可以创建 9 张特征图分别来检测对应的物体区域。因为每张图检测的是目标物体的子区域，所以这些特征图被称为位置敏感分数图（position-sensitive score maps）。<img src="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Object-detection-learning/24.png" alt="image"><br>比如，我们可以说，下图由虚线所画的红色矩形是被提议的 ROIs 。我们将其分为 3*3 区域并得出每个区域可能包含其对应的物体部分的可能性。我们将此结果储存在 3*3 的投票阵列（如下右图）中。比如，投票阵列 [0][0] 中数值的意义是在此找到方形目标左上区域的可能性。<img src="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Object-detection-learning/25.png" alt="image"><br>将分数图和 ROIs 映射到投票阵列的过程叫做位置敏感 ROI 池化（position-sensitive ROI-pool）。<br><img src="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Object-detection-learning/26.png" alt="image"><br>在计算完位置敏感 ROI 池化所有的值之后，分类的得分就是所有它元素的平均值<br><img src="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Object-detection-learning/27.png" alt="image"><br>如果说我们有 C 类物体需要检测。我们将使用 C+1个类，因为其中多包括了一个背景（无目标物体）类。每类都分别有一个 3×3 分数图，因此一共有 (C+1)×3×3 张分数图。通过使用自己类别的那组分数图，我们可以预测出每一类的分数。然后我们使用 softmax 来操作这些分数从而计算出每一类的概率。</p>
-<h3 id="FPN-FEature-Pyramid-Networks-for-Object-Detection"><a href="#FPN-FEature-Pyramid-Networks-for-Object-Detection" class="headerlink" title="FPN FEature Pyramid Networks for Object Detection"></a>FPN FEature Pyramid Networks for Object Detection</h3><p><a href="http://openaccess.thecvf.com/content_cvpr_2017/papers/Lin_Feature_Pyramid_Networks_CVPR_2017_paper.pdf" target="_blank" rel="noopener">论文地址</a></p>
-<p><img src="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Object-detection-learning/28.png" alt="image"></p>
-<p>a. 通过缩放图片获取不同尺度的特征图</p>
-<p>b. ConvNET</p>
-<p>c. 通过不同特征分层</p>
-<p>d. FPN</p>
-<p>特征金字塔网络FPN，网络直接在原来的单网络上做修改，每个分辨率的 feature map 引入后一分辨率缩放两倍的 feature map 做 element-wise 相加的操作。通过这样的连接，每一层预测所用的 feature map 都融合了不同分辨率、不同语义强度的特征，融合的不同分辨率的 feature map 分别做对应分辨率大小的物体检测。这样保证了每一层都有合适的分辨率以及强语义特征。同时，由于此方法只是在原网络基础上加上了额外的跨层连接，在实际应用中几乎不增加额外的时间和计算量。</p>
-<p><strong>FPN</strong>:<br><img src="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Object-detection-learning/29.png" alt="image"></p>
-<ol>
-<li>图中feature map用蓝色轮廓表示，较粗的表示语义上较强特征</li>
-<li>采用的bottom-up 和 top-down 的方法， bottom-up这条含有较低级别的语义但其激活可以更精确的定位因为下采样的次数更少。 Top-down的这条路更粗糙但是语义更强。</li>
-<li>top-down的特征随后通过bottom-up的特征经由横向连接进行增强如图，使用较粗糙分辨率的特征映射时候将空间分辨率上采样x2倍。bottom-up的特征要经过1x1卷积层来生成最粗糙分辨率映射。</li>
-<li>每个横向连接合并来自自下而上路径和自顶向下路径的具有相同空间大小的特征映射。<br><img src="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Object-detection-learning/30.png" alt="image"></li>
-</ol>
-<p><strong>RPN结合FPN</strong></p>
-<ol>
-<li>通过用FPN替换单尺度特征映射来适应RPN。在特征金字塔的每个层级上附加一个相同设计的头部（3x3 conv（目标/非目标二分类和边界框回归）和 两个1x1convs（分类和回归））由于头部在所有金字塔等级上的所有位置密集滑动，所以不需要在特定层级上具有多尺度锚点。相反，为每个层级分配单尺度的锚点。定义锚点$[P_{2},P_{3},P_{4},P_{5},P_{6}]$分别具有$[32^{2},64^{2},128^{2},256^{2},512^{2}]$个像素 面积，以及多个长宽比{1:2,1:1,2:1}所以总共15个锚点在金字塔上。</li>
-<li>其余同RPN网络</li>
-<li>不同的尺度ROI用不同层的特征，每个box根据公式计算后提取其中某一层特征图对应的特征ROI，大尺度就用后面一些的金字塔层（P5），小尺度就用前面一点的层（P4）<br>可根据公式：$k=[k_{0}+log_{2}(\frac{\sqrt{wh}}{224}]$ 计算需要哪一层的特征<br><img src="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Object-detection-learning/31.png" alt="image"></li>
-</ol>
 <h3 id="RetinaNet-Focal-Loss-for-Dense-Object-Detection"><a href="#RetinaNet-Focal-Loss-for-Dense-Object-Detection" class="headerlink" title="RetinaNet Focal Loss for Dense Object Detection"></a>RetinaNet Focal Loss for Dense Object Detection</h3><p><a href="https://arxiv.org/abs/1708.02002" target="_blank" rel="noopener">论文地址</a></p>
 <p><img src="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Object-detection-learning/32.png" alt="image"></p>
 <p>稠密分类的后者精度不够高，核心问题（central issus）是稠密proposal中前景和背景的极度不平衡。以我更熟悉的YOLO举例子，比如在PASCAL VOC数据集中，每张图片上标注的目标可能也就几个。但是YOLO V2最后一层的输出是13×13×5，也就是845个候选目标！大量（简单易区分）的负样本在loss中占据了很大比重，使得有用的loss不能回传回来。基于此，作者将经典的交叉熵损失做了变形（见下），给那些易于被分类的简单例子小的权重，给不易区分的难例更大的权重。同时，作者提出了一个新的one-stage的检测器RetinaNet，达到了速度和精度很好地trade-off。</p>
@@ -693,6 +654,72 @@
 </ul>
 <p>Anchors:<br>在金字塔等级P3到P7上，锚点的面积分别为$32^{2}$到$512^{2}$, 使用的长宽比为[1:2,1:1,2:1]. 对于更密集的比例覆盖，每个级别添加锚点的尺寸$[2^{0},2^{\frac{1}{3}},2^{\frac{1}{2}}]$</p>
 <p>IOU:<br>[0,0.4)的为背景，[0.4,0.5)的忽略，大于0.5的为前景</p>
+<h2 id="Two-Stage"><a href="#Two-Stage" class="headerlink" title="Two Stage"></a>Two Stage</h2><h3 id="R-FCN-Object-Detection-via-Region-based-Fully-Convolutional-Networks"><a href="#R-FCN-Object-Detection-via-Region-based-Fully-Convolutional-Networks" class="headerlink" title="R-FCN Object Detection via Region-based Fully Convolutional Networks"></a>R-FCN Object Detection via Region-based Fully Convolutional Networks</h3><p><a href="https://link.jianshu.com/?t=https%3A%2F%2Farxiv.org%2Fpdf%2F1605.06409.pdf" target="_blank" rel="noopener">论文地址</a></p>
+<p>R-FCN 通过添加 Position-sensitive score map 解决了把 ROI pooling 放到网络最后一层降低平移可变性的问题，以此改进了 Faster R-CNN 中检测速度慢的问题。</p>
+<p>PS: </p>
+<ul>
+<li><p>分类需要特征具有平移不变性，检测则要求对目标的平移做出准确响应。论文中作者给了测试的数据：ROI放在ResNet-101的conv5后，mAP是68.9%；ROI放到conv5前（就是标准的Faster R-CNN结构）的mAP是76.4%，差距是巨大的，这能证明平移可变性对目标检测的重要性。</p>
+</li>
+<li><p>Faster R-CNN检测速度慢的问题，速度慢是因为ROI层后的结构对不同的proposal是不共享的，试想下如果有300个proposal，ROI后的全连接网络就要计算300次, 非常耗时。</p>
+</li>
+</ul>
+<p><strong>模型</strong>：<br><img src="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Object-detection-learning/19.png" alt="image"></p>
+<ul>
+<li>Backbone architecture: ResNet-101有100个卷积层，后面是全局平均池化和1000类的全连接层。删除了平均池化层和全连接层，只使用卷积层来计算特征映射。最后一个卷积块是2048维，附加一个随机初始化的1024维的1×1卷积层来降维</li>
+<li>$k^{2}(C+1)$Conv: ResNet101的输出是W*H*1024，用$k^{2}(C+1)$个1024*1*1的卷积核去卷积即可得到$k^{2}(C+1)$个大小为W*H的position sensitive的score map。这步的卷积操作就是在做prediction。k = 3，表示把一个ROI划分成3*3，对应的9个位置</li>
+<li>ROI pooling: 一层的SPP结构。主要用来将不同大小的ROI对应的feature map映射成同样维度的特征<img src="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Object-detection-learning/21.png" alt="image"></li>
+<li>Vote:k*k个bin直接进行求和（每个类单独做）得到每一类的score，并进行softmax得到每类的最终得分，并用于计算损失<img src="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Object-detection-learning/22.png" alt="image"></li>
+</ul>
+<p><strong>训练</strong>:</p>
+<ul>
+<li>损失函数： $L(s,t_{x,y,w,h})=L_{cls}(s_{c^{\star}}+ \lambda [c^{\star}&gt;0]L_{reg}(t,t^{\star})$<br>将正样本定义为与真实边界框IOU至少为0.5的ROI，否则为负样本</li>
+<li>在线难例挖掘（<strong>OHEM</strong>): 其主要考虑训练样本集总是包含较多easy examples而相对较少hard examples，而自动选择困难样本能够使得训练更为有效，此外还有：S-OHEM: Stratified Online Hard Example Mining for Object Detection. <strong>S-OHEM</strong> 利用OHEM和stratified sampling技术。其主要考虑OHEM训练过程忽略了不同损失分布的影响，因此S-OHEM根据分布抽样训练样本。A-Fast-RCNN: Hard positive generation via adversary for object detection从更好的利用数据的角度出发，OHEM和S-OHEM都是发现困难样本，而A-Fast-RCNN的方法则是通过<strong>GAN</strong>的方式在特征空间产生具有部分遮挡和形变的困难样本。</li>
+<li><strong>空洞和步长</strong>:我们的全卷积架构享有FCN广泛使用的语义分割的网络修改的好处。特别的是，将ResNet-101的有效步长从32像素降低到了16像素，增加了分数图的分辨率。第一个conv5块中的stride=2操作被修改为stride=1，并且conv5阶段的所有卷积滤波器都被“hole algorithm” 修改来弥补减少的步幅.</li>
+</ul>
+<p><strong>位置敏感分数图</strong>：<br>我们可以想想一下这种情况，M 是一个 5*5 大小，有一个蓝色的正方形物体在其中的特征图，我们将方形物体平均分割成 3*3 的区域。现在我们从 M 中创建一个新的特征图并只用其来检测方形区域的左上角。这个新的特征图如下右图，只有黄色网格单元被激活<img src="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Object-detection-learning/23.png" alt="image"></p>
+<p>因为我们将方形分为了 9 个部分，我们可以创建 9 张特征图分别来检测对应的物体区域。因为每张图检测的是目标物体的子区域，所以这些特征图被称为位置敏感分数图（position-sensitive score maps）。<img src="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Object-detection-learning/24.png" alt="image"><br>比如，我们可以说，下图由虚线所画的红色矩形是被提议的 ROIs 。我们将其分为 3*3 区域并得出每个区域可能包含其对应的物体部分的可能性。我们将此结果储存在 3*3 的投票阵列（如下右图）中。比如，投票阵列 [0][0] 中数值的意义是在此找到方形目标左上区域的可能性。<img src="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Object-detection-learning/25.png" alt="image"><br>将分数图和 ROIs 映射到投票阵列的过程叫做位置敏感 ROI 池化（position-sensitive ROI-pool）。<br><img src="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Object-detection-learning/26.png" alt="image"><br>在计算完位置敏感 ROI 池化所有的值之后，分类的得分就是所有它元素的平均值<br><img src="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Object-detection-learning/27.png" alt="image"><br>如果说我们有 C 类物体需要检测。我们将使用 C+1个类，因为其中多包括了一个背景（无目标物体）类。每类都分别有一个 3×3 分数图，因此一共有 (C+1)×3×3 张分数图。通过使用自己类别的那组分数图，我们可以预测出每一类的分数。然后我们使用 softmax 来操作这些分数从而计算出每一类的概率。</p>
+<h3 id="FPN-Feature-Pyramid-Networks-for-Object-Detection"><a href="#FPN-Feature-Pyramid-Networks-for-Object-Detection" class="headerlink" title="FPN Feature Pyramid Networks for Object Detection"></a>FPN Feature Pyramid Networks for Object Detection</h3><p><a href="http://openaccess.thecvf.com/content_cvpr_2017/papers/Lin_Feature_Pyramid_Networks_CVPR_2017_paper.pdf" target="_blank" rel="noopener">论文地址</a></p>
+<p><img src="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Object-detection-learning/28.png" alt="image"></p>
+<p>a. 通过缩放图片获取不同尺度的特征图</p>
+<p>b. ConvNET</p>
+<p>c. 通过不同特征分层</p>
+<p>d. FPN</p>
+<p>特征金字塔网络FPN，网络直接在原来的单网络上做修改，每个分辨率的 feature map 引入后一分辨率缩放两倍的 feature map 做 element-wise 相加的操作。通过这样的连接，每一层预测所用的 feature map 都融合了不同分辨率、不同语义强度的特征，融合的不同分辨率的 feature map 分别做对应分辨率大小的物体检测。这样保证了每一层都有合适的分辨率以及强语义特征。同时，由于此方法只是在原网络基础上加上了额外的跨层连接，在实际应用中几乎不增加额外的时间和计算量。</p>
+<p><strong>FPN</strong>:<br><img src="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Object-detection-learning/29.png" alt="image"></p>
+<ol>
+<li>图中feature map用蓝色轮廓表示，较粗的表示语义上较强特征</li>
+<li>采用的bottom-up 和 top-down 的方法， bottom-up这条含有较低级别的语义但其激活可以更精确的定位因为下采样的次数更少。 Top-down的这条路更粗糙但是语义更强。</li>
+<li>top-down的特征随后通过bottom-up的特征经由横向连接进行增强如图，使用较粗糙分辨率的特征映射时候将空间分辨率上采样x2倍。bottom-up的特征要经过1x1卷积层来生成最粗糙分辨率映射。</li>
+<li>每个横向连接合并来自自下而上路径和自顶向下路径的具有相同空间大小的特征映射。<br><img src="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Object-detection-learning/30.png" alt="image"></li>
+</ol>
+<p><strong>RPN结合FPN</strong></p>
+<ol>
+<li>通过用FPN替换单尺度特征映射来适应RPN。在特征金字塔的每个层级上附加一个相同设计的头部（3x3 conv（目标/非目标二分类和边界框回归）和 两个1x1convs（分类和回归））由于头部在所有金字塔等级上的所有位置密集滑动，所以不需要在特定层级上具有多尺度锚点。相反，为每个层级分配单尺度的锚点。定义锚点$[P_{2},P_{3},P_{4},P_{5},P_{6}]$分别具有$[32^{2},64^{2},128^{2},256^{2},512^{2}]$个像素 面积，以及多个长宽比{1:2,1:1,2:1}所以总共15个锚点在金字塔上。</li>
+<li>其余同RPN网络</li>
+<li>不同的尺度ROI用不同层的特征，每个box根据公式计算后提取其中某一层特征图对应的特征ROI，大尺度就用后面一些的金字塔层（P5），小尺度就用前面一点的层（P4）<br>可根据公式：$k=[k_{0}+log_{2}(\frac{\sqrt{wh}}{224}]$ 计算需要哪一层的特征<br><img src="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Object-detection-learning/31.png" alt="image"></li>
+</ol>
+<h3 id="Light-Head-R-CNN-In-Defense-of-Two-Stage-Object-Detector"><a href="#Light-Head-R-CNN-In-Defense-of-Two-Stage-Object-Detector" class="headerlink" title="Light-Head R-CNN: In Defense of Two-Stage Object Detector"></a>Light-Head R-CNN: In Defense of Two-Stage Object Detector</h3><p><a href="https://arxiv.org/abs/1711.07264" target="_blank" rel="noopener">论文地址</a></p>
+<p>two-stage 的方法在本身的一个基础网络上都会附加计算量很大的一个用于 classification+regression 的网络，导致速度变慢</p>
+<ul>
+<li>Faster R-CNN: two fully connected layers for RoI recognition</li>
+<li>R-FCN: produces a large score maps.</li>
+</ul>
+<p>因此，作者为了解决 detection 的速度问题，提出了一种新的 two-stage detector，就是Light-Head R-CNN。速度和准确率都有提升。Light-Head R-CNN 重点是 head 的结构设计。包括两部分： R-CNN subnet（ROI pooling 之后的network） 和ROI warping。</p>
+<p><img src="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Object-detection-learning/35.png" alt="image"></p>
+<p><strong>方法</strong></p>
+<ul>
+<li><strong>Thin feature map</strong>: <img src="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Object-detection-learning/36.png" alt="image">降低进入head部分feature map的channel数也就是将r-fcn的score map从$P\times P(C+1)$减小到$P\times P\times \alpha$，$\alpha$是一个与类别数无关且较小的值，比如10。这样，score map的channel数与类别数无关，使得后面的分类不能像r-fcn那样vote，于是在roi pooling之后添加了一个fc层进行预测类别和位置。</li>
+<li><strong>Large separable convolution</strong>: </li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Object-detection-learning/38.png" alt="image"><img src="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Object-detection-learning/39.png" alt="image">  </p>
+<ul>
+<li><strong>Cheap R-CNN</strong>: <img src="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Object-detection-learning/37.png" alt="image"> </li>
+</ul>
+<p><strong>模型</strong>：</p>
+<ul>
+<li><strong>Large</strong>: (1) ResNEt-101; (2) atrous algorithm; (3) RPN chanels 512; (4) Large separable convolution with $C_{mid}=256$</li>
+<li><strong>Small</strong>: (1) Xception like; (2) abbandon atrous algorithm; (3) RPN convolution to 256; (4) Large separable convolution with $C_{mid}=64$; (5) Apply PSPooling with alignment techniques as RoI warping(better results involve RoI-align).</li>
+</ul>
 
       
     </div>
@@ -967,7 +994,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Object-detection"><span class="nav-number">1.</span> <span class="nav-text">Object detection</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#One-Stage"><span class="nav-number">1.1.</span> <span class="nav-text">One Stage</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#YOLO-V1"><span class="nav-number">1.1.1.</span> <span class="nav-text">YOLO V1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#YOLO-V2-and-YOLO-9000"><span class="nav-number">1.1.2.</span> <span class="nav-text">YOLO V2 and YOLO 9000</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#YOLO-V3"><span class="nav-number">1.1.3.</span> <span class="nav-text">YOLO V3</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SSD-Single-Shot-MultiBox-Detector"><span class="nav-number">1.1.4.</span> <span class="nav-text">SSD: Single Shot MultiBox Detector</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#R-FCN-Object-Detection-via-Region-based-Fully-Convolutional-Networks"><span class="nav-number">1.1.5.</span> <span class="nav-text">R-FCN Object Detection via Region-based Fully Convolutional Networks</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#FPN-FEature-Pyramid-Networks-for-Object-Detection"><span class="nav-number">1.1.6.</span> <span class="nav-text">FPN FEature Pyramid Networks for Object Detection</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RetinaNet-Focal-Loss-for-Dense-Object-Detection"><span class="nav-number">1.1.7.</span> <span class="nav-text">RetinaNet Focal Loss for Dense Object Detection</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Object-detection"><span class="nav-number">1.</span> <span class="nav-text">Object detection</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#One-Stage"><span class="nav-number">1.1.</span> <span class="nav-text">One Stage</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#YOLO-V1"><span class="nav-number">1.1.1.</span> <span class="nav-text">YOLO V1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#YOLO-V2-and-YOLO-9000"><span class="nav-number">1.1.2.</span> <span class="nav-text">YOLO V2 and YOLO 9000</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#YOLO-V3"><span class="nav-number">1.1.3.</span> <span class="nav-text">YOLO V3</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SSD-Single-Shot-MultiBox-Detector"><span class="nav-number">1.1.4.</span> <span class="nav-text">SSD: Single Shot MultiBox Detector</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RetinaNet-Focal-Loss-for-Dense-Object-Detection"><span class="nav-number">1.1.5.</span> <span class="nav-text">RetinaNet Focal Loss for Dense Object Detection</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Two-Stage"><span class="nav-number">1.2.</span> <span class="nav-text">Two Stage</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#R-FCN-Object-Detection-via-Region-based-Fully-Convolutional-Networks"><span class="nav-number">1.2.1.</span> <span class="nav-text">R-FCN Object Detection via Region-based Fully Convolutional Networks</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#FPN-Feature-Pyramid-Networks-for-Object-Detection"><span class="nav-number">1.2.2.</span> <span class="nav-text">FPN Feature Pyramid Networks for Object Detection</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Light-Head-R-CNN-In-Defense-of-Two-Stage-Object-Detector"><span class="nav-number">1.2.3.</span> <span class="nav-text">Light-Head R-CNN: In Defense of Two-Stage Object Detector</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
