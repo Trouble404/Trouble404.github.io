@@ -102,7 +102,7 @@
 <meta property="og:site_name" content="KAMISAMA&#39;S SPACE">
 <meta property="og:description" content="Ubuntu 配置Anaconda3官网下载安装包For Linux Installer">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-11-26T13:38:17.043Z">
+<meta property="og:updated_time" content="2018-11-26T13:44:56.516Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Ubuntu">
 <meta name="twitter:description" content="Ubuntu 配置Anaconda3官网下载安装包For Linux Installer">
@@ -426,7 +426,7 @@
                   <span class="post-meta-item-text">字数统计</span>
                 
                 <span title="字数统计">
-                  299
+                  286
                 </span>
               
 
@@ -454,23 +454,56 @@
         <h2 id="Ubuntu-配置"><a href="#Ubuntu-配置" class="headerlink" title="Ubuntu 配置"></a>Ubuntu 配置</h2><h3 id="Anaconda3"><a href="#Anaconda3" class="headerlink" title="Anaconda3"></a>Anaconda3</h3><p><a href="https://www.anaconda.com/download/#linux" target="_blank" rel="noopener">官网下载安装包</a><br><strong>For Linux Installer</strong><a id="more"></a></p>
 <p>打开命令行</p>
 <ol>
-<li>/path/filename 替换为安装包路径<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sha256sum /path/filename</span><br><span class="line">```  </span><br><span class="line">2. 安装</span><br></pre></td></tr></table></figure>
+<li><p>/path/filename 替换为安装包路径</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sha256sum /path/filename</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>安装</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bash ~/path/filename</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>安装过程中出现说明以及选择的地方选择YES</p>
+</li>
+<li><p>修改环境变量</p>
 </li>
 </ol>
-<p>bash ~/path/filename<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">3. 安装过程中出现说明以及选择的地方选择YES</span><br><span class="line">4. 修改环境变量</span><br></pre></td></tr></table></figure></p>
-<p>vim ~/.bashrc<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">按&quot;i&quot;进入编辑模式，在最后一行添加</span><br></pre></td></tr></table></figure></p>
-<p>export PATH=~/anaconda3/bin:$PATH<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">然后重启环境变量</span><br></pre></td></tr></table></figure></p>
-<p>source ~/.bashrc<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">5. 配置完成，命令行输入</span><br></pre></td></tr></table></figure></p>
-<p>anaconda-navigator<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">6. 启动</span><br><span class="line"></span><br><span class="line">### Anaconda环境管理</span><br><span class="line">**断开VPN!!!**</span><br><span class="line"></span><br><span class="line">1. 创建新环境</span><br></pre></td></tr></table></figure></p>
-<p>conda create -n pytorch python=3.5<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">2. 启动环境</span><br></pre></td></tr></table></figure></p>
-<p>source activate pytorch<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">3. 安装Pytorch以及torchvision [具体版本命令网址](https://pytorch.org/)</span><br></pre></td></tr></table></figure></p>
-<p>conda install pytorch-cpu torchvision-cpu -c pytorch<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">4. 关联环境到Jupyter-Notebook</span><br></pre></td></tr></table></figure></p>
-<p>conda install nb_conda<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">### 切换国内源</span><br><span class="line">1. Linux下，在home目录下创建一下.pip文本夹</span><br></pre></td></tr></table></figure></p>
-<p>mkdir .pip<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">2. 在该文件夹下创建pip.conf文件</span><br></pre></td></tr></table></figure></p>
-<p>torch pip.conf<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">3. 启动编辑</span><br></pre></td></tr></table></figure></p>
-<p>vim pip.conf<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">4. 添加如下内容:</span><br></pre></td></tr></table></figure></p>
-<p>[global]<br>index-url = <a href="https://pypi.tuna.tsinghua.edu.cn/simple" target="_blank" rel="noopener">https://pypi.tuna.tsinghua.edu.cn/simple</a><br>[install]<br>trusted-host=mirrors.aliyun.com<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">5. Anaconda 镜像</span><br></pre></td></tr></table></figure></p>
-<p>conda config –add channels ‘<a href="https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/&#39;" target="_blank" rel="noopener">https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/&#39;</a><br>conda config –set show_channel_urls yes<br><code>`</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim ~/.bashrc</span><br></pre></td></tr></table></figure>
+<p>按”i”进入编辑模式，在最后一行添加<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export PATH=~/anaconda3/bin:$PATH</span><br></pre></td></tr></table></figure></p>
+<p>然后重启环境变量<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">source ~/.bashrc</span><br></pre></td></tr></table></figure></p>
+<ol start="5">
+<li><p>配置完成，命令行输入</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">anaconda-navigator</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>启动</p>
+</li>
+</ol>
+<h3 id="Anaconda环境管理"><a href="#Anaconda环境管理" class="headerlink" title="Anaconda环境管理"></a>Anaconda环境管理</h3><p><strong>断开VPN!!!</strong></p>
+<ol>
+<li><p>创建新环境<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda create -n pytorch python=3.5</span><br></pre></td></tr></table></figure></p>
+</li>
+<li><p>启动环境<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">source activate pytorch</span><br></pre></td></tr></table></figure></p>
+</li>
+<li><p>安装Pytorch以及torchvision <a href="https://pytorch.org/" target="_blank" rel="noopener">具体版本命令网址</a><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda install pytorch-cpu torchvision-cpu -c pytorch</span><br></pre></td></tr></table></figure></p>
+</li>
+<li><p>关联环境到Jupyter-Notebook </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda install nb_conda</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="切换国内源"><a href="#切换国内源" class="headerlink" title="切换国内源"></a>切换国内源</h3><ol>
+<li><p>Linux下，在home目录下创建一下.pip文本夹</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir .pip</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在该文件夹下创建pip.conf文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">torch pip.conf</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>启动编辑</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim pip.conf</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>添加如下内容: </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[global]</span><br><span class="line">index-url = https://pypi.tuna.tsinghua.edu.cn/simple</span><br><span class="line">[install]</span><br><span class="line">trusted-host=mirrors.aliyun.com</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Anaconda 镜像</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">conda config --add channels &apos;https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/&apos;</span><br><span class="line">conda config --set show_channel_urls yes</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
 
       
     </div>
@@ -749,7 +782,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Ubuntu-配置"><span class="nav-number">1.</span> <span class="nav-text">Ubuntu 配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Anaconda3"><span class="nav-number">1.1.</span> <span class="nav-text">Anaconda3</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Ubuntu-配置"><span class="nav-number">1.</span> <span class="nav-text">Ubuntu 配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Anaconda3"><span class="nav-number">1.1.</span> <span class="nav-text">Anaconda3</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Anaconda环境管理"><span class="nav-number">1.2.</span> <span class="nav-text">Anaconda环境管理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#切换国内源"><span class="nav-number">1.3.</span> <span class="nav-text">切换国内源</span></a></li></ol></li></ol></div>
             
 
           </div>
