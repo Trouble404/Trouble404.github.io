@@ -108,7 +108,10 @@
 <meta property="og:image" content="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Image-Segmentation-Learning/4.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Image-Segmentation-Learning/5.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Image-Segmentation-Learning/6.png">
-<meta property="og:updated_time" content="2018-11-26T13:27:24.111Z">
+<meta property="og:image" content="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Image-Segmentation-Learning/7.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Image-Segmentation-Learning/8.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Image-Segmentation-Learning/9.png">
+<meta property="og:updated_time" content="2018-11-27T12:57:26.408Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MalongTech 学习内容:图像分割">
 <meta name="twitter:description" content="Image Segmentation Introduction在计算机视觉领域，图像分割（Segmentation）指的是将数字图像细分为多个图像子区域（像素的集合）（也被称作超像素）的过程。图像分割的目的是简化或改变图像的表示形式，使得图像更容易理解和分析。图像分割通常用于定位图像中的物体和边界（线，曲线等）。更精确的，图像分割是对图像中的每个像素加标签的一个过程，这一过程使得具有相同标签的像素">
@@ -433,7 +436,7 @@
                   <span class="post-meta-item-text">字数统计</span>
                 
                 <span title="字数统计">
-                  2,630
+                  4,910
                 </span>
               
 
@@ -490,7 +493,7 @@
 <li>Mean Intersection over Union(MIoU, 均交并比): 为语义分割的标准度量。其计算两个集合的交集和并集之比，这两个集合为真实值(ground truth)和预测值(predicted segmentation). 这个比例可以变形为正真数(intersection)比上真正、假负、假正(并集)之和，之后在每个类上计算IoU再平均。<br>$$MIoU = \frac{1}{k+1}\sum_{i=0}^{k}\frac{p_{ii}}{\sum_{j=0}^{k}p_{ij}+\sum_{j=0}^{k}(p_{ji}-p_{ii})}$$</li>
 <li>Frequency Weighted Intersection over Union(FWIoU, 频权交并比): 为MIoU的一种提升，根据每个类出现的频率为其设置权重。<br>$$FWIoU = \frac{1}{\sum_{i=0}^{k}\sum_{j=0}^{k}p_{ij}}\sum_{i=0}^{k}\frac{p_{ii}}{\sum_{j=0}^{k}p_{ij}+\sum_{j=0}^{k}(p_{ji}-p_{ii})}$$</li>
 </ol>
-<h2 id="深度学习算法"><a href="#深度学习算法" class="headerlink" title="深度学习算法"></a>深度学习算法</h2><h3 id="Fully-Convolutional-Networks"><a href="#Fully-Convolutional-Networks" class="headerlink" title="Fully Convolutional Networks"></a>Fully Convolutional Networks</h3><p>传统神经网络做分类的步骤是，首先是一个图像进来之后经过多层卷积得到降维之后的特征图，这个特征图经过全连接层变成一个分类器，最后输出一个类别的向量，这就是分类的结果。</p>
+<h2 id="深度学习算法"><a href="#深度学习算法" class="headerlink" title="深度学习算法"></a>深度学习算法</h2><h3 id="Fully-Convolutional-Networks"><a href="#Fully-Convolutional-Networks" class="headerlink" title="Fully Convolutional Networks"></a>Fully Convolutional Networks</h3><p><a href="https://people.eecs.berkeley.edu/~jonlong/long_shelhamer_fcn.pdf" target="_blank" rel="noopener">论文地址</a><br>传统神经网络做分类的步骤是，首先是一个图像进来之后经过多层卷积得到降维之后的特征图，这个特征图经过全连接层变成一个分类器，最后输出一个类别的向量，这就是分类的结果。</p>
 <p>而 FCN 是把所有的全连接层换成卷基层，原来只能输出一个类别分类的网络可以在特征图的每一个像素输出一个分类结果。这样就把分类的向量，变成了一个分类的特征图。</p>
 <center><img src="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Image-Segmentation-Learning/2.png" alt="image"></center>
 
@@ -524,6 +527,91 @@
 <p>$f(R_{1}=\frac{x_{2}-x}{x_{2}-x_{1}}f(Q_{11})+\frac{x-x_{1}}{x_{2}-x_{1}}f(Q_{21})$; $f(R_{2}=\frac{x_{2}-x}{x_{2}-x_{1}}f(Q_{12})+\frac{x-x_{1}}{x_{2}-x_{1}}f(Q_{22})$</p>
 <p>Y方向的线性插值：通过第一步计算出的$R_{1$}与$R_{2}$在y方向上插值计算出P点</p>
 <p>$f(P)=\frac{y_{2}-y}{y_{2}-y_{1}}f(R_{1})+\frac{y-y_{1}}{y_{2}-y_{1}}f(R_{2})$</p>
+<hr>
+<h3 id="U-Net-Convolutional-Networks-for-Biomedical-Image-Segmentation"><a href="#U-Net-Convolutional-Networks-for-Biomedical-Image-Segmentation" class="headerlink" title="U-Net: Convolutional Networks for Biomedical Image Segmentation"></a>U-Net: Convolutional Networks for Biomedical Image Segmentation</h3><p><a href="https://arxiv.org/pdf/1505.04597.pdf" target="_blank" rel="noopener">论文地址</a><br>卷积网络被大规模应用在分类任务中，输出的结果是整个图像的类标签。然而，在许多视觉任务，尤其是生物医学图像处理领域，目标输出应该包括目标类别的位置，并且每个像素都应该有类标签。另外，在生物医学图像往往缺少训练图片。所以，Ciresan等人训练了一个卷积神经网络，用滑动窗口提供像素的周围区域（patch）作为输入来预测每个像素的类标签。这个网络有两个优点： 第一，输出结果可以定位出目标类别的位置； 第二，由于输入的训练数据是patches，这样就相当于进行了数据增广，解决了生物医学图像数量少的问题。</p>
+<p>但是，这个方法也有两个很明显缺点。</p>
+<p>第一，它很慢，因为这个网络必须训练每个patch，并且因为patch间的重叠有很多的冗余,造成资源的浪费，减慢训练时间和效率; 第二，定位准确性和获取上下文信息不可兼得。大的patches需要更多的max-pooling层这样减小了定位准确性,小的patches只能看到很小的局部信息，包含的背景信息不够。</p>
+<p><strong>U-Net Architecture</strong></p>
+<center><img src="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Image-Segmentation-Learning/7.jpg" alt="image"></center>
+
+<ol>
+<li>使用全卷积神经网络。(全卷积神经网络就是卷积取代了全连接层，全连接层必须固定图像大小而卷积不用，所以这个策略使得，你可以输入任意尺寸的图片，而且输出也是图片，所以这是一个端到端的网络。)</li>
+<li>左边的网络是收缩路径：使用卷积和maxpooling。</li>
+<li>右边的网络是扩张路径:使用上采样产生的特征图与左侧收缩路径对应层产生的特征图进行concatenate操作。（pooling层会丢失图像信息和降低图像分辨率且是不可逆的操作，对图像分割任务有一些影响，对图像分类任务的影响不大，为什么要做上采样？因为上采样可以补足一些图片的信息，但是信息补充的肯定不完全，所以还需要与左边的分辨率比较高的图片相连接起来（直接复制过来再裁剪到与上采样图片一样大小），这就相当于在高分辨率和更抽象特征当中做一个折衷，因为随着卷积次数增多，提取的特征也更加有效，更加抽象，上采样的图片是经历多次卷积后的图片，肯定是比较高效和抽象的图片，然后把它与左边不怎么抽象但更高分辨率的特征图片进行连接）。</li>
+<li>最后再经过两次反卷积操作，生成特征图，再用两个1X1的卷积做分类得到最后的两张heatmap,例如第一张表示的是第一类的得分，第二张表示第二类的得分heatmap,然后作为softmax函数的输入，算出概率比较大的softmax类，选择它作为输入给交叉熵进行反向传播训练。</li>
+</ol>
+<p><strong>Overlap-tile strategy</strong></p>
+<center><img src="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Image-Segmentation-Learning/8.png" alt="image"></center>
+
+<p>医学图像是一般相当大，但是分割时候不可能将原图太小输入网络，所以必须切成一张一张的小patch，在切成小patch的时候，Unet由于网络结构原因适合有overlap的切图，可以看图，红框是要分割区域，但是在切图时要包含周围区域，overlap另一个重要原因是周围overlap部分可以为分割区域边缘部分提供文理等信息。可以看黄框的边缘，分割结果并没有受到切成小patch而造成分割情况不好。 </p>
+<p><strong>训练</strong></p>
+<p>最后一层使用了交叉熵函数与softmax：<br>$$E=\sum_{x\in \Omega}w(x)log(p_{\ell(x)}(x))$$</p>
+<p>并且为了补偿训练每个类像素的不同频率使得网络更注重学习相互接触的细胞之间的小的分割边界，引入了权重图计算$w(x)$:<br>$$w(x)=w_{c}(x)+w_{0} \times exp(-\frac{(d_{1}(x)+d_{2}(x))}{2\sigma^{2}})$$</p>
+<p><strong>Data Augmentation</strong><br>在只有少量样本的情况况下，要想尽可能的让网络获得不变性和鲁棒性，数据增加是必不可少的。因为本论文需要处理显微镜图片，我们需要平移与旋转不变性，并且对形变和灰度变化鲁棒。将训练样本进行随机弹性形变是训练分割网络的关键。使用随机位移矢量在粗糙的3*3网格上产生平滑形变(smooth deformations)。 位移是从10像素标准偏差的高斯分布中采样的。然后使用双三次插值(Bicubic interpolation)计算每个像素的位移。在contracting path的末尾采用drop-out 层更进一步增加数据。</p>
+<p><strong>双三次插值</strong><br>在这种方法中，函数f在点(x,y)的值可以通过矩形网络中最近的16个采样点加权平均得到。</p>
+<hr>
+<h3 id="DeepLab-V1"><a href="#DeepLab-V1" class="headerlink" title="DeepLab V1"></a>DeepLab V1</h3><p><a href="https://arxiv.org/pdf/1412.7062v3.pdf" target="_blank" rel="noopener">论文地址</a></p>
+<p>DeepLab是结合了深度卷积神经网络(<a href="https://www.cnblogs.com/wangxiaocvpr/p/8763510.html" target="_blank" rel="noopener">DCNNs</a>)和概率图模型(<a href="https://zhuanlan.zhihu.com/p/33397147" target="_blank" rel="noopener">DenseCRFs</a>)的方法.</p>
+<p>DCNN在图像标记任务中存在两个技术障碍：</p>
+<ul>
+<li>信号下采样</li>
+<li>空间不敏感(invariance)</li>
+</ul>
+<p>第一个问题涉及到：在DCNN中重复最大池化和下采样带来的分辨率下降问题，分辨率的下降会丢失细节。DeepLab是采用的<code>atrous</code>(带孔)算法扩展感受野，获取更多的上下文信息。</p>
+<p>第二个问题涉及到：分类器获取以对象中心的决策是需要空间变换的不变性，这天然的限制了DCNN的定位精度，DeepLab采用完全连接的条件随机场(DenseCRF)提高模型捕获细节的能力。</p>
+<p>除空洞卷积和 CRFs 之外，论文使用的 tricks 还有 Multi-Scale features。其实就是 U-Net 和 FPN 的思想，在输入图像和前四个最大池化层的输出上附加了两层的 MLP，第一层是 128 个 3×3 卷积，第二层是 128 个 1×1 卷积。最终输出的特征与主干网的最后一层特征图融合，特征图增加 5×128=640 个通道。实验表示多尺度有助于提升预测结果，但是效果不如 CRF 明显。</p>
+<p><strong>CRF-&gt;语义分割</strong></p>
+<p>对于每个像素位置$i$具有隐变量$x_{i}$(这里隐变量就是像素的真实类别标签，如果预测结果有21类，则$(i \in 1,2,..,21)$ 还有对应的观测值 $y_{i}$(即像素点对应的颜色值)。以像素为节点，像素与像素间的关系作为边，构成了一个条件随机场(CRF)。通过观测变量$y_{i}$来推测像素位置$i$应的类别标签$x_{i}$.条件随机场示意图如下:</p>
+<center><img src="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Image-Segmentation-Learning/9.png" alt="image"></center>
+
+<p>条件随机场符合吉布斯分布(x是上面的观测值，下面省略全局观测I):<br>$$p(x|I)=\frac{1}{Z}exp(-E(x|I))$$</p>
+<p>全连接的CRF模型使用的能量函数$E(x)$为:<br>$$E(x)=\sum_{i} \theta_{i}(x_{i})+\sum_{ij}\theta_{ij}(x_{i},x_{j})$$</p>
+<p>这分为一元势函数$\theta_{i}(x_{i})$和二元势函数$\theta_{ij}(x_{i},x_{j})$两部分</p>
+<ul>
+<li>一元势函数是定义在观测序列位置i的状态特征函数，用于刻画观测序列对标记变量的影响（例如在城市道路任务中，观测到像素点为黑色，对应车子的可能比天空可能要大）。这里$P(x_{i})$是取DCNN计算关于像素i的输出的标签分配概率.</li>
+</ul>
+<p>$$\theta_{i}(x_{i})=-logP(x_{i})$$</p>
+<ul>
+<li>二元势函数是定义在不同观测位置上的转移特征函数，用于刻画变量之间的相关关系以及观测序列对其影响。如果比较相似，那可能是一类，否则就裂开，这可以细化边缘。一般的二元势函数只取像素点与周围像素之间的边，这里使用的是全连接，即像素点与其他所有像素之间的关系。</li>
+</ul>
+<p>$$\theta_{ij}(x_{i},x_{j})=\mu(x_{i},x_{j})\sum_{m=1}^{K}w_{m}k^{m}(f_{i},f_{j})$$</p>
+<p>DeepLab中高斯核采用双边位置和颜色的组合（第一核取决于像素位置(p)和像素颜色强度(I),第二核取决于像素位置(p)）:<br>$$w_{1}exp(-\frac{\lVert p_{i}-p_{j} \rVert^{2}}{2\sigma_{\alpha}^{2}}-\frac{\lVert I_{i}-I_{j} \rVert^{2}}{2\sigma_{\beta}^{2}})+w_{2}exp(-\frac{\lVert p_{i}-p_{j} \rVert^{2}}{2\sigma_{\gamma}^{2}})$$</p>
+<p><strong>实验</strong></p>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>设置</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>数据集</td>
+<td>PASCAL VOC 2012 segmentation benchmark</td>
+</tr>
+<tr>
+<td>DCNN模型</td>
+<td>权重采用预训练的VGG16</td>
+</tr>
+<tr>
+<td>DCNN损失函数</td>
+<td>交叉熵</td>
+</tr>
+<tr>
+<td>训练器</td>
+<td>SGD，batch=20</td>
+</tr>
+<tr>
+<td>学习率</td>
+<td>初始为0.001，最后的分类层是0.01。每2000次迭代乘0.1</td>
+</tr>
+<tr>
+<td>权重</td>
+<td>0.9的动量， 0.0005的衰减</td>
+</tr>
+</tbody>
+</table>
+<hr>
 
       
     </div>
@@ -798,7 +886,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Image-Segmentation"><span class="nav-number">1.</span> <span class="nav-text">Image Segmentation</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Introduction"><span class="nav-number">1.1.</span> <span class="nav-text">Introduction</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Tranditional-Methods"><span class="nav-number">1.2.</span> <span class="nav-text">Tranditional Methods</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Datasets"><span class="nav-number">1.3.</span> <span class="nav-text">Datasets</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#图像分割的度量标准"><span class="nav-number">1.4.</span> <span class="nav-text">图像分割的度量标准</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#深度学习算法"><span class="nav-number">1.5.</span> <span class="nav-text">深度学习算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Fully-Convolutional-Networks"><span class="nav-number">1.5.1.</span> <span class="nav-text">Fully Convolutional Networks</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Image-Segmentation"><span class="nav-number">1.</span> <span class="nav-text">Image Segmentation</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Introduction"><span class="nav-number">1.1.</span> <span class="nav-text">Introduction</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Tranditional-Methods"><span class="nav-number">1.2.</span> <span class="nav-text">Tranditional Methods</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Datasets"><span class="nav-number">1.3.</span> <span class="nav-text">Datasets</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#图像分割的度量标准"><span class="nav-number">1.4.</span> <span class="nav-text">图像分割的度量标准</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#深度学习算法"><span class="nav-number">1.5.</span> <span class="nav-text">深度学习算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Fully-Convolutional-Networks"><span class="nav-number">1.5.1.</span> <span class="nav-text">Fully Convolutional Networks</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#U-Net-Convolutional-Networks-for-Biomedical-Image-Segmentation"><span class="nav-number">1.5.2.</span> <span class="nav-text">U-Net: Convolutional Networks for Biomedical Image Segmentation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DeepLab-V1"><span class="nav-number">1.5.3.</span> <span class="nav-text">DeepLab V1</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
