@@ -111,7 +111,16 @@
 <meta property="og:image" content="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Image-Segmentation-Learning/7.jpg">
 <meta property="og:image" content="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Image-Segmentation-Learning/8.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Image-Segmentation-Learning/9.png">
-<meta property="og:updated_time" content="2018-11-27T12:57:26.408Z">
+<meta property="og:image" content="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Image-Segmentation-Learning/10.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Image-Segmentation-Learning/11.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Image-Segmentation-Learning/12.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Image-Segmentation-Learning/13.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Image-Segmentation-Learning/14.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Image-Segmentation-Learning/15.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Image-Segmentation-Learning/18.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Image-Segmentation-Learning/16.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Image-Segmentation-Learning/17.png">
+<meta property="og:updated_time" content="2018-11-29T01:26:10.545Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MalongTech 学习内容:图像分割">
 <meta name="twitter:description" content="Image Segmentation Introduction在计算机视觉领域，图像分割（Segmentation）指的是将数字图像细分为多个图像子区域（像素的集合）（也被称作超像素）的过程。图像分割的目的是简化或改变图像的表示形式，使得图像更容易理解和分析。图像分割通常用于定位图像中的物体和边界（线，曲线等）。更精确的，图像分割是对图像中的每个像素加标签的一个过程，这一过程使得具有相同标签的像素">
@@ -436,7 +445,7 @@
                   <span class="post-meta-item-text">字数统计</span>
                 
                 <span title="字数统计">
-                  4,910
+                  6,964
                 </span>
               
 
@@ -608,6 +617,156 @@
 <tr>
 <td>权重</td>
 <td>0.9的动量， 0.0005的衰减</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h3 id="DepLab-V2"><a href="#DepLab-V2" class="headerlink" title="DepLab V2"></a>DepLab V2</h3><p><a href="https://arxiv.org/pdf/1606.00915.pdf" target="_blank" rel="noopener">论文地址</a></p>
+<p>DeepLabv2 是相对于 DeepLabv1 基础上的优化。DeepLabv1 在三个方向努力解决，但是问题依然存在：</p>
+<ol>
+<li>特征分辨率的降低</li>
+<li>物体存在多尺度</li>
+<li>DCNN 的平移不变性</li>
+</ol>
+<p>针对这三个问题, DeepLabv2做出了3个主要贡献:</p>
+<ol>
+<li>首先，强调使用空洞卷积，作为密集预测任务的强大工具。空洞卷积能够明确地控制DCNN内计算特征响应的分辨率，即可以有效的扩大感受野，在不增加参数量和计算量的同时获取更多的上下文。</li>
+<li>其次，提出了空洞空间卷积池化金字塔(atrous spatial pyramid pooling (ASPP))，以多尺度的信息得到更强健的分割结果。ASPP并行的采用多个采样率的空洞卷积层来探测，以多个比例捕捉对象以及图像上下文。</li>
+<li>最后，通过组合DCNN和概率图模型，改进分割边界结果。在DCNN中最大池化和下采样组合实现可平移不变性，但这对精度是有影响的。通过将最终的DCNN层响应与全连接的CRF结合来克服这个问题。</li>
+</ol>
+<p><strong>步骤</strong></p>
+<center><img src="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Image-Segmentation-Learning/10.png" alt="image"></center>
+
+<ul>
+<li>输入经过改进的DCNN(带空洞卷积和ASPP模块)得到粗略预测结果，即<code>Aeroplane Coarse Score map</code></li>
+<li>通过双线性插值扩大到原本大小，即<code>Bi-linear Interpolation</code></li>
+<li>再通过全连接的CRF细化预测结果，得到最终输出<code>Final Output</code></li>
+</ul>
+<p><strong>方法</strong></p>
+<ol>
+<li><p><strong>空洞卷积用于密集特征提取和扩大感受野</strong></p>
+<p>首先考虑一维信号，空洞卷积输出为$y[i]$, 输入为$x[i]$, 长度K的滤波器为$w[k]$, 则定义为：<br>$$y[k]=\sum_{k=1}^{K}x[i+r\cdot k]w[k]$$<br>输入采样的步幅为参数r, 标准采样率是$r=1$如图(a); 图(b)是采样率$r=2$的时候：</p>
+<center><img src="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Image-Segmentation-Learning/11.png" alt="image"></center>
+
+<p>二维信号(图片)上使用空洞卷积的表现,给定一个图像：</p>
+<ul>
+<li>上分支：首先下采样将分辨率降低2倍，做卷积。再上采样得到结果。本质上这只是在原图片的1/4内容上做卷积响应。</li>
+<li>下分支：如果将全分辨率图像做空洞卷积(采样率为2，核大小与上面卷积核相同)，直接得到结果。这样可以计算出整张图像的响应，如下图所示，这样做效果更佳。<center><img src="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Image-Segmentation-Learning/12.png" alt="image"></center>
+
+</li>
+</ul>
+<p>空洞卷积能够放大滤波器的感受野，速率r引入$r-1$个零，有效将感受野从$k\times k$扩展到$k_{e}=k+(k-1)(r-1)$而不增加参数和计算量。在DCNN中，常见的做法是混合使用空洞卷积以高的分辨率(理解为采样密度)计算最终的DCNN网络响应。</p>
+</li>
+<li><p><strong>使用ASPP模块表示多尺度图像</strong></p>
+<p>DeepLabv2的做法与SPPNet类似，并行的采用多个采样率的空洞卷积提取特征，再将特征融合，类似于空间金字塔结构，形象的称为Atrous Spatial Pyramid Pooling (ASPP)。示意图如下：</p>
+<center><img src="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Image-Segmentation-Learning/13.png" alt="image"></center>
+
+<p>在同一Input Feature Map的基础上，并行的使用4个空洞卷积，空洞卷积配置为$r=6,12,18,24$, 核大小为$3 \times 3$. 最终将不同卷积层得到的结果做像素加融合到一起.</p>
+</li>
+<li><p><strong>使用全连接CRF做结构预测用于恢复边界精度</strong></p>
+<center><img src="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Image-Segmentation-Learning/14.png" alt="image"></center>
+
+</li>
+</ol>
+<p><strong>训练</strong></p>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>设置</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DCNN模型</td>
+<td>权重采用预训练的VGG16，<strong>ResNet101</strong></td>
+</tr>
+<tr>
+<td>DCNN损失函数</td>
+<td>输出的结果与ground truth下采样8倍做像素交叉熵</td>
+</tr>
+<tr>
+<td>训练器</td>
+<td>SGD，batch=20</td>
+</tr>
+<tr>
+<td>学习率</td>
+<td>初始为0.001，最后的分类层是0.01。每2000次迭代乘0.1</td>
+</tr>
+<tr>
+<td>权重</td>
+<td>0.9的动量， 0.0005的衰减</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h3 id="DepLab-V3"><a href="#DepLab-V3" class="headerlink" title="DepLab V3"></a>DepLab V3</h3><p><a href="https://arxiv.org/pdf/1706.05587.pdf" target="_blank" rel="noopener">论文地址</a></p>
+<p>语义分割任务，在应用深度卷积神经网络中的有两个挑战：</p>
+<ul>
+<li>第一个挑战：连续池化和下采样，让高层特征具有局部图像变换的内在不变性，这允许DCNN学习越来越抽象的特征表示。但同时引起的特征分辨率下降，会妨碍密集的定位预测任务，因为这需要详细的空间信息。</li>
+<li>第二个挑战：多尺度目标的存在</li>
+</ul>
+<p>DeepLabv3的主要贡献在于：</p>
+<ul>
+<li>重新讨论了空洞卷积的使用，在级联模块和空间金字塔池化的框架下，能够获取更大的感受野从而获取多尺度信息。</li>
+<li>改进了ASPP模块：由不同采样率的空洞卷积和BN层组成，尝试以级联或并行的方式布局模块。</li>
+<li>讨论了一个重要问题：使用大采样率的空洞卷积，因为图像边界响应无法捕捉远距离信息，会退化为1×1的卷积, 因此建议将图像级特征融合到ASPP模块中。</li>
+<li>阐述了训练细节并分享了训练经验，论文提出的”DeepLabv3”改进了以前的工作，获得了很好的结果</li>
+</ul>
+<p><strong>方法</strong></p>
+<ol>
+<li><strong>空洞卷积应用于密集的特征提取</strong></li>
+<li><p><strong>深层次的空洞卷积</strong></p>
+<center><img src="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Image-Segmentation-Learning/15.png" alt="image"></center>
+
+<center><img src="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Image-Segmentation-Learning/18.png" alt="image"></center>
+
+<p>将空洞卷积应用在级联模块, 取ResNet中最后一个block，在上图中为block4，并在其后面增加级联模块。图(a)所示，整体图片的信息总结到后面非常小的特征映射上，使用步幅越长的特征映射，得到的结果反倒会差，结果最好的out_stride = 8 需要占用较多的存储空间。因为连续的下采样会降低特征映射的分辨率，细节信息被抽取，这对语义分割是有害的。上图(b)所示，可使用不同采样率的空洞卷积保持输出步幅的为out_stride = 16.这样不增加参数量和计算量同时有效的缩小了步幅。</p>
+</li>
+<li><p><strong>Atrous Spatial Pyramid Pooling</strong></p>
+<p>对于在DeepLabv2中提出的ASPP模块，其在特征顶部映射图并行使用了四种不同采样率的空洞卷积。这表明以不同尺度采样是有效的，在DeepLabv3中向ASPP中添加了BN层。不同采样率的空洞卷积可以有效的捕获多尺度信息，但是，随着采样率的增加，滤波器的有效权重(权重有效的应用在特征区域，而不是填充0)逐渐变小。如下图所示：</p>
+<center><img src="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Image-Segmentation-Learning/16.png" alt="image"></center>
+
+<p>当不同采样率的$3 \times 3$卷积核应用在$65 \times 65$的特征映射上，采样率接近特征映射大小时，$3 \times 3$的滤波器不是捕捉全图像的上下文，而是退化为简单的$1 \times 1$滤波器，只有滤波器中心点的权重起了作用。</p>
+<p><center><img src="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Image-Segmentation-Learning/17.png" alt="image"></center><br>为了克服这个问题，改进了ASPP结构如上图：</p>
+<ol>
+<li>一个$1 \times 1$卷积和三个$3 \times 3$卷积的采样率为$rate = (6,12,18)$的空洞卷积，滤波器数量为256，包含BN层。针对output_stride=16的情况。（当output_stride=8的时候，采样率会加倍，所有的特征会通过$1 \times 1$卷积级联到一起）</li>
+<li>使用了图片级特征。具体来说，在模型最后的特征映射上应用全局平均，将结果经过$1 \times 1$的卷积，再双线性上采样得到所需的空间维度。</li>
+</ol>
+</li>
+</ol>
+<p><strong>训练</strong></p>
+<table>
+<thead>
+<tr>
+<th>部分</th>
+<th>设置</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>数据集</td>
+<td>PASCAL VOC 2012</td>
+</tr>
+<tr>
+<td>工具</td>
+<td>TensorFlow</td>
+</tr>
+<tr>
+<td>裁剪尺寸</td>
+<td>采样513大小的裁剪尺寸</td>
+</tr>
+<tr>
+<td>学习率策略</td>
+<td>采用poly策略， $learning rate = base_lr(1-\frac{iter}{max_iters})^{power}$</td>
+</tr>
+<tr>
+<td><strong>BN层策略</strong></td>
+<td>当output_stride=16时，我们采用batchsize=16，同时BN层的参数做参数衰减0.9997。在增强的数据集上，以初始学习率0.007训练30K后，冻结BN层参数。采用output_stride=8时，再使用初始学习率0.001训练30K。训练output_stride=16比output_stride=8要快很多，因为中间的特征映射在空间上小四倍。但因为output_stride=16在特征映射上粗糙的是牺牲了精度。</td>
+</tr>
+<tr>
+<td><strong>上采样策略</strong></td>
+<td>在先前的工作上,将最终的输出与GroundTruth下采样8倍做比较之后发现保持GroundTruth更重要，故将最终的输出上采样8倍与完整的GroundTruth比较。</td>
 </tr>
 </tbody>
 </table>
@@ -886,7 +1045,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Image-Segmentation"><span class="nav-number">1.</span> <span class="nav-text">Image Segmentation</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Introduction"><span class="nav-number">1.1.</span> <span class="nav-text">Introduction</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Tranditional-Methods"><span class="nav-number">1.2.</span> <span class="nav-text">Tranditional Methods</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Datasets"><span class="nav-number">1.3.</span> <span class="nav-text">Datasets</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#图像分割的度量标准"><span class="nav-number">1.4.</span> <span class="nav-text">图像分割的度量标准</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#深度学习算法"><span class="nav-number">1.5.</span> <span class="nav-text">深度学习算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Fully-Convolutional-Networks"><span class="nav-number">1.5.1.</span> <span class="nav-text">Fully Convolutional Networks</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#U-Net-Convolutional-Networks-for-Biomedical-Image-Segmentation"><span class="nav-number">1.5.2.</span> <span class="nav-text">U-Net: Convolutional Networks for Biomedical Image Segmentation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DeepLab-V1"><span class="nav-number">1.5.3.</span> <span class="nav-text">DeepLab V1</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Image-Segmentation"><span class="nav-number">1.</span> <span class="nav-text">Image Segmentation</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Introduction"><span class="nav-number">1.1.</span> <span class="nav-text">Introduction</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Tranditional-Methods"><span class="nav-number">1.2.</span> <span class="nav-text">Tranditional Methods</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Datasets"><span class="nav-number">1.3.</span> <span class="nav-text">Datasets</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#图像分割的度量标准"><span class="nav-number">1.4.</span> <span class="nav-text">图像分割的度量标准</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#深度学习算法"><span class="nav-number">1.5.</span> <span class="nav-text">深度学习算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Fully-Convolutional-Networks"><span class="nav-number">1.5.1.</span> <span class="nav-text">Fully Convolutional Networks</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#U-Net-Convolutional-Networks-for-Biomedical-Image-Segmentation"><span class="nav-number">1.5.2.</span> <span class="nav-text">U-Net: Convolutional Networks for Biomedical Image Segmentation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DeepLab-V1"><span class="nav-number">1.5.3.</span> <span class="nav-text">DeepLab V1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DepLab-V2"><span class="nav-number">1.5.4.</span> <span class="nav-text">DepLab V2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DepLab-V3"><span class="nav-number">1.5.5.</span> <span class="nav-text">DepLab V3</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
