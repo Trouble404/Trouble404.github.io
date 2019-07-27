@@ -102,7 +102,7 @@
 <meta property="og:site_name" content="KAMISAMA&#39;S SPACE">
 <meta property="og:description" content="Ubuntu 配置Anaconda3官网下载安装包For Linux Installer">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-11-26T13:44:56.516Z">
+<meta property="og:updated_time" content="2019-07-27T09:54:25.070Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Ubuntu">
 <meta name="twitter:description" content="Ubuntu 配置Anaconda3官网下载安装包For Linux Installer">
@@ -424,7 +424,7 @@
                   <span class="post-meta-item-text">字数统计</span>
                 
                 <span title="字数统计">
-                  286
+                  250
                 </span>
               
 
@@ -486,17 +486,11 @@
 </li>
 </ol>
 <h3 id="切换国内源"><a href="#切换国内源" class="headerlink" title="切换国内源"></a>切换国内源</h3><ol>
-<li><p>Linux下，在home目录下创建一下.pip文本夹</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir .pip</span><br></pre></td></tr></table></figure>
+<li><p>升级pip&gt;10.0</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install -i https://pypi.tuna.tsinghua.edu.cn/simple pip -U</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>在该文件夹下创建pip.conf文件</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">torch pip.conf</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>启动编辑</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim pip.conf</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>添加如下内容: </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[global]</span><br><span class="line">index-url = https://pypi.tuna.tsinghua.edu.cn/simple</span><br><span class="line">[install]</span><br><span class="line">trusted-host=mirrors.aliyun.com</span><br></pre></td></tr></table></figure>
+<li><p>设置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>Anaconda 镜像</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">conda config --add channels &apos;https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/&apos;</span><br><span class="line">conda config --set show_channel_urls yes</span><br></pre></td></tr></table></figure>
