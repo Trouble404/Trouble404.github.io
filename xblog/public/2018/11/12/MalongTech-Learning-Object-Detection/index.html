@@ -1,0 +1,1655 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="Deep Learning,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.2">
+
+
+
+
+
+
+<meta name="description" content="Object detection    one-stage系 two-stage系     YOLO V1,V2,V3 FPN   SSD RFCN   RetinalNet LIghthead">
+<meta name="keywords" content="Deep Learning">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MalongTech 学习内容:目标检测">
+<meta property="og:url" content="http://yoursite.com/2018/11/12/MalongTech-Learning-Object-Detection/index.html">
+<meta property="og:site_name" content="KAMISAMA&#39;S SPACE">
+<meta property="og:description" content="Object detection    one-stage系 two-stage系     YOLO V1,V2,V3 FPN   SSD RFCN   RetinalNet LIghthead">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Object-detection-learning/14.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Object-detection-learning/1.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Object-detection-learning/2.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Object-detection-learning/3.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Object-detection-learning/4.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Object-detection-learning/5.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Object-detection-learning/6.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Object-detection-learning/7.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Object-detection-learning/8.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Object-detection-learning/9.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Object-detection-learning/10.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Object-detection-learning/11.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Object-detection-learning/12.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Object-detection-learning/13.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Object-detection-learning/15.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Object-detection-learning/16.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Object-detection-learning/17.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Object-detection-learning/18.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Object-detection-learning/20.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Object-detection-learning/32.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Object-detection-learning/33.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Object-detection-learning/34.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Object-detection-learning/19.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Object-detection-learning/21.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Object-detection-learning/22.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Object-detection-learning/23.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Object-detection-learning/24.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Object-detection-learning/25.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Object-detection-learning/26.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Object-detection-learning/27.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Object-detection-learning/28.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Object-detection-learning/29.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Object-detection-learning/30.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Object-detection-learning/31.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Object-detection-learning/35.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Object-detection-learning/36.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Object-detection-learning/38.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Object-detection-learning/39.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Object-detection-learning/37.png">
+<meta property="og:updated_time" content="2018-11-26T13:22:48.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="MalongTech 学习内容:目标检测">
+<meta name="twitter:description" content="Object detection    one-stage系 two-stage系     YOLO V1,V2,V3 FPN   SSD RFCN   RetinalNet LIghthead">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Object-detection-learning/14.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/11/12/MalongTech-Learning-Object-Detection/">
+
+
+
+
+
+  <title>MalongTech 学习内容:目标检测 | KAMISAMA'S SPACE</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?14798f1d1a9de82a174c7d52dd582793";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">KAMISAMA'S SPACE</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/12/MalongTech-Learning-Object-Detection/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Junming Zhang">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="KAMISAMA'S SPACE">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">MalongTech 学习内容:目标检测</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-12T11:00:00+08:00">
+                2018-11-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/实习/" itemprop="url" rel="index">
+                    <span itemprop="name">实习</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/11/12/MalongTech-Learning-Object-Detection/" class="leancloud_visitors" data-flag-title="MalongTech 学习内容:目标检测">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  8,521
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Object-detection"><a href="#Object-detection" class="headerlink" title="Object detection"></a>Object detection</h1><p><img src="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Object-detection-learning/14.png" alt="image"></p>
+<table>
+<thead>
+<tr>
+<th>one-stage系</th>
+<th>two-stage系</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>YOLO V1,V2,V3</td>
+<td>FPN</td>
+</tr>
+<tr>
+<td>SSD</td>
+<td>RFCN</td>
+</tr>
+<tr>
+<td>RetinalNet</td>
+<td>LIghthead</td>
+</tr>
+</tbody>
+</table>
+<a id="more"></a>
+<h2 id="One-Stage"><a href="#One-Stage" class="headerlink" title="One Stage"></a>One Stage</h2><h3 id="YOLO-V1"><a href="#YOLO-V1" class="headerlink" title="YOLO V1"></a>YOLO V1</h3><p><strong> You only look once unified real-time object detection</strong></p>
+<p><a href="https://www.cv-foundation.org/openaccess/content_cvpr_2016/papers/Redmon_You_Only_Look_CVPR_2016_paper.pdf" target="_blank" rel="noopener">PAPER ADDRESS</a></p>
+<p>作者在YOLO算法中把物体检测（object detection）问题处理成回归问题，用一个卷积神经网络结构就可以从输入图像直接预测bounding box和类别概率。</p>
+<p><strong>优点</strong>: </p>
+<ol>
+<li>YOLO的速度非常快。在Titan X GPU上的速度是45 fps, 加速版155 fps。</li>
+<li>YOLO是基于图像的全局信息进行预测的。这一点和基于sliding window以及region proposal等检测算法不一样。与Fast R-CNN相比，YOLO在误检测（将背景检测为物体）方面的错误率能降低一半多。</li>
+<li>泛化能力强。</li>
+</ol>
+<p><img src="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Object-detection-learning/1.png" alt="image"></p>
+<p><strong>缺点</strong>:</p>
+<ol>
+<li>accuracy 还落后于同期 state-of-the-art 目标检测方法。</li>
+<li>难于检测小目标。</li>
+<li>定位不够精准。</li>
+<li>虽然降低了背景检测为物体的概率但同事导致了召回率较低。</li>
+</ol>
+<p><strong>流程</strong></p>
+<ol>
+<li>调整图像大小至$448\times448$.</li>
+<li>运行卷积网络同时预测多目标的边界框和所属类的概率</li>
+<li>NMX(非极大值抑制)</li>
+</ol>
+<p><strong>Unified Detection</strong><br><img src="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Object-detection-learning/2.png" alt="image"></p>
+<ol>
+<li>将图片分为$S\times S$格子。</li>
+<li>对每个格子都预测B个边界框并且每个边界框包含5个预测值：x,t,w,h以及confidence。x,y就是bounding box的中心坐标，与grid cell对齐（即相对于当前grid cell的偏移值），使得范围变成0到1；w和h进行归一化（分别除以图像的w和h，这样最后的w和h就在0到1范围。</li>
+<li>每个格子都预测C个假定类别的概率。</li>
+<li>在Pascal VOC中， S=7,B=2,C=20. 所以有 $S\times S\times (B \times 5 + C)$ 即 $7\times 7\times 30$ 维张量。</li>
+</ol>
+<p>Confidence计算：$Pr(Object) * IOU_{pred}^{turth} $</p>
+<p>每个bounding box都对应一个confidence score，如果grid cell里面没有object，confidence就是0，如果有，则confidence score等于预测的box和ground truth的IOU值，见上面公式。并且如果一个object的ground truth的中心点坐标在一个grid cell中，那么这个grid cell就是包含这个object，也就是说这个object的预测就由该grid cell负责。<br>每个grid cell都预测C个类别概率，表示一个grid cell在包含object的条件下属于某个类别的概率：$Pr(Class_{i}|Object)$</p>
+<p>每个bounding box的confidence和每个类别的score相乘，得到每个bounding box属于哪一类的confidence score。</p>
+<p>即得到每个bounding box属于哪一类的confidence score。也就是说最后会得到20*(7*7*2)的score矩阵，括号里面是bounding box的数量，20代表类别。接下来的操作都是20个类别轮流进行：在某个类别中（即矩阵的某一行），将得分少于阈值（0.2）的设置为0，然后再按得分从高到低排序。最后再用NMS算法去掉重复率较大的bounding box（NMS:针对某一类别，选择得分最大的bounding box，然后计算它和其它bounding box的IOU值，如果IOU大于0.5，说明重复率较大，该得分设为0，如果不大于0.5，则不改；这样一轮后，再选择剩下的score里面最大的那个bounding box，然后计算该bounding box和其它bounding box的IOU，重复以上过程直到最后）。最后每个bounding box的20个score取最大的score，如果这个score大于0，那么这个bounding box就是这个socre对应的类别（矩阵的行），如果小于0，说明这个bounding box里面没有物体，跳过即可。</p>
+<p><strong>网络设计</strong><br>灵感来源于GoogLeNet,如下图：<br><img src="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Object-detection-learning/3.png" alt="image"><br>训练过程中：</p>
+<ol>
+<li>作者先在ImageNet数据集上预训练网络，而且网络只采用图中的前面20个卷积层，输入是224*224大小的图像。然后在检测的时候再加上随机初始化的4个卷积层和2个全连接层，同时输入改为更高分辨率的448*448。</li>
+<li>Relu层改为leaky Relu，即当x&lt;0时，激活值是0.1*x，而不是传统的0。</li>
+<li>作者采用sum-squared error的方式把localization error（bounding box的坐标误差）和classificaton error整合在一起。但是如果二者的权值一致，容易导致模型不稳定，训练发散。因为很多grid cell是不包含物体的，这样的话很多grid cell的confidence score为0。所以采用设置不同权重方式来解决，一方面提高localization error的权重，另一方面降低没有object的box的confidence loss权值，loss权重分别是5和0.5。而对于包含object的box的confidence loss权值还是原来的1。</li>
+<li>用宽和高的开根号代替原来的宽和高，这样做主要是因为相同的宽和高误差对于小的目标精度影响比大的目标要大.</li>
+<li>Loss Function如下：<img src="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Object-detection-learning/4.png" alt="image"></li>
+</ol>
+<p>训练的时候：输入N个图像，每个图像包含M个objec，每个object包含4个坐标（x，y，w，h）和1个label。然后通过网络得到7*7*30大小的三维矩阵。每个1*30的向量前5个元素表示第一个bounding box的4个坐标和1个confidence，第6到10元素表示第二个bounding box的4个坐标和1个confidence。最后20个表示这个grid cell所属类别。注意这30个都是预测的结果。然后就可以计算损失函数的第一、二 、五行。至于第二三行，confidence可以根据ground truth和预测的bounding box计算出的IOU和是否有object的0,1值相乘得到。真实的confidence是0或1值，即有object则为1，没有object则为0。 这样就能计算出loss function的值了。</p>
+<p>测试的时候：输入一张图像，跑到网络的末端得到7*7*30的三维矩阵，这里虽然没有计算IOU，但是由训练好的权重已经直接计算出了bounding box的confidence。然后再跟预测的类别概率相乘就得到每个bounding box属于哪一类的概率。</p>
+<p><strong>YOLO效果</strong><br><img src="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Object-detection-learning/5.png" alt="image"><br>由于yolo更少的识别背景为物体对比Faster RCNN,因此结合YOLO作为背景检测器与Faster RCNN可以带来更大的提升，不过速度方面就没有优势了。</p>
+<h3 id="YOLO-V2-and-YOLO-9000"><a href="#YOLO-V2-and-YOLO-9000" class="headerlink" title="YOLO V2 and YOLO 9000"></a>YOLO V2 and YOLO 9000</h3><p><a href="https://arxiv.org/pdf/1612.08242.pdf" target="_blank" rel="noopener">论文地址</a></p>
+<p>与分类和标记等其他任务的数据集相比，目前目标检测数据集是有限的。最常见的检测数据集包含成千上万到数十万张具有成百上千个标签的图像。分类数据集有数以百万计的图像，数十或数十万个类别。为了扩大当前检测系统的范围。我们的方法使用目标分类的分层视图，允许我们将不同的数据集组合在一起。此外联合训练算法，使我们能够在检测和分类数据上训练目标检测器。我们的方法利用标记的检测图像来学习精确定位物体，同时使用分类图像来增加词表和鲁棒性。</p>
+<p><strong>对比YOLO V1的改进</strong></p>
+<ol>
+<li>YOLO有许多缺点。YOLO与Fast R-CNN相比的误差分析表明，YOLO造成了大量的定位误差。此外，与基于区域提出的方法相比，YOLO召回率相对较低。因此，我们主要侧重于提高召回率和改进定位，同时保持分类准确性。</li>
+<li><p>在YOLOv2中，一个更精确的检测器被设计出来，它仍然很快。但是不是通过扩大网络，而是简化网络，然后让其更容易学习。结合了以往的一些新方法，以提高YOLO的性能：</p>
+<ul>
+<li>Batch Normalization: map提升2%</li>
+<li>High Resolution Classifier: 先在ImageNet上以448×448的分辨率对分类网络进行10个迭代周期的微调。这给了网络时间来调整其滤波器以便更好地处理更高分辨率的输入。map提升4%,</li>
+<li>Convolutional With Anchor Boxes: 从YOLO中移除全连接层，并使用锚盒来预测边界框。首先，我们消除了一个池化层，使网络卷积层输出具有更高的分辨率。我们还缩小了网络，操作416×416的输入图像而不是448×448。我们这样做是因为我们要在我们的特征映射中有奇数个位置，所以只有一个中心单元。目标，特别是大目标，往往占据图像的中心，所以在中心有一个单独的位置来预测这些目标，而不是四个都在附近的位置是很好的。YOLO的卷积层将图像下采样32倍，所以通过使用416的输入图像，我们得到了13×13的输出特征映射。map有所下降但是召回率达到了88%.</li>
+<li>Dimension Clusters: Anchors 尺寸的选择用k-means聚类来挑选合适的锚盒尺寸。如果我们使用具有欧几里得距离的标准k-means，那么较大的边界框比较小的边界框产生更多的误差。然而，我们真正想要的是导致好的IOU分数的先验，这是独立于边界框大小的。因此，对于我们的距离度量，我们使用：$d(box,centroid)=1-IOU(box,centroid)$. 在voc和coco的测试中，更薄更高的边界框会带来更好的结果在k=5的时候，如图所示：<img src="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Object-detection-learning/6.png" alt="image"></li>
+<li>Direct location prediction: 传统的RPN中，特别是在早期的迭代过程中。大部分的不稳定来自预测边界框的(x,y)位置，他的位置修正方法是不受限制的，所以任何锚盒都可以在图像任一点结束，而不管在哪个位置预测该边界框。随机初始化模型需要很长时间才能稳定以预测合理的偏移量。所以这一步就优化为直接预测相对于网格单元位置的位置坐标。逻辑激活备用来限制网络的预测落在这个范围内。Sigmoid使输出在0~1之间这样映射到原图中时候不会位于其他的网格（在中心目标处）。<img src="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Object-detection-learning/7.png" alt="image">网络预测输出特征映射中每个单元的5个边界框。网络预测每个边界框的5个坐标，$t_{x}$,$t_{y}$,$t_{w}$,$t_{h}$,$t_{o}$,如果单元从图像的左上角偏移了$(c_{x},c_{y})$,并且边界框先验的宽度和高度为$p_{w}$,$p_{h}$. 预测就可以对应如图公式计算。$Pr(object)\times IOU(b,object)=\sigma(t_{o}) $ 该方法结合维度聚类，map 提升了5%对比与其他的锚盒方法。</li>
+<li>Fine-Grained Features(细粒度特征): 对于小目标物体，更细的力度特种可以带来更好的效果，因此直通层通过将相邻特征堆叠到不同的通道而不是空间位置来连接较高分辨率特征和较低分辨率特征，类似于ResNet中的恒等映射。这将26×26×512特征映射变成13×13×2048特征映射，其可以与原始特征连接。我们的检测器运行在这个扩展的特征映射的顶部，以便它可以访问细粒度的特征。这会使性能提高1%。</li>
+<li>Multi-Scale Training:  由于模型只使用卷积层和池化层，因此它可以实时调整大小。所以每隔10个批次会随机选择一个新的图像尺寸大小（330到608，从32的倍数中选择因为模型缩减了32倍），强迫网络学习在不同维度上预测，并且小尺度的网络运行更快。<img src="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Object-detection-learning/8.png" alt="image"></li>
+</ul>
+</li>
+<li><p>Darknet-19， 它有19个卷积层和5个最大池化层并且只需要55.8亿次运算处理图像获得了比复杂运算VGG和前一代YOLO更高的top-5精度在ImageNet上，结构如下：<br><img src="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Object-detection-learning/9.png" alt="image"></p>
+</li>
+<li>分类训练：使用Darknet神经网络结构，使用随机梯度下降，初始学习率为0.1，学习率多项式衰减系数为4，权重衰减为0.0005，动量为0.9，在标准ImageNet 1000类分类数据集上训练网络160个迭代周期。在训练过程中，标准的数据增强技巧，包括随机裁剪，旋转，色调，饱和度和曝光偏移被使用来防止over-fitting. 在在对224×224的图像进行初始训练之后，对网络在更大的尺寸448上进行了微调。</li>
+<li>检测训练：删除了最后一个卷积层，加上了三个具有1024个滤波器的3×3卷积层，其后是最后的1×1卷积层与我们检测需要的输出数量。对于VOC，我们预测5个边界框，每个边界框有5个坐标和20个类别，所以有125个滤波器。还添加了从最后的3×3×512层到倒数第二层卷积层的直通层，以便模型可以使用细粒度特征。</li>
+<li>联合训练分类和检测数据：<ul>
+<li>网络看到标记为检测的图像时，可以基于完整的YOLOv2损失函数进行反向传播。当它看到一个分类图像时，只能从该架构的分类特定部分反向传播损失。</li>
+<li>Hierarchical classification(分层分类)：ImageNet标签是从WordNet中提取的，这是一个构建概念及其相互关系的语言数据库，在这里通过构建简单的分层树简化问题。最终的结果是WordTree，一个视觉概念的分层模型。为了使用WordTree进行分类，我们预测每个节点的条件概率，以得到同义词集合中每个同义词下义词的概率。如果想要计算一个特定节点的绝对概率，只需沿着通过树到达根节点的路径，再乘以条件概率。可以使用WordTree以合理的方式将多个数据集组合在一起。只需将数据集中的类别映射到树中的synsets即可。<img src="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Object-detection-learning/10.png" alt="image"></li>
+<li>YOLO 9000（anchors尺寸3个限制输出大小）: 使用COCO检测数据集和完整的ImageNet版本中的前9000个类来创建的组合数据集。该数据集的相应WordTree有9418个类别。ImageNet是一个更大的数据集，所以通过对COCO进行过采样来平衡数据集，使得ImageNet仅仅大于4:1的比例。当分析YOLO9000在ImageNet上的表现时，发现它很好地学习了新的动物种类，但是却在像服装和设备这样的学习类别中挣扎。新动物更容易学习，因为目标预测可以从COCO中的动物泛化的很好。相反，COCO没有任何类型的衣服的边界框标签，只针对人，因此效果不好3</li>
+</ul>
+</li>
+</ol>
+<h3 id="YOLO-V3"><a href="#YOLO-V3" class="headerlink" title="YOLO V3"></a>YOLO V3</h3><p><a href="https://pjreddie.com/media/files/papers/YOLOv3.pdf" target="_blank" rel="noopener">论文地址</a></p>
+<p>改进：</p>
+<ol>
+<li>将YOLO V3替换了V2中的Softmax loss变成Logistic loss(每个类一个logistic)，而且每个GT只匹配一个先验框.</li>
+<li>Anchor bbox prior不同：V2用了5个anchor，V3用了9个anchor，提高了IOU.</li>
+<li>Detection的策略不同：V2只有一个detection，V3设置有3个，分别是一个下采样的，Feature map为13*13，还有2个上采样的eltwise sum(feature pyramid networks)，Feature map分别为26<em>\26和52\</em>52，也就是说，V3的416版本已经用到了52的Feature map，而V2把多尺度考虑到训练的data采样上，最后也只是用到了13的Feature map，这应该是对小目标影响最大的地方。<br>总结：<img src="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Object-detection-learning/11.png" alt="image"></li>
+<li>网络改进 DarkNet-53: 融合了YOLOv2、Darknet-19以及其他新型残差网络，由连续的3×3和1×1卷积层组合而成，当然，其中也添加了一些shortcut connection，整体体量也更大。因为一共有53个卷积层。<img src="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Object-detection-learning/12.png" alt="image"></li>
+<li>YOLO V3在Pascal Titan X上处理608x608图像速度达到20FPS，在 COCO test-dev 上 <a href="mailto:mAP@0.5" target="_blank" rel="noopener">mAP@0.5</a> 达到 57.9%，与RetinaNet的结果相近，并且速度快了4倍。  YOLO V3的模型比之前的模型复杂了不少，可以通过改变模型结构的大小来权衡速度与精度。  速度对比如下：<img src="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Object-detection-learning/13.png" alt="image"></li>
+<li>失败的尝试：<ul>
+<li>Anchor box坐标的偏移预测</li>
+<li>用线性方法预测x,y，而不是使用逻辑方法</li>
+<li>focal loss</li>
+<li>双IOU阈值和真值分配</li>
+</ul>
+</li>
+</ol>
+<h3 id="SSD-Single-Shot-MultiBox-Detector"><a href="#SSD-Single-Shot-MultiBox-Detector" class="headerlink" title="SSD: Single Shot MultiBox Detector"></a>SSD: Single Shot MultiBox Detector</h3><p><a href="https://arxiv.org/pdf/1512.02325.pdf" target="_blank" rel="noopener">论文地址</a></p>
+<p>SSD将边界框的输出空间离散化为不同长宽比的一组默认框和并缩放每个特征映射的位置。在预测时，网络会在每个默认框中为每个目标类别的出现生成分数，并对框进行调整以更好地匹配目标形状。此外，网络还结合了不同分辨率的多个特征映射的预测，自然地处理各种尺寸的目标。</p>
+<p><strong>改进</strong>:</p>
+<ol>
+<li>针对多个类别的单次检测器</li>
+<li>预测固定的一系列默认边界框的类别分数和边界框偏移，使用更小的卷积滤波器应用到特征映射上</li>
+<li>根据不同尺度的特征映射生成不同尺度的预测，并通过纵横比明确分开预测</li>
+<li>在低分辨率输入图像上也能实现简单的端到端训练和高精度，从而进一步提高速度与精度之间的权衡。</li>
+</ol>
+<p><strong>模型</strong>:<br><img src="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Object-detection-learning/15.png" alt="image"><br>SSD方法基于前馈卷积网络，该网络产生固定大小的边界框集合，并对这些边界框中存在的目标类别实例进行评分，然后进行非极大值抑制步骤来产生最终的检测结果。早期的网络层基于用于高质量图像分类的标准架构将其称为基础网络。然后，将辅助结构添加到网络中以产生具有以下关键特征的检测：</p>
+<ul>
+<li><strong>用于检测的多尺度特征映射</strong>。我们将卷积特征层添加到截取的基础网络的末端。这些层在尺寸上逐渐减小，并允许在多个尺度上对检测结果进行预测。用于预测检测的卷积模型对于每个特征层都是不同的</li>
+<li><strong>用于检测的卷积预测器</strong>。每个添加的特征层（或者任选的来自基础网络的现有特征层）可以使用一组卷积滤波器产生固定的检测预测集合。</li>
+<li><strong>默认边界框和长宽比</strong>。默认边界框与Faster R-CNN[2]中使用的锚边界框相似，但是我们将它们应用到不同分辨率的几个特征映射上。在几个特征映射中允许不同的默认边界框形状可以有效地离散可能的输出框形状的空间。<img src="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Object-detection-learning/16.png" alt="image"></li>
+<li>总结： 末尾添加的特征层预测不同尺度的长宽比的默认边界框的偏移量以及相关的置信度。PS: 空洞版本VGG更快。</li>
+</ul>
+<p><strong>训练</strong>：</p>
+<ol>
+<li><strong>匹配策略</strong>：默认边界框匹配到IOU重叠高于阈值（0.5）的任何实际边界框。这简化了学习问题，允许网络为多个重叠的默认边界框预测高分，而不是要求它只挑选具有最大重叠的一个边界框。</li>
+<li><strong>训练目标函数</strong>：定位损失加上置信度损失<img src="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Object-detection-learning/17.png" alt="image"></li>
+<li><strong>为默认边界框选择尺度和长宽比</strong>: <img src="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Object-detection-learning/18.png" alt="image"></li>
+<li><strong>难例挖掘</strong>: 在匹配步骤之后，大多数默认边界框为负例，尤其是当可能的默认边界框数量较多时。这在正的训练实例和负的训练实例之间引入了显著的不平衡。不使用所有负例，而是使用每个默认边界框的最高置信度损失来排序它们，并挑选最高的置信度，以便负例和正例之间的比例至多为3:1。</li>
+<li><strong>数据增强</strong><img src="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Object-detection-learning/20.png" alt="image"></li>
+<li><strong>小目标数据增强</strong>： 将图像随机放置在填充了平均值的原始图像大小为16x的画布上，然后再进行任意的随机裁剪操作。因为通过引入这个新的“扩展”数据增强技巧，有更多的训练图像，所以必须将训练迭代次数加倍。</li>
+</ol>
+<p><strong>优劣</strong>:<br>SSD对类似的目标类别（特别是对于动物）有更多的混淆，部分原因是共享多个类别的位置。SSD对边界框大小非常敏感。换句话说，它在较小目标上比在较大目标上的性能要差得多。这并不奇怪，因为这些小目标甚至可能在顶层没有任何信息。增加输入尺寸（例如从300×300到512×512）可以帮助改进检测小目标，但仍然有很大的改进空间。积极的一面，SSD在大型目标上的表现非常好。而且对于不同长宽比的目标，它是非常鲁棒的，因为使用每个特征映射位置的各种长宽比的默认框。</p>
+<h3 id="RetinaNet-Focal-Loss-for-Dense-Object-Detection"><a href="#RetinaNet-Focal-Loss-for-Dense-Object-Detection" class="headerlink" title="RetinaNet Focal Loss for Dense Object Detection"></a>RetinaNet Focal Loss for Dense Object Detection</h3><p><a href="https://arxiv.org/abs/1708.02002" target="_blank" rel="noopener">论文地址</a></p>
+<p><img src="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Object-detection-learning/32.png" alt="image"></p>
+<p>稠密分类的后者精度不够高，核心问题（central issus）是稠密proposal中前景和背景的极度不平衡。以我更熟悉的YOLO举例子，比如在PASCAL VOC数据集中，每张图片上标注的目标可能也就几个。但是YOLO V2最后一层的输出是13×13×5，也就是845个候选目标！大量（简单易区分）的负样本在loss中占据了很大比重，使得有用的loss不能回传回来。基于此，作者将经典的交叉熵损失做了变形（见下），给那些易于被分类的简单例子小的权重，给不易区分的难例更大的权重。同时，作者提出了一个新的one-stage的检测器RetinaNet，达到了速度和精度很好地trade-off。</p>
+<p>$FL(p_{t}=-(1-p_{t})^{\gamma}log(p_{t})$</p>
+<p><strong>Focal Loss</strong><br>Focal Loss从交叉熵损失而来。二分类的交叉熵损失如下：<br><img src="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Object-detection-learning/33.png" alt="image"></p>
+<p>对应的，多分类的交叉熵损失是这样的：</p>
+<p>$CE(p,y)=-log(p_{y})$</p>
+<p>因此可以使用添加权重的交叉熵损失：<br>$CE(p)=-\alpha_{t}log(p_{t})$</p>
+<p>而作者提出的是一个自适应调节的权重：(可加入权重$\alpha$平衡)</p>
+<p><strong>$FL(p_{t}=-(1-p_{t})^{\gamma}log(p_{t})$</strong></p>
+<p>Pytorch实现：</p>
+<p>$L=-\sum_{i}^{C}onehot\odot(1-p_{t})^{\gamma}log(p_{t})$</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">import</span> torch.nn <span class="keyword">as</span> nn</span><br><span class="line"><span class="keyword">import</span> torch.nn.functional <span class="keyword">as</span> F</span><br><span class="line"><span class="keyword">from</span> torch.autograd <span class="keyword">import</span> Variable</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">one_hot</span><span class="params">(index, classes)</span>:</span></span><br><span class="line">    size = index.size() + (classes,)</span><br><span class="line">    view = index.size() + (<span class="number">1</span>,)</span><br><span class="line">    mask = torch.Tensor(*size).fill_(<span class="number">0</span>)</span><br><span class="line">    index = index.view(*view)</span><br><span class="line">    ones = <span class="number">1.</span></span><br><span class="line">    <span class="keyword">if</span> isinstance(index, Variable):</span><br><span class="line">        ones = Variable(torch.Tensor(index.size()).fill_(<span class="number">1</span>))</span><br><span class="line">        mask = Variable(mask, volatile=index.volatile)</span><br><span class="line">    <span class="keyword">return</span> mask.scatter_(<span class="number">1</span>, index, ones)</span><br><span class="line">    </span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">FocalLoss</span><span class="params">(nn.Module)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, gamma=<span class="number">0</span>, eps=<span class="number">1e-7</span>)</span>:</span></span><br><span class="line">        super(FocalLoss, self).__init__()</span><br><span class="line">        self.gamma = gamma</span><br><span class="line">        self.eps = eps</span><br><span class="line">        </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">forward</span><span class="params">(self, input, target)</span>:</span></span><br><span class="line">        y = one_hot(target, input.size(<span class="number">-1</span>))</span><br><span class="line">        logit = F.softmax(input)</span><br><span class="line">        logit = logit.clamp(self.eps, <span class="number">1.</span> - self.eps)</span><br><span class="line">        loss = <span class="number">-1</span> * y * torch.log(logit) <span class="comment"># cross entropy</span></span><br><span class="line">        loss = loss * (<span class="number">1</span> - logit) ** self.gamma <span class="comment"># focal loss</span></span><br><span class="line">        <span class="keyword">return</span> loss.sum()</span><br></pre></td></tr></table></figure>
+<p><strong>模型</strong>:</p>
+<ol>
+<li>模型初始化： 对于一般的分类网络，初始化之后，往往其输出的预测结果是均等的（随机猜测）。然而作者认为，这种初始化方式在类别极度不均衡的时候是有害的。作者提出，应该初始化模型参数，使得初始化之后，模型输出稀有类别的概率变小（如0.01），作者发现这种初始化方法对于交叉熵损失和Focal Loss的性能提升都有帮助。首先，从imagenet预训练得到的base net不做调整，新加入的卷积层权重均初始化为$\sigma$=0.01的高斯分布，偏置项为0.对于分类网络的最后一个卷积层，偏置项为$b=-log(\frac{(1-\pi)}{\pi})$, $\pi$是一个超参数，其意义是在训练的初始阶段，每个anchor被分类为前景的概率。<br><img src="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Object-detection-learning/34.png" alt="image"></li>
+</ol>
+<p>作者利用前面介绍的发现和结论，基于ResNet和Feature Pyramid Net（FPN）设计了一种新的one-stage检测框架.RetinaNet 是由一个骨干网络和两个特定任务子网组成的单一网络。骨感网络负责在整个输入图像上计算卷积特征图，并且是一个现成的卷积网络。</p>
+<ul>
+<li>第一个子网在骨干网络的输出上执行卷积对象分类(small FCN attached to each FPN level)子网的参数在所有金字塔级别共享</li>
+<li>第二个子网执行卷积边界框回归(attach another samll FCN to each pyramid level)</li>
+<li>对象分类子网和框回归子网，尽管共享一个共同的结构，使用单独的参数。</li>
+</ul>
+<p>Anchors:<br>在金字塔等级P3到P7上，锚点的面积分别为$32^{2}$到$512^{2}$, 使用的长宽比为[1:2,1:1,2:1]. 对于更密集的比例覆盖，每个级别添加锚点的尺寸$[2^{0},2^{\frac{1}{3}},2^{\frac{1}{2}}]$</p>
+<p>IOU:<br>[0,0.4)的为背景，[0.4,0.5)的忽略，大于0.5的为前景</p>
+<h2 id="Two-Stage"><a href="#Two-Stage" class="headerlink" title="Two Stage"></a>Two Stage</h2><h3 id="R-FCN-Object-Detection-via-Region-based-Fully-Convolutional-Networks"><a href="#R-FCN-Object-Detection-via-Region-based-Fully-Convolutional-Networks" class="headerlink" title="R-FCN Object Detection via Region-based Fully Convolutional Networks"></a>R-FCN Object Detection via Region-based Fully Convolutional Networks</h3><p><a href="https://link.jianshu.com/?t=https%3A%2F%2Farxiv.org%2Fpdf%2F1605.06409.pdf" target="_blank" rel="noopener">论文地址</a></p>
+<p>R-FCN 通过添加 Position-sensitive score map 解决了把 ROI pooling 放到网络最后一层降低平移可变性的问题，以此改进了 Faster R-CNN 中检测速度慢的问题。</p>
+<p>PS: </p>
+<ul>
+<li><p>分类需要特征具有平移不变性，检测则要求对目标的平移做出准确响应。论文中作者给了测试的数据：ROI放在ResNet-101的conv5后，mAP是68.9%；ROI放到conv5前（就是标准的Faster R-CNN结构）的mAP是76.4%，差距是巨大的，这能证明平移可变性对目标检测的重要性。</p>
+</li>
+<li><p>Faster R-CNN检测速度慢的问题，速度慢是因为ROI层后的结构对不同的proposal是不共享的，试想下如果有300个proposal，ROI后的全连接网络就要计算300次, 非常耗时。</p>
+</li>
+</ul>
+<p><strong>模型</strong>：<br><img src="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Object-detection-learning/19.png" alt="image"></p>
+<ul>
+<li>Backbone architecture: ResNet-101有100个卷积层，后面是全局平均池化和1000类的全连接层。删除了平均池化层和全连接层，只使用卷积层来计算特征映射。最后一个卷积块是2048维，附加一个随机初始化的1024维的1×1卷积层来降维</li>
+<li>$k^{2}(C+1)$Conv: ResNet101的输出是W*H*1024，用$k^{2}(C+1)$个1024*1*1的卷积核去卷积即可得到$k^{2}(C+1)$个大小为W*H的position sensitive的score map。这步的卷积操作就是在做prediction。k = 3，表示把一个ROI划分成3*3，对应的9个位置</li>
+<li>ROI pooling: 一层的SPP结构。主要用来将不同大小的ROI对应的feature map映射成同样维度的特征<img src="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Object-detection-learning/21.png" alt="image"></li>
+<li>Vote:k*k个bin直接进行求和（每个类单独做）得到每一类的score，并进行softmax得到每类的最终得分，并用于计算损失<img src="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Object-detection-learning/22.png" alt="image"></li>
+</ul>
+<p><strong>训练</strong>:</p>
+<ul>
+<li>损失函数： $L(s,t_{x,y,w,h})=L_{cls}(s_{c^{\star}}+ \lambda [c^{\star}&gt;0]L_{reg}(t,t^{\star})$<br>将正样本定义为与真实边界框IOU至少为0.5的ROI，否则为负样本</li>
+<li>在线难例挖掘（<strong>OHEM</strong>): 其主要考虑训练样本集总是包含较多easy examples而相对较少hard examples，而自动选择困难样本能够使得训练更为有效，此外还有：S-OHEM: Stratified Online Hard Example Mining for Object Detection. <strong>S-OHEM</strong> 利用OHEM和stratified sampling技术。其主要考虑OHEM训练过程忽略了不同损失分布的影响，因此S-OHEM根据分布抽样训练样本。A-Fast-RCNN: Hard positive generation via adversary for object detection从更好的利用数据的角度出发，OHEM和S-OHEM都是发现困难样本，而A-Fast-RCNN的方法则是通过<strong>GAN</strong>的方式在特征空间产生具有部分遮挡和形变的困难样本。</li>
+<li><strong>空洞和步长</strong>:我们的全卷积架构享有FCN广泛使用的语义分割的网络修改的好处。特别的是，将ResNet-101的有效步长从32像素降低到了16像素，增加了分数图的分辨率。第一个conv5块中的stride=2操作被修改为stride=1，并且conv5阶段的所有卷积滤波器都被“hole algorithm” 修改来弥补减少的步幅.</li>
+</ul>
+<p><strong>位置敏感分数图</strong>：<br>我们可以想想一下这种情况，M 是一个 5*5 大小，有一个蓝色的正方形物体在其中的特征图，我们将方形物体平均分割成 3*3 的区域。现在我们从 M 中创建一个新的特征图并只用其来检测方形区域的左上角。这个新的特征图如下右图，只有黄色网格单元被激活<img src="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Object-detection-learning/23.png" alt="image"></p>
+<p>因为我们将方形分为了 9 个部分，我们可以创建 9 张特征图分别来检测对应的物体区域。因为每张图检测的是目标物体的子区域，所以这些特征图被称为位置敏感分数图（position-sensitive score maps）。<img src="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Object-detection-learning/24.png" alt="image"><br>比如，我们可以说，下图由虚线所画的红色矩形是被提议的 ROIs 。我们将其分为 3*3 区域并得出每个区域可能包含其对应的物体部分的可能性。我们将此结果储存在 3*3 的投票阵列（如下右图）中。比如，投票阵列 [0][0] 中数值的意义是在此找到方形目标左上区域的可能性。<img src="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Object-detection-learning/25.png" alt="image"><br>将分数图和 ROIs 映射到投票阵列的过程叫做位置敏感 ROI 池化（position-sensitive ROI-pool）。<br><img src="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Object-detection-learning/26.png" alt="image"><br>在计算完位置敏感 ROI 池化所有的值之后，分类的得分就是所有它元素的平均值<br><img src="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Object-detection-learning/27.png" alt="image"><br>如果说我们有 C 类物体需要检测。我们将使用 C+1个类，因为其中多包括了一个背景（无目标物体）类。每类都分别有一个 3×3 分数图，因此一共有 (C+1)×3×3 张分数图。通过使用自己类别的那组分数图，我们可以预测出每一类的分数。然后我们使用 softmax 来操作这些分数从而计算出每一类的概率。</p>
+<h3 id="FPN-Feature-Pyramid-Networks-for-Object-Detection"><a href="#FPN-Feature-Pyramid-Networks-for-Object-Detection" class="headerlink" title="FPN Feature Pyramid Networks for Object Detection"></a>FPN Feature Pyramid Networks for Object Detection</h3><p><a href="http://openaccess.thecvf.com/content_cvpr_2017/papers/Lin_Feature_Pyramid_Networks_CVPR_2017_paper.pdf" target="_blank" rel="noopener">论文地址</a></p>
+<p><img src="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Object-detection-learning/28.png" alt="image"></p>
+<p>a. 通过缩放图片获取不同尺度的特征图</p>
+<p>b. ConvNET</p>
+<p>c. 通过不同特征分层</p>
+<p>d. FPN</p>
+<p>特征金字塔网络FPN，网络直接在原来的单网络上做修改，每个分辨率的 feature map 引入后一分辨率缩放两倍的 feature map 做 element-wise 相加的操作。通过这样的连接，每一层预测所用的 feature map 都融合了不同分辨率、不同语义强度的特征，融合的不同分辨率的 feature map 分别做对应分辨率大小的物体检测。这样保证了每一层都有合适的分辨率以及强语义特征。同时，由于此方法只是在原网络基础上加上了额外的跨层连接，在实际应用中几乎不增加额外的时间和计算量。</p>
+<p><strong>FPN</strong>:<br><img src="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Object-detection-learning/29.png" alt="image"></p>
+<ol>
+<li>图中feature map用蓝色轮廓表示，较粗的表示语义上较强特征</li>
+<li>采用的bottom-up 和 top-down 的方法， bottom-up这条含有较低级别的语义但其激活可以更精确的定位因为下采样的次数更少。 Top-down的这条路更粗糙但是语义更强。</li>
+<li>top-down的特征随后通过bottom-up的特征经由横向连接进行增强如图，使用较粗糙分辨率的特征映射时候将空间分辨率上采样x2倍。bottom-up的特征要经过1x1卷积层来生成最粗糙分辨率映射。</li>
+<li>每个横向连接合并来自自下而上路径和自顶向下路径的具有相同空间大小的特征映射。<br><img src="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Object-detection-learning/30.png" alt="image"></li>
+</ol>
+<p><strong>RPN结合FPN</strong></p>
+<ol>
+<li>通过用FPN替换单尺度特征映射来适应RPN。在特征金字塔的每个层级上附加一个相同设计的头部（3x3 conv（目标/非目标二分类和边界框回归）和 两个1x1convs（分类和回归））由于头部在所有金字塔等级上的所有位置密集滑动，所以不需要在特定层级上具有多尺度锚点。相反，为每个层级分配单尺度的锚点。定义锚点$[P_{2},P_{3},P_{4},P_{5},P_{6}]$分别具有$[32^{2},64^{2},128^{2},256^{2},512^{2}]$个像素 面积，以及多个长宽比{1:2,1:1,2:1}所以总共15个锚点在金字塔上。</li>
+<li>其余同RPN网络</li>
+<li>不同的尺度ROI用不同层的特征，每个box根据公式计算后提取其中某一层特征图对应的特征ROI，大尺度就用后面一些的金字塔层（P5），小尺度就用前面一点的层（P4）<br>可根据公式：$k=[k_{0}+log_{2}(\frac{\sqrt{wh}}{224}]$ 计算需要哪一层的特征<br><img src="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Object-detection-learning/31.png" alt="image"></li>
+</ol>
+<h3 id="Light-Head-R-CNN-In-Defense-of-Two-Stage-Object-Detector"><a href="#Light-Head-R-CNN-In-Defense-of-Two-Stage-Object-Detector" class="headerlink" title="Light-Head R-CNN: In Defense of Two-Stage Object Detector"></a>Light-Head R-CNN: In Defense of Two-Stage Object Detector</h3><p><a href="https://arxiv.org/abs/1711.07264" target="_blank" rel="noopener">论文地址</a></p>
+<p>two-stage 的方法在本身的一个基础网络上都会附加计算量很大的一个用于 classification+regression 的网络，导致速度变慢</p>
+<ul>
+<li>Faster R-CNN: two fully connected layers for RoI recognition</li>
+<li>R-FCN: produces a large score maps.</li>
+</ul>
+<p>因此，作者为了解决 detection 的速度问题，提出了一种新的 two-stage detector，就是Light-Head R-CNN。速度和准确率都有提升。Light-Head R-CNN 重点是 head 的结构设计。包括两部分： R-CNN subnet（ROI pooling 之后的network） 和ROI warping。</p>
+<p><img src="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Object-detection-learning/35.png" alt="image"></p>
+<p><strong>方法</strong></p>
+<ul>
+<li><strong>Thin feature map</strong>: <img src="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Object-detection-learning/36.png" alt="image">降低进入head部分feature map的channel数也就是将r-fcn的score map从$P\times P(C+1)$减小到$P\times P\times \alpha$，$\alpha$是一个与类别数无关且较小的值，比如10。这样，score map的channel数与类别数无关，使得后面的分类不能像r-fcn那样vote，于是在roi pooling之后添加了一个fc层进行预测类别和位置。</li>
+<li><strong>Large separable convolution</strong>: </li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Object-detection-learning/38.png" alt="image"><img src="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Object-detection-learning/39.png" alt="image">  </p>
+<ul>
+<li><strong>Cheap R-CNN</strong>: <img src="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Object-detection-learning/37.png" alt="image"> </li>
+</ul>
+<p><strong>模型</strong>：</p>
+<ul>
+<li><strong>Large</strong>: (1) ResNEt-101; (2) atrous algorithm; (3) RPN chanels 512; (4) Large separable convolution with $C_{mid}=256$</li>
+<li><strong>Small</strong>: (1) Xception like; (2) abbandon atrous algorithm; (3) RPN convolution to 256; (4) Large separable convolution with $C_{mid}=64$; (5) Apply PSPooling with alignment techniques as RoI warping(better results involve RoI-align).</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>兴趣使然</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>Donate</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechat-reward-image.jpg" alt="Junming Zhang WeChat Pay">
+        <p>WeChat Pay</p>
+      </div>
+    
+
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Deep-Learning/" rel="tag"># Deep Learning</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/11/12/LInux/" rel="next" title="Ubuntu">
+                <i class="fa fa-chevron-left"></i> Ubuntu
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/11/26/MalongTech-Learning-Image-Segmentation/" rel="prev" title="MalongTech 学习内容:图像分割-2D">
+                MalongTech 学习内容:图像分割-2D <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        
+  <div class="bdsharebuttonbox">
+    <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+    <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+    <a href="#" class="bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+    <a href="#" class="bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+    <a href="#" class="bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+    <a class="bds_count" data-cmd="count"></a>
+  </div>
+  <script>
+    window._bd_share_config = {
+      "common": {
+        "bdText": "",
+        "bdMini": "2",
+        "bdMiniList": false,
+        "bdPic": ""
+      },
+      "share": {
+        "bdSize": "32",
+        "bdStyle": "0"
+      },
+
+    }
+  </script>
+
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zNjA1NS8xMjU5MA=="></div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/avatar.gif" alt="Junming Zhang">
+          <p class="site-author-name" itemprop="name">Junming Zhang</p>
+           
+              <p class="site-description motion-element" itemprop="description">Someting for Noting</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/Trouble404" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://weibo.com/2173518995/profile?topnav=1&wvr=6&is_all=1" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                    
+                      Weibo
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="mailto:junming.zhang84@gmail.com" target="_blank" title="E-Mail">
+                  
+                    <i class="fa fa-fw fa-envelope"></i>
+                  
+                    
+                      E-Mail
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.instagram.com/lebron_kami/" target="_blank" title="Instagram">
+                  
+                    <i class="fa fa-fw fa-instagram"></i>
+                  
+                    
+                      Instagram
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Object-detection"><span class="nav-number">1.</span> <span class="nav-text">Object detection</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#One-Stage"><span class="nav-number">1.1.</span> <span class="nav-text">One Stage</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#YOLO-V1"><span class="nav-number">1.1.1.</span> <span class="nav-text">YOLO V1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#YOLO-V2-and-YOLO-9000"><span class="nav-number">1.1.2.</span> <span class="nav-text">YOLO V2 and YOLO 9000</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#YOLO-V3"><span class="nav-number">1.1.3.</span> <span class="nav-text">YOLO V3</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SSD-Single-Shot-MultiBox-Detector"><span class="nav-number">1.1.4.</span> <span class="nav-text">SSD: Single Shot MultiBox Detector</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RetinaNet-Focal-Loss-for-Dense-Object-Detection"><span class="nav-number">1.1.5.</span> <span class="nav-text">RetinaNet Focal Loss for Dense Object Detection</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Two-Stage"><span class="nav-number">1.2.</span> <span class="nav-text">Two Stage</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#R-FCN-Object-Detection-via-Region-based-Fully-Convolutional-Networks"><span class="nav-number">1.2.1.</span> <span class="nav-text">R-FCN Object Detection via Region-based Fully Convolutional Networks</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#FPN-Feature-Pyramid-Networks-for-Object-Detection"><span class="nav-number">1.2.2.</span> <span class="nav-text">FPN Feature Pyramid Networks for Object Detection</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Light-Head-R-CNN-In-Defense-of-Two-Stage-Object-Detector"><span class="nav-number">1.2.3.</span> <span class="nav-text">Light-Head R-CNN: In Defense of Two-Stage Object Detector</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Junming Zhang</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Gemini
+  </a>
+</div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("OCX7qN1ae9flChFhUYTRGsS8-gzGzoHsz", "iUTQuhaKI2lh81hnVNhGbHDd");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>
