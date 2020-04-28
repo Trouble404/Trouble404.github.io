@@ -90,5 +90,5 @@ disqus_shortname: zhangjunming
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
   type: git
-  repository: git@github.com:Trouble404/Trouble404.github.io
+  repository: https://gh_token@github.com/Trouble404/Trouble404.github.io.git
   branch: master
