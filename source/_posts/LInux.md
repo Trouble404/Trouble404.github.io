@@ -186,6 +186,7 @@ tar xzvf TensorRT-${version}.${os}.${arch}-gnu.${cuda}.${cudnn}.tar.gz
 4. 添加环境变量
 ```
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:<TensorRT-${version}/lib>
+export LIBRARY_PATH=$LIBRARY_PATH:<TensorRT-${version}/lib>
 ```
 5. 安装
 ```
