@@ -7,6 +7,99 @@ categories: System
 
 ## Ubuntu 配置
 
+### NVIDIA驱动
+1. 驱动删除
+```
+sudo apt --purge autoremove nvidia*
+```
+
+2. 驱动安装
+```
+sudo add-apt-repository ppa:graphics-drivers/ppa
+sudo apt update
+sudo apt upgrade
+ubuntu-drivers list
+sudo apt install nvidia-driver-VERSION_NUMBER_HERE
+```
+
+Reboot your computer so that the new driver is loaded.
+
+
+### CUDA+Cudnn
+1. 下载对应驱动版本的cuda以及cudnn
+2. 安装cuda后配置环境变量
+3. 把cudnn对应文件移入 /usr/local/cuda/ 中
+
+
+### Vim
+1. 升级vim到8.0以上
+
+2. 下载Vundl管理插件
+```
+git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+```
+
+3. 配置 .vimrc
+```bash
+vim  ~/.vimrc
+
+set nocompatible              " be iMproved, required
+filetype off                  " required
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+Plugin 'VundleVim/Vundle.vim'
+Plugin 'tpope/vim-fugitive'
+Plugin 'git://git.wincent.com/command-t.git'
+Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
+Plugin 'davidhalter/jedi-vim'
+call vundle#end()            " required
+filetype plugin indent on    " required
+let g:jedi#completions_enabled = 1
+set backspace=indent,eol,start
+" 设置utf8编码
+set fileencodings=utf-8,gbk,cp936
+set fileencoding=utf-8
+set encoding=utf-8
+set termencoding=utf-8
+" 设置标签栏
+set showtabline=2
+
+" 去除启动界面
+set shortmess=atI
+
+" 设置帮助信息为中文
+set helplang=cn
+
+" 设置自动对齐
+set autoindent
+set smartindent
+
+" 设置c系缩进方式
+set cindent
+set tabstop=4
+
+" 空格替换Tab
+set expandtab
+set shiftwidth=4
+set softtabstop=4
+set smarttab
+
+" 增强命令补全
+set wildmenu
+" 设置语法高亮
+syntax enable
+"
+" 显示行数
+" set nu
+```
+
+3. 安装插件
+```
+vim ~/.vimrc
+:PluginInstall ##插入模式下输入
+```
+
+
 ### Anaconda3
 [官网下载安装包](https://www.anaconda.com/download/#linux)  
 **For Linux Installer**<!-- more -->
@@ -48,29 +141,27 @@ anaconda-navigator
 ### Anaconda环境管理
 **断开VPN!!!**
 
-1. 创建新环境```
-conda create -n pytorch python=3.5
+1. 创建新环境(自定义python版本)
+```
+conda create -n pytorch python=3.7
 ```
 
-2. 启动环境```
+2. 启动环境
+```
 source activate pytorch
 ```
 
-3. 安装Pytorch以及torchvision [具体版本命令网址](https://pytorch.org/)```
-conda install pytorch-cpu torchvision-cpu -c pytorch
+3. 关联环境到Jupyter-Notebook 
+```
+conda install ipykernel
 ```
 
-4. 关联环境到Jupyter-Notebook 
-```
-conda install nb_conda
-```
-
-### 切换国内源
+#### 切换国内源
 1. 升级pip>10.0
 ```
 pip install -i https://pypi.tuna.tsinghua.edu.cn/simple pip -U
 ```
-2. 设置
+2. 设置清华源作为镜像
 ```
 pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
 ```
@@ -81,11 +172,43 @@ conda config --add channels 'https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/
 conda config --set show_channel_urls yes
 ```
 
+### Pytorch
+1. 各个pytorch以及torchvision版本地址 [here](https://download.pytorch.org/whl/torch_stable.html)
 
 
+### TensorRT
+1. 下载对应版本tensorrt(cuda, cudnn, linux)
+2. 进入conda虚拟环境
+3. 解压
+```
+tar xzvf TensorRT-${version}.${os}.${arch}-gnu.${cuda}.${cudnn}.tar.gz
+```
+4. 添加环境变量
+```
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:<TensorRT-${version}/lib>
+```
+5. 安装
+```
+cd TensorRT-${version}/python
+pip install tensorrt-*-cp3x-none-linux_x86_64.whl
+cd TensorRT-${version}/graphsurgeon
+pip install graphsurgeon-0.4.4-py2.py3-none-any.whl
+```
+6. 重启虚拟环境
+```
+source ~/.bashrc
+```
 
-
-
-
-
-
+7. tensorrt bug记录
+---
+```
+Assertion failed: !_importer_ctx.network()->hasImplicitBatchDimension() && "This version of the ONNX parser only supports TensorRT INetworkDefinitions with an explicit batch dimension. Please ensure t
+he network was created using the EXPLICIT_BATCH NetworkDefinitionCreationFlag."
+```
+build trt enginn时候设定 EXPLICIT_BATCH
+```python
+EXPLICIT_BATCH = 1 << (int)(trt.NetworkDefinitionCreationFlag.EXPLICIT_BATCH)
+builder = trt.Builder()
+network = builder.create_network(EXPLICIT_BATCH)
+```
+---
