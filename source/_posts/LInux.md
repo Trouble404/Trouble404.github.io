@@ -100,6 +100,19 @@ vim ~/.vimrc
 ```
 
 
+### Tmux
+1. 安装
+```
+sudo apt-get install tmux
+```
+
+2. tmux 内无法连接X
+```
+set-option -g update-environment "SSH_ASKPASS SSH_AUTH_SOCK SSH_AGENT_PID SSH_CONNECTION WINDOWID XAUTHORITY"
+```
+上面命令放到 tmux.conf 中
+
+
 ### Anaconda3
 [官网下载安装包](https://www.anaconda.com/download/#linux)  
 **For Linux Installer**<!-- more -->
