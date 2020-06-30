@@ -10,6 +10,7 @@ categories: My Life
 
 <iframe width="731" height="411" src="https://www.youtube.com/embed/-fFqguvUmwM" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 
+<!-- more -->
 ## BiliBili Source
 [【四月是你的谎言】你还会记得吗](https://www.bilibili.com/video/av2113169/)
 
@@ -21,7 +22,7 @@ categories: My Life
 </center>
 
 ![image](https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/YourLieInApril/1.png)
-<!-- more -->
+
 ![image](https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/YourLieInApril/2.png)
 
 ![image](https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/YourLieInApril/3.png)

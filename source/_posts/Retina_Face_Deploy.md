@@ -14,6 +14,8 @@ Project Adress: https://github.com/wang-xinyu/tensorrtx
 
 Project Adress: https://github.com/wang-xinyu/Pytorch_Retinaface
 
+<!-- more -->
+
 #### Deploy
 
 1. generate retinaface.wts from pytorch

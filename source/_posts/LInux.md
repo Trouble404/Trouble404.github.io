@@ -24,7 +24,7 @@ sudo apt install nvidia-driver-VERSION_NUMBER_HERE
 
 Reboot your computer so that the new driver is loaded.
 
-
+<!-- more -->
 ### CUDA+Cudnn
 1. 下载对应驱动版本的cuda以及cudnn
 2. 安装cuda后配置环境变量
@@ -115,7 +115,7 @@ set-option -g update-environment "SSH_ASKPASS SSH_AUTH_SOCK SSH_AGENT_PID SSH_CO
 
 ### Anaconda3
 [官网下载安装包](https://www.anaconda.com/download/#linux)  
-**For Linux Installer**<!-- more -->
+**For Linux Installer**
 
 打开命令行
 1. /path/filename 替换为安装包路径

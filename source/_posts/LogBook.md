@@ -5,9 +5,9 @@ tags: [Deep Learning, Object Detection]
 categories: Msc Project
 ---
 
+<!-- more -->
 ## Gantt chart
 ![image](https://raw.githubusercontent.com/Trouble404/Object-Detection-System-Based-on-CNN-and-Capsule-Network/master/Project%20Plan/gantt%20chart%20of%20project.PNG)
-<!-- more -->
 ---
 
 ## Check list
