@@ -226,3 +226,17 @@ builder = trt.Builder()
 network = builder.create_network(EXPLICIT_BATCH)
 ```
 ---
+
+### OpenCV
+1. 安装
+```
+git clone https://github.com/opencv/opencv.git
+cd opencv
+mkdir release
+cd release
+cmake -D CMAKE_BUILD_TYPE=RELEASE -D CMAKE_INSTALL_PREFIX=/usr/local ..
+sudo make
+sudo make install
+sudo /bin/bash -c 'echo "/usr/local/lib" > /etc/ld.so.conf.d/opencv.conf'  
+sudo ldconfig
+```
