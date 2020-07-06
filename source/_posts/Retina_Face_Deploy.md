@@ -14,9 +14,65 @@ Project Adress: https://github.com/wang-xinyu/tensorrtx
 
 Project Adress: https://github.com/wang-xinyu/Pytorch_Retinaface
 
+### Jetson AGX Xavier
+
+Deploy: https://developer.nvidia.com/embedded/jetson-agx-xavier-developer-kit
+
 <!-- more -->
 
-#### Deploy
+### Xavier Jetpack 4.4DP
+
+#### JetPack 4.4 components:
+
+* L4T R32.4.2
+* **CUDA 10.2**
+* **cuDNN 8.0.0 (Developer Preview)**
+* **TensorRT 7.1.0 (Developer Preview)**
+* VisionWorks 1.6
+* **OpenCV 4.1**
+* Vulkan 1.2
+* VPI 0.2.0 (Developer Preview)
+* Nsight Systems 2020.2
+* Nsight Graphics 2020.1
+* Nsight Compute 2019.3
+
+#### 通过sdk-manager刷机
+
+```
+mkdir -p ~/sdkmanager 
+cd ~/sdkmanager
+下载 sdkmanager_1.1.0-6343_amd64.deb
+cd ~/sdkmanager 
+sudo apt install ./sdkmanager_1.1.0-6343_amd64.deb
+sdkmanager
+```
+
+选择对应xavier型号安装jetpack 4.4环境，选择离线安装(多Retry几次)
+
+手动方式就需要自己动手进入recovery模式：
+0. 给xavier插上网线
+1. 用原装usb先将host与Xavier连接，还要注意是连接**电源灯**旁边的插口(lsusb可以查看到NVidia Corp)；
+2. 确保连接电源并保持Xavier为关闭状态；
+3. 按住中间的按键（Force Recovery）不松手；
+4. 按住左边的电源（Power）不松手；
+5. 过一两秒，同时松手。
+6. 安装完第一部分后配置xavier的ubantu系统
+7. 完成剩余的安装
+8. ifconfig 查看地址
+
+
+#### 查看Xavier性能
+```
+tegrastats
+```
+
+or jetson monitor script
+https://github.com/rbonghi/jetson_stats
+
+PS: 测试TensorRT性能时需要跑多次测试
+
+
+### Retina Face TensorRTX compile
 
 1. generate retinaface.wts from pytorch
 
@@ -70,7 +126,7 @@ endif()
 
 # appends some common paths
 set(_TensorRT_SEARCH_NORMAL
-    PATHS "/home/MALONGAD/riczhang/TensorRT-7.0.0.11"
+    PATHS "/usr/src/tensorrt/" # or custom tensorrt path
 )
 list(APPEND _TensorRT_SEARCHES _TensorRT_SEARCH_NORMAL)
 
@@ -169,3 +225,8 @@ target_link_libraries(retina_50 ${CUDA_LIBRARIES})
 
 add_definitions(-O2 -pthread)
 ```
+
+4. Performance
+Xavier:
+Input IMG Size(768, 1344)
+Speed: 102ms/per img
