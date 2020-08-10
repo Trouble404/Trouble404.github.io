@@ -7,7 +7,7 @@ categories: 实习
 
 # 论文阅读 - Semantic Soft Segmentation
 
-<center>![image](https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Semantic-soft-Segmentation/1.png)</center>
+<center>![image](https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/Semantic-soft-Segmentation/1.png)</center>
 
 ---
 
@@ -59,12 +59,12 @@ $$\sum_{i}\alpha_{i}=1$$
 
 输入图片的 RGB 像素可以表示为每一层中的像素值与对应的 alpha 值的加权和.
 
-<center>![image](https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Semantic-soft-Segmentation/2.png)</center>
+<center>![image](https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/Semantic-soft-Segmentation/2.png)</center>
 
 ### 1\. 低层特征构建 - Nonlocal Color Affinity
 
 构建低层次的仿射关系项，以表示基于颜色的像素间较大范围的关联性特征. Nonloal Color Affinity可以提升分解恢复过程中isolated的区域的效果。
-<center>![image](https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Semantic-soft-Segmentation/3.png)</center>
+<center>![image](https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/Semantic-soft-Segmentation/3.png)</center>
 
 主要构建过程：
 1. 采用 SLIC(超像素分割) 生成 2500 个超像素;
@@ -75,7 +75,7 @@ $$\sum_{i}\alpha_{i}=1$$
 虽然 nonlocal color affinity 添加了像素间大范围间的相互作用关系，但仍是低层特征.
 这里构建高层语义仿射关系项，以使得属于同一场景物体的像素尽可能的接近，不同场景物体的像素间的关系远离.
 
-<center>![image](https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Semantic-soft-Segmentation/4.png)</center>
+<center>![image](https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/Semantic-soft-Segmentation/4.png)</center>
 
 ### 3\. 图像层创建 - Creating the Layers
 
@@ -85,7 +85,7 @@ $$\sum_{i}\alpha_{i}=1$$
 3. 受约束的稀疏化(Constrained sparsification)
 3. 松弛的稀疏化(Relaxed sparsification)
 
-<center>![image](https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Semantic-soft-Segmentation/5.png)</center>
+<center>![image](https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/Semantic-soft-Segmentation/5.png)</center>
 
 ### 4\. 语义特征向量 - Semantic Feature Vectors
 在高层特征构建时，相同物体的像素的特征向量相似，不同物体的像素的特征向量不同.
@@ -93,7 +93,7 @@ $$\sum_{i}\alpha_{i}=1$$
 
 这里采用了 DeepLab-ResNet-101 作为特征提取器，但网络训练是采用的是度量学习方法，最大化不同物体的特征间的 L2 距离(稍微修改了 N-Pair loss).
 
-<center>![image](https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Semantic-soft-Segmentation/6.png)</center>
+<center>![image](https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/Semantic-soft-Segmentation/6.png)</center>
 
 ### 5\. 个人看法
 使用了底层特征和高层特征(包括deep learning)产生的语义特征构建的拉普拉斯矩阵的特征分解创建了精细的图层来聚类区分最大可能的前景和背景。分割的效果特别不错，不过计算量特别的庞大，3~4分钟处理一张图片。并且比较依赖图像中的颜色信息，对颜色相近的物体的效果不是特别的好。 在影视方面有不错的前景，也可能可以考虑用来帮助标注人员产生不错的分割图并且进行进一步的标注。

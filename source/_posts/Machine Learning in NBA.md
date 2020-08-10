@@ -18,7 +18,7 @@ categories: Machine Learning
 *  [Keras](https://keras-cn.readthedocs.io/en/latest/)是一个高层神经网络API，Keras由纯Python编写而成并基[Tensorflow](https://github.com/tensorflow/tensorflow)后端
 *    [All-star players in 2017 prediction](https://github.com/Trouble404/NBA-with-Machine-Learning/blob/master/nerual_network/prediction/nba_all_star_prediction/nba%20all%20star%20prediction.ipynb)
 *    [Tensorboard](https://www.tensorflow.org/get_started/summaries_and_tensorboard) is used to compare and choose better model.
-![image](https://raw.githubusercontent.com/Trouble404/NBA-with-Machine-Learning/master/readme_add_pic/full-list.PNG)
+![image](https://cdn.jsdelivr.net/gh/Trouble404/NBA-with-Machine-Learning/readme_add_pic/full-list.PNG)
 
 ### Best rookies in 2017 prediction
 *    [PCA 主成份分析](https://github.com/Trouble404/NBA-with-Machine-Learning/blob/master/nerual_network/pca/nba%20rookies%20best/pca%20process.ipynb) in best rookies prediction
@@ -26,14 +26,14 @@ categories: Machine Learning
 *    [Best rookies in 2017 prediction](https://github.com/Trouble404/NBA-with-Machine-Learning/blob/master/nerual_network/prediction/rookies_best/normal%20prediction/Best%205%20rookie.ipynb)
 *    [First and Second rookies in 2017 prediction](https://github.com/Trouble404/NBA-with-Machine-Learning/blob/master/nerual_network/prediction/rookies_first_second/first_second_rookie-tensorboard.ipynb) **Muti-classes classification application**
 *    [Tensorboard](https://www.tensorflow.org/get_started/summaries_and_tensorboard) is used to compare and choose better model.
-![image](https://raw.githubusercontent.com/Trouble404/NBA-with-Machine-Learning/master/readme_add_pic/firstrookies.PNG)
+![image](https://cdn.jsdelivr.net/gh/Trouble404/NBA-with-Machine-Learning/readme_add_pic/firstrookies.PNG)
 
 ### Potential all-star players in 2015~16 prediction
 *    [PCA 主成份分析](https://github.com/Trouble404/NBA-with-Machine-Learning/blob/master/nerual_network/pca/nba%20rookies%20all%20star/pca%20process.ipynb) in potential rookies prediction
 * [Keras](https://keras-cn.readthedocs.io/en/latest/)是一个高层神经网络API，Keras由纯Python编写而成并基[Tensorflow](https://github.com/tensorflow/tensorflow)后端
 *    [Potential rookies in 2015~16 prediction](https://github.com/Trouble404/NBA-with-Machine-Learning/blob/master/nerual_network/prediction/rookies_all_star_prediction/All%20star%20rookie%20without%20pca.ipynb)
 *    [Tensorboard](https://www.tensorflow.org/get_started/summaries_and_tensorboard) is used to compare and choose better model.
-![image](https://raw.githubusercontent.com/Trouble404/NBA-with-Machine-Learning/master/readme_add_pic/rookies-allstar.PNG)
+![image](https://cdn.jsdelivr.net/gh/Trouble404/NBA-with-Machine-Learning/readme_add_pic/rookies-allstar.PNG)
 
 ---
 
@@ -44,13 +44,13 @@ categories: Machine Learning
 example: 
 *  Neural network model
 
-![image](https://raw.githubusercontent.com/Trouble404/NBA-with-Machine-Learning/master/readme_add_pic/model.png)
+![image](https://cdn.jsdelivr.net/gh/Trouble404/NBA-with-Machine-Learning/readme_add_pic/model.png)
 
 *  2D PCA (linear unseparable)
 
-![image](https://raw.githubusercontent.com/Trouble404/NBA-with-Machine-Learning/master/readme_add_pic/pca.PNG)
+![image](https://cdn.jsdelivr.net/gh/Trouble404/NBA-with-Machine-Learning/readme_add_pic/pca.PNG)
 
 
 *  Tensorboard check
 
-![image](https://raw.githubusercontent.com/Trouble404/NBA-with-Machine-Learning/master/readme_add_pic/tensor_board.PNG)
+![image](https://cdn.jsdelivr.net/gh/Trouble404/NBA-with-Machine-Learning/readme_add_pic/tensor_board.PNG)

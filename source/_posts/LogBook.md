@@ -7,7 +7,7 @@ categories: Msc Project
 
 <!-- more -->
 ## Gantt chart
-![image](https://raw.githubusercontent.com/Trouble404/Object-Detection-System-Based-on-CNN-and-Capsule-Network/master/Project%20Plan/gantt%20chart%20of%20project.PNG)
+![image](https://cdn.jsdelivr.net/gh/Trouble404/Object-Detection-System-Based-on-CNN-and-Capsule-Network/Project%20Plan/gantt%20chart%20of%20project.PNG)
 ---
 
 ## Check list
@@ -107,7 +107,7 @@ with tf.device('/cpu:0'):
 ```
 jupyter notebook --generate-config
 ```
-![image](https://raw.githubusercontent.com/Trouble404/Object-Detection-System-Based-on-CNN-and-Capsule-Network/master/Learned%20skills/jupyter%20_setting.PNG)
+![image](https://cdn.jsdelivr.net/gh/Trouble404/Object-Detection-System-Based-on-CNN-and-Capsule-Network/Learned%20skills/jupyter%20_setting.PNG)
 
 ## June
 ### 【01/06/2018】
@@ -317,7 +317,7 @@ The detection task will be judged by the precision/recall curve. The principal q
 
 ### 【07/06/2018】
 #### **Poster conference**
-![iamge](https://raw.githubusercontent.com/Trouble404/Object-Detection-System-Based-on-CNN-and-Capsule-Network/master/Poster/poster.png)
+![iamge](https://cdn.jsdelivr.net/gh/Trouble404/Object-Detection-System-Based-on-CNN-and-Capsule-Network/Poster/poster.png)
 
 5 People in one group to present their object.
 I present this object to my supervisor in this conference.
@@ -337,7 +337,7 @@ Paper: [Rich feature hierarchies for accurate object detection and semantic segm
 2. 特征提取： 对每个候选区域，使用深度卷积网络提取特征 （CNN） 
 3. 类别判断： 特征送入每一类的SVM 分类器，判别是否属于该类
 4. 位置精修： 使用回归器精细修正候选框位置
-<center>![image](https://raw.githubusercontent.com/Trouble404/Object-Detection-System-Based-on-CNN-and-Capsule-Network/master/Research%20Review/LaTex/1.PNG)</center>
+<center>![image](https://cdn.jsdelivr.net/gh/Trouble404/Object-Detection-System-Based-on-CNN-and-Capsule-Network/Research%20Review/LaTex/1.PNG)</center>
 
 【**[Selective Search](https://www.koen.me/research/pub/uijlings-ijcv2013-draft.pdf)**】
 1. 使用一种过分割手段，将图像分割成小区域 (1k~2k 个)
@@ -368,7 +368,7 @@ RCNN使用CNN作为特征提取器，首次使得目标检测跨入深度学习�
    训练的时候通过上面提到的多尺寸训练方法，也就是在每个epoch中首先训练一个尺寸产生一个model，然后加载这个model并训练第二个尺寸，直到训练完所有的尺寸。空间金字塔池化使用的尺度为：1\*1，2\*2，3\*3，6\*6，一共是50个bins。
 3. 在测试时，每个region proposal选择能使其包含的像素个数最接近224\*224的尺寸，提取相 应特征。
 4. 训练SVM，BoundingBox回归.
-<center>![image](https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/FYP/SPP-NET.jpg)</center>
+<center>![image](https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/FYP/SPP-NET.jpg)</center>
 
 
 ### 【13/06/2018】
@@ -389,7 +389,7 @@ Paper: [Fast R-CNN](https://arxiv.org/abs/1504.08083)
 3. 每个特征向量被输送到分支成两个同级输出层的全连接（fc）层序列中：
    其中一层进行分类，对 目标关于K个对象类（包括全部“背景background”类）产生softmax概率估计，即输出每一个RoI的概率分布；
 另一层进行bbox regression，输出K个对象类中每一个类的四个实数值。每4个值编码K个类中的每个类的精确边界盒（bounding-box）位置，即输出每一个种类的的边界盒回归偏差。整个结构是使用多任务损失的端到端训练（trained end-to-end with a multi-task loss）。
-<center>![image](https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/FYP/fast-rcnn.png)</center>
+<center>![image](https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/FYP/fast-rcnn.png)</center>
 
 ### 【14~18/06/2018】
 #### **FASTER R-CNN**
@@ -398,7 +398,7 @@ I want to use **Faster R-cnn** as the first method to implement object detection
 Paper: [Faster R-CNN: Towards Real-Time Object Detection with Region Proposal Networks](https://arxiv.org/abs/1506.01497)
 
 在结构上，Faster RCNN已经将特征抽取(feature extraction)，proposal提取，bounding box regression(rect refine)，classification都整合在了一个网络中，使得综合性能有较大提高，在检测速度方面尤为明显。
-<center>![image](https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/FYP/faster-rcnn.jpg)</center>
+<center>![image](https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/FYP/faster-rcnn.jpg)</center>
 
  #### 流程
 
@@ -410,26 +410,26 @@ Paper: [Faster R-CNN: Towards Real-Time Object Detection with Region Proposal Ne
 #### 解释
 
 **\[1. Conv layers\]**
-   <center>![image](https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/FYP/faster_1.jpg)</center>
+   <center>![image](https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/FYP/faster_1.jpg)</center>
    Conv layers包含了conv，pooling，relu三种层。以python版本中的VGG16模型中的faster_rcnn_test.pt的网络结构为例，如图,    Conv layers部分共有13个conv层，13个relu层，4个pooling层。这里有一个非常容易被忽略但是又无比重要的信息，在Conv          layers中：
    
   * 所有的conv层都是： $kernel\_size=3$ ， $pad=1$ ， $stride=1$ <br>
   * 所有的pooling层都是： $kernel\_size=2$ ， $pad=0$ ， $stride=2$
   
    为何重要？在Faster RCNN Conv layers中对所有的卷积都做了扩边处理（ $pad=1$ ，即填充一圈0），导致原图变为                $(M+2)\times (N+2)$ 大小，再做3x3卷积后输出 $M\times N$ 。正是这种设置，导致Conv layers中的conv层不改变输入和输出    矩阵大小。如下图：
-<center>![image](https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/FYP/faster_2.jpg)</center>
+<center>![image](https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/FYP/faster_2.jpg)</center>
    类似的是，Conv layers中的pooling层 $kernel\_size=2$ ， $stride=2$ 。这样每个经过pooling层的 $M\times N$ 矩阵，都会变为 $(M/2) \times(N/2)$ 大小。综上所述，在整个Conv layers中，conv和relu层不改变输入输出大小，只有pooling层使输出长宽都变为输入的1/2。
 那么，一个 $M\times N$ 大小的矩阵经过Conv layers固定变为 $(M/16)\times (N/16)$ ！这样Conv layers生成的featuure map中都可以和原图对应起来。
 
 **\[2. Region Proposal Networks(RPN)\]**
    经典的检测方法生成检测框都非常耗时，如OpenCV adaboost使用滑动窗口+图像金字塔生成检测框；或如R-CNN使用SS(Selective      Search)方法生成检测框。而Faster RCNN则抛弃了传统的滑动窗口和SS方法，直接使用RPN生成检测框，这也是Faster R-CNN的巨大    优势，能极大提升检测框的生成速度。
-   <center>![image](https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/FYP/faster_3.jpg)</center>
+   <center>![image](https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/FYP/faster_3.jpg)</center>
    上图展示了RPN网络的具体结构。可以看到RPN网络实际分为2条线，上面一条通过softmax分类anchors获得foreground和              background（检测目标是foreground），下面一条用于计算对于anchors的bounding box regression偏移量，以获得精确的          proposal。而最后的Proposal层则负责综合foreground anchors和bounding box regression偏移量获取proposals，同时剔除太    小和超出边界的proposals。其实整个网络到了Proposal Layer这里，就完成了相当于目标定位的功能。
    
    **2.1 多通道图像卷积基础知识介绍**
    * 对于单通道图像+单卷积核做卷积，之前展示了；
    * 对于多通道图像+多卷积核做卷积，计算方式如下：
-     <center>![image](https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/FYP/faster_4.jpg)</center>
+     <center>![image](https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/FYP/faster_4.jpg)</center>
      输入有3个通道，同时有2个卷积核。对于每个卷积核，先在输入3个通道分别作卷积，再将3个通道结果加起来得到卷积输出。所以对     于某个卷积层，无论输入图像有多少个通道，输出图像通道数总是等于卷积核数量！
     对多通道图像做 $1\times1$ 卷积，其实就是将输入图像于每个通道乘以卷积系数后加在一起，即相当于把原图像中本来各个独立的     通道“联通”在了一起。
     
@@ -446,10 +446,10 @@ Paper: [Faster R-CNN: Towards Real-Time Object Detection with Region Proposal Ne
    [-168. -344.  183.  359.]]
 
    其中每行的4个值 $(x1,y1,x2,y2)$ 代表矩形左上和右下角点坐标。9个矩形共有3种形状，长宽比为大约为 $width:height = [1:1, 1:2, 2:1]$ 三种，如下图。实际上通过anchors就引入了检测中常用到的多尺度方法。
-   <center>![image](https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/FYP/faster_5.jpg)</center>
+   <center>![image](https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/FYP/faster_5.jpg)</center>
    注：关于上面的anchors size，其实是根据检测图像设置的。在python demo中，会把任意大小的输入图像reshape成 $800\times600$。再回头来看anchors的大小，anchors中长宽 1:2 中最大为 $352\times704$ ，长宽 2:1 中最大 $736\times384$ ，基本是cover了 $800\times600$ 的各个尺度和形状。
 那么这9个anchors是做什么的呢？借用Faster RCNN论文中的原图，如下图，遍历Conv layers计算获得的feature maps，为每一个点都配备这9种anchors作为初始的检测框。这样做获得检测框很不准确，不用担心，后面还有2次bounding box regression可以修正检测框位置。
-  <center>![image](https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/FYP/faster_6.jpg)</center>
+  <center>![image](https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/FYP/faster_6.jpg)</center>
   
   解释一下上面这张图的数字。
 
@@ -460,19 +460,19 @@ Paper: [Faster R-CNN: Towards Real-Time Object Detection with Region Proposal Ne
 
    **2.3 softmax判定foreground与background**
    一副MxN大小的矩阵送入Faster RCNN网络后，到RPN网络变为(M/16)x(N/16)，不妨设 W=M/16 ， H=N/16 。在进入reshape与softmax之前，先做了1x1卷积，如下图：
-   <center>![image](https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/FYP/faster_7.jpg)</center>
+   <center>![image](https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/FYP/faster_7.jpg)</center>
    该1x1卷积的caffe prototxt定义如下：
-   <center>![image](https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/FYP/faster_19.PNG)</center>
+   <center>![image](https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/FYP/faster_19.PNG)</center>
 可以看到其num_output=18，也就是经过该卷积的输出图像为 $W\times H \times 18$ 大小（注意第二章开头提到的卷积计算方式）。这也就刚好对应了feature maps每一个点都有9个anchors，同时每个anchors又有可能是foreground和background，所有这些信息都保存 $W\times H\times (9\cdot2)$ 大小的矩阵。为何这样做？后面接softmax分类获得foreground anchors，也就相当于初步提取了检测目标候选区域box（一般认为目标在foreground anchors中）。
 综上所述，RPN网络中利用anchors和softmax初步提取出foreground anchors作为候选区域。
 
    **2.4 bounding box regression原理**
  如图所示绿色框为飞机的Ground Truth(GT)，红色为提取的foreground anchors，即便红色的框被分类器识别为飞机，但是由于红色的框定位不准，这张图相当于没有正确的检测出飞机。所以我们希望采用一种方法对红色的框进行微调，使得foreground anchors和GT更加接近。
-<center>![image](https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/FYP/faster_8.jpg)</center>
+<center>![image](https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/FYP/faster_8.jpg)</center>
 对于窗口一般使用四维向量 (x, y, w, h) 表示，分别表示窗口的中心点坐标和宽高。对于下图，红色的框A代表原始的Foreground Anchors，绿色的框G代表目标的GT，我们的目标是寻找一种关系，使得输入原始的anchor A经过映射得到一个跟真实窗口G更接近的回归窗口G'，即：
 * 给定：$anchor A=(A_{x}, A_{y}, A_{w}, A_{h})$ 和 $GT=[G_{x}, G_{y}, G_{w}, G_{h}]$
 * 寻找一种变换F，使得：$F(A_{x}, A_{y}, A_{w}, A_{h})=(G_{x}^{'}, G_{y}^{'}, G_{w}^{'}, G_{h}^{'})$，其中 $(G_{x}^{'}, G_{y}^{'}, G_{w}^{'}, G_{h}^{'}) \approx (G_{x}, G_{y}, G_{w}, G_{h})$
-<center>![image](https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/FYP/faster_9.jpg)</center>
+<center>![image](https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/FYP/faster_9.jpg)</center>
 那么经过何种变换F才能从图10中的anchor A变为G'呢？ 比较简单的思路就是:
 
 * 先做平移
@@ -499,12 +499,12 @@ $Loss = \sum^{N}_{i}(t^{i}_{*} - \hat{w}^{T}_{*} \cdot \phi(A^{i}))^{2}$
 </center>
 函数优化目标为：
 <center>
-![image](https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/FYP/faster_20.jpg)
+![image](https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/FYP/faster_20.jpg)
 </center>
 需要说明，只有在GT与需要回归框位置比较接近时，才可近似认为上述线性变换成立。
 说完原理，对应于Faster RCNN原文，foreground anchor与ground truth之间的平移量 $(t_x, t_y)$ 与尺度因子 $(t_w, t_h)$ 如下：
 <center>
-![image](https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/FYP/faster_21.jpg)
+![image](https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/FYP/faster_21.jpg)
 </center>
 对于训练bouding box regression网络回归分支，输入是cnn feature Φ，监督信号是Anchor与GT的差距 $(t_x, t_y, t_w, t_h)$，即训练目标是：输入Φ的情况下使网络输出与监督信号尽可能接近。
 那么当bouding box regression工作时，再输入Φ时，回归网络分支的输出就是每个Anchor的平移量和变换尺度 $(t_x, t_y, t_w, t_h)$，显然即可用来修正Anchor位置了。
@@ -512,7 +512,7 @@ $Loss = \sum^{N}_{i}(t^{i}_{*} - \hat{w}^{T}_{*} \cdot \phi(A^{i}))^{2}$
    **2.5 对proposals进行bounding box regression**
 在了解bounding box regression后，再回头来看RPN网络第二条线路，如下图。
 <center>
-![image](https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/FYP/faster_10.jpg)
+![image](https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/FYP/faster_10.jpg)
 </center>
 其 $num\_output=36$ ，即经过该卷积输出图像为 $W\times H\times 36$ ，在caffe blob存储为 \[1, 36, H, W\] ，这里相当于feature maps每个点都有9个anchors，每个anchors又都有4个用于回归的$d_{x}(A),d_{y}(A),d_{w}(A),d_{h}(A)$变换量。
 
@@ -520,7 +520,7 @@ $Loss = \sum^{N}_{i}(t^{i}_{*} - \hat{w}^{T}_{*} \cdot \phi(A^{i}))^{2}$
 Proposal Layer负责综合所有 $d_{x}(A),d_{y}(A),d_{w}(A),d_{h}(A)$ 变换量和foreground anchors，计算出精准的proposal，送入后续RoI Pooling Layer。
 首先解释im_info。对于一副任意大小PxQ图像，传入Faster RCNN前首先reshape到固定 $M\times N$ ，im_info=\[M, N, scale_factor\]则保存了此次缩放的所有信息。然后经过Conv Layers，经过4次pooling变为 $W\times H=(M/16)\times(N/16)$ 大小，其中feature_stride=16则保存了该信息，用于计算anchor偏移量。
 <center>
-![image](https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/FYP/faster_11.jpg)
+![image](https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/FYP/faster_11.jpg)
 </center>
 
 Proposal Layer forward（caffe layer的前传函数）按照以下顺序依次处理：
@@ -544,7 +544,7 @@ Proposal Layer forward（caffe layer的前传函数）按照以下顺序依次�
 * 区分训练集测试集根据竞赛要求
 * 解析XML文档收录到PYTHON词典中
 <center>
-![image](https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/FYP/faster_23.PNG)
+![image](https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/FYP/faster_23.PNG)
 </center> 
 Github 的 jupyter notebook [地址](https://github.com/Trouble404/Object-Detection-System-Based-on-CNN-and-Capsule-Network/blob/master/Faster-RCNN/parser_voc2012_xml_and_plotting.ipynb) 
 
@@ -556,7 +556,7 @@ Github 的 jupyter notebook [地址](https://github.com/Trouble404/Object-Detect
 
 图片中的20个类的统计情况：
 <center>
-![image](https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/FYP/faster_24.PNG)
+![image](https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/FYP/faster_24.PNG)
 </center> 
 
 
@@ -595,14 +595,14 @@ Github 的 jupyter notebook [地址](https://github.com/Trouble404/Object-Detect
 
 我写了一个show_image_with_bbox函数去画出带BBOXES的图根据处理XML文件得到的list:
 <center>
-![image](https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/FYP/faster_22.PNG)
+![image](https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/FYP/faster_22.PNG)
 </center>  
 Github 的 jupyter notebook [地址](https://github.com/Trouble404/Object-Detection-System-Based-on-CNN-and-Capsule-Network/blob/master/Faster-RCNN/parser_voc2012_xml_and_plotting.ipynb) 
 
 EXAMPLE:
 <center>
-![image](https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/FYP/img_with_bboex_1.PNG)
-![image](https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/FYP/img_with_bboex_2.PNG)
+![image](https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/FYP/img_with_bboex_1.PNG)
+![image](https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/FYP/img_with_bboex_2.PNG)
 </center>  
 
 ### 【21/06/2018】
@@ -610,12 +610,12 @@ EXAMPLE:
 set config class:
                  for image enhancement:
 <center>
-![image](https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/FYP/21_1.PNG)
+![image](https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/FYP/21_1.PNG)
 </center>  
 
 #### image enhancement
 <center>
-![image](https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/FYP/21_2.PNG)
+![image](https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/FYP/21_2.PNG)
 </center>  
 According to the config of three peremeters, users could augment image with 3 different ways or using them all.
 For horizontal and vertical flips, 1/3 probability to triggle
@@ -629,30 +629,30 @@ detailed in Github, jupyter notebook: [address](https://github.com/Trouble404/Ob
 
 Orignal image:
 <center>
-![image](https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/FYP/21_3.PNG)
+![image](https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/FYP/21_3.PNG)
 </center>  
 horizontal flip:
 <center>
-![image](https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/FYP/21_4.PNG)
+![image](https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/FYP/21_4.PNG)
 </center>  
 Vertical filp:
 <center>
-![image](https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/FYP/21_5.PNG)
+![image](https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/FYP/21_5.PNG)
 </center>  
 Random rotation:
 <center>
-![image](https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/FYP/21_6.PNG)
+![image](https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/FYP/21_6.PNG)
 </center>  
 Horizontal and then vertical flips:
 <center>
-![image](https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/FYP/21_7.PNG)
+![image](https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/FYP/21_7.PNG)
 </center>  
 
 ### 【22/06/2018】
 #### Image rezise
 This function is to rezise input image to a uniform size with same shortest side
 <center>
-![image](https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/FYP/22_2.PNG)
+![image](https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/FYP/22_2.PNG)
 </center> 
 
 According to set the value of shortest side, convergent-divergent or augmented another side proportion
@@ -660,32 +660,32 @@ According to set the value of shortest side, convergent-divergent or augmented a
 Test:
 Left image is resized image, in this case, the orignal image amplified.
 <center>
-![image](https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/FYP/22_1.png)
+![image](https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/FYP/22_1.png)
 </center> 
 
 #### Class Balance
 When training the model, if we sent image with no repeating classes, it may help to improve the performance of model. Therefore, this function is to make sure no repeating classes in two closed input image.
 <center>
-![image](https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/FYP/22_3.PNG)
+![image](https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/FYP/22_3.PNG)
 </center> 
 
 Test:
 <center>
-![image](https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/FYP/22_4.PNG)
+![image](https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/FYP/22_4.PNG)
 </center> 
 Random output 4 iamge with is function, it could find no repeating classes in two closed image. However, it may reduce the number of trainning image because skip some images.
 
 
 ### 【25~26/06/2018】
 #### Region Proposal Networks(RPN)
-<center>![image](https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/FYP/faster_3.jpg)</center>
+<center>![image](https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/FYP/faster_3.jpg)</center>
 可以看到RPN网络实际分为2条线，上面一条通过softmax分类anchors获得foreground和background（检测目标是foreground），下面一条用于计算对于anchors的bounding box regression偏移量，以获得精确的proposal。而最后的Proposal层则负责综合foreground anchors和bounding box regression偏移量获取proposals，同时剔除太小和超出边界的proposals。其实整个网络到了Proposal Layer这里，就完成了相当于目标定位的功能。
 
 #### Anchors
 对每一个点生成的矩形
-<center>![image](https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/FYP/faster_5.jpg)</center>
+<center>![image](https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/FYP/faster_5.jpg)</center>
 其中每行的4个值 (x1,y1,x2,y2) 代表矩形左上和右下角点坐标。9个矩形共有3种形状，长宽比为大约为 width:height = \[1:1, 1:2, 2:1\]
-<center>![image](https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/FYP/faster_6.jpg)</center>
+<center>![image](https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/FYP/faster_6.jpg)</center>
 通过遍历Conv layers计算获得的feature maps，为每一个点都配备这9种anchors作为初始的检测框。这样做获得检测框很不准确，不用担心，后面还有2次bounding box regression可以修正检测框位置.
 
 #### Code
@@ -826,7 +826,7 @@ if curr_iou > best_iou_for_bbox[bbox_num] or curr_iou > C.rpn_max_overlap:
 	th = np.log((gta[bbox_num, 3] - gta[bbox_num, 2])) / (y2_anc - y1_anc)
 ```
 对应于Faster RCNN原文，foreground anchor与ground truth之间的平移量 $(t_x, t_y)$ 如下：
-<center>![image](https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/FYP/25_2.jpg)</center>
+<center>![image](https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/FYP/25_2.jpg)</center>
 对于训练bouding box regression网络回归分支，输入是cnn feature Φ，监督信号是Anchor与GT的差距 $(t_x, t_y, t_w, t_h)$，即训练目标是：输入 Φ的情况下使网络输出与监督信号尽可能接近。
 那么当bouding box regression工作时，再输入Φ时，回归网络分支的输出就是每个Anchor的平移量和变换尺度 $(t_x, t_y, t_w, t_h)$，显然即可用来修正Anchor位置了。
 
@@ -1041,7 +1041,7 @@ Test:
 ```python
 img,rpn,img_aug = next(data_gen_train)
 ```
-![image](https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/FYP/26_1.PNG)
+![image](https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/FYP/26_1.PNG)
 
 ### 【28/06/2018】
 #### Resnet50 structure
@@ -1056,7 +1056,7 @@ img,rpn,img_aug = next(data_gen_train)
 
 He kaiMing大神认为靠堆layers竟然会导致degradation，那肯定是我们堆的方式不对。因此他提出了一种基于残差块的identity mapping，通过学习残差的方式，而非直接去学习直接的映射关系。 
 
-![image](https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/FYP/01_2.jpg)
+![image](https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/FYP/01_2.jpg)
 
 事实证明，靠堆积残差块能够带来很好效果提升。而不断堆积plain layer却会带来很高的训练误差 
 残差块的两个优点：
@@ -1066,14 +1066,14 @@ He kaiMing大神认为靠堆layers竟然会导致degradation，那肯定是我�
 
 ### 【29/06/2018】
 #### Resnet50 image structure
-![iamge](https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/FYP/1_01.png)
+![iamge](https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/FYP/1_01.png)
 ResNet有2个基本的block，一个是Identity Block，输入和输出的dimension是一样的，所以可以串联多个；另外一个基本block是Conv Block，输入和输出的dimension是不一样的，所以不能连续串联，它的作用本来就是为了改变feature vector的dimension
 
 因为CNN最后都是要把image一点点的convert成很小但是depth很深的feature map，一般的套路是用统一的比较小的kernel（比如VGG都是用3x3），但是随着网络深度的增加，output的channel也增大（学到的东西越来越复杂），所以有必要在进入Identity Block之前，用Conv Block转换一下维度，这样后面就可以连续接Identity Block.
 
 可以看下Conv Block是怎么改变输出维度的:
-![image](https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/FYP/01_3.png)
-![image](https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/FYP/01_4.png)
+![image](https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/FYP/01_3.png)
+![image](https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/FYP/01_4.png)
 其实就是在shortcut path的地方加上一个conv2D layer（1x1 filter size），然后在main path改变dimension，并与shortcut path对应起来.
 
 ## July
@@ -1168,7 +1168,7 @@ model.summary()
 
 [下载地址](https://github.com/fchollet/deep-learning-models/releases)
 
-![image](https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/FYP/01_7.JPG)
+![image](https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/FYP/01_7.JPG)
 
 因为使用了预训练模型，参数名称需要和预训练模型一致：
 identity层：
@@ -1301,7 +1301,7 @@ base_model.load_weights('resnet50_weights_tf_dim_ordering_tf_kernels_notop.h5')
 ```
 
 无法载入
-![image](https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/FYP/01_8.JPG)
+![image](https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/FYP/01_8.JPG)
 ### 【04/07/2018】
 #### Loading pre-trained model
 对于keras：如果新模型和旧模型结构一样，直接调用model.load_weights读取参数就行。如果新模型中的几层和之前模型一样，也通过model.load_weights('my_model_weights.h5', by_name=True)来读取参数， 或者手动对每一层进行参数的赋值，比如x= Dense(100, weights=oldModel.layers[1].get_weights())(x)
@@ -1602,7 +1602,7 @@ model_all = Model([img_input, roi_input], rpn[:2] + classifier)
 
 ### 【09/07/2018】
 #### Loss define
-![image](https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/FYP/6_1.JPG)
+![image](https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/FYP/6_1.JPG)
 
 由于涉及到分类和回归，所以需要定义一个多任务损失函数(Multi-task Loss Function)，包括Softmax Classification Loss和Bounding Box Regression Loss，公式定义如下：
 
@@ -1632,7 +1632,7 @@ $$
 
 $L_{reg} = Smooth_{L1}(t-t^{\ast})$
 Smooth L1损失函数曲线如下图所示，相比于L2损失函数，L1对离群点或异常值不敏感，可控制梯度的量级使训练更易收敛。
-![iamge](https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/FYP/7_1.JPG)
+![iamge](https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/FYP/7_1.JPG)
 
 在损失函数中，$p_{i}^{\ast}L_{reg}$这一项表示只有目标anchor$(p_{i}^{\ast}=1)$才有回归损失，其他anchor不参与计算。这里需要注意的是，当样本bbox和ground truth比较接近时(IoU大于某一阈值)，可以认为上式的坐标变换是一种线性变换，因此可将样本用于训练线性回归模型，否则当bbox与ground truth离得较远时，就是非线性问题，用线性回归建模显然不合理，会导致模型不work。分类层(cls)和回归层(reg)的输出分别为{p}和{t}，两项损失函数分别由$N_{cls}$和$N_{reg}$以及一个平衡权重λ归一化。
 
@@ -1647,7 +1647,7 @@ Rpn calculation:
 img,rpn,img_aug = next(data_gen_train)
 ```
 
- ![image](https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/FYP/7_2.JPG)
+ ![image](https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/FYP/7_2.JPG)
 
 连续两个def 是装饰器，
 装饰器其实也就是一个函数，一个用来包装函数的函数，返回一个修改之后的函数对象。经常被用于有切面需求的场景，较为经典的有插入日志、
@@ -1717,7 +1717,7 @@ def class_loss_cls(y_true, y_pred):
 ### 【11/07/2018】
 #### Iridis
 #### High Performance Computing (HPC)
-![image](https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/FYP/8_1.jpg)
+![image](https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/FYP/8_1.jpg)
 [Introduction](https://www.southampton.ac.uk/isolutions/staff/high-performance-computing.page)
 
 Iridis 5 specifications
@@ -1798,7 +1798,7 @@ ResNet，IncRes V2，ResNeXt 都是显著超越 VGG 的特征网络，当然网�
 @改进2：多尺度之 HyperNet
 论文：Hypernet: Towards accurate region proposal generation and joint object detection
 基于 Region Proposal 的方法，通过多尺度的特征提取来提高对小目标的检测能力，来看网络框图：
-![image](https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/FYP/8_2.JPG)
+![image](https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/FYP/8_2.JPG)
 分为 三个主要特征 来介绍（对应上面网络拓扑图的 三个红色框）：
 
 1）Hyper Feature Extraction （特征提取）
@@ -2534,15 +2534,15 @@ print('Training complete, exiting.')
 
 ### 【30/07/2018】
 #### Running at GPU enviorment
-![image](https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/FYP/9_1.JPG)
-![image](https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/FYP/9_2.JPG)
+![image](https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/FYP/9_1.JPG)
+![image](https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/FYP/9_2.JPG)
 Meet error in GPU version tensorflow
 No enough memory.
 
 Try to Running at Irius:
 
 Setting 3 differnet configration:
-![image](https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/FYP/9_3.JPG)
+![image](https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/FYP/9_3.JPG)
 at Prjoect1 file:
 set epoch_length to number of training img
 ```python
@@ -2591,13 +2591,13 @@ C.rot_90 = True
 ```bash
 myqueue
 ```
-![image](https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/FYP/9_4.JPG)
+![image](https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/FYP/9_4.JPG)
 
 ```bash
 ssh pink59
 nvidia-smi
 ```
-![image](https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/FYP/9_5.JPG)
+![image](https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/FYP/9_5.JPG)
 
 ### 【31/07/2018】
 #### obtain trained model and log file
@@ -2709,7 +2709,7 @@ plt.ylim(0,2)
 plt.savefig("pic1.PNG", dpi = 600)
 plt.show()
 ```
-![image](https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/FYP/pic1.PNG)
+![image](https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/FYP/pic1.PNG)
 
 ```python
 filename = r'F:\desktop\新建文件夹\1000-no_balance\train1.out'
@@ -2729,7 +2729,7 @@ plt.xlim(80787,92327)
 plt.savefig("pic2.PNG", dpi = 600)
 plt.show()
 ```
-![image](https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/FYP/pic2.PNG)
+![image](https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/FYP/pic2.PNG)
 
 [Jupyter notebook](https://github.com/Trouble404/Object-Detection-System-Based-on-CNN-and-Capsule-Network/blob/master/Plot/logbook_plot.ipynb)
 
@@ -2763,7 +2763,7 @@ except:
 ```
 
 **读取需要检测的图片：**
-![image](https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/FYP/test/test4.jpg)
+![image](https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/FYP/test/test4.jpg)
 将图片规整到制定的大小
 1. 将图片缩放到规定的大小
     首先从配置文件夹中得到最小边的大小
@@ -2812,8 +2812,8 @@ F:卷积后的特征图，接下来会有用
 ```
 
 获得rpn预测的结果以及对应的回归梯度，这一步就是对图片上隔16个像素的每个anchor进行rpn计算
-![image](https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/FYP/pic_anchors.png)
-![image](https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/FYP/25_1.jpg)
+![image](https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/FYP/pic_anchors.png)
+![image](https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/FYP/25_1.jpg)
 
 **根据rpn预测的结果，得到预选框:**
 这里会返回300个预选框以及它们对应的坐标(x1,y1,x2,y2)
@@ -2821,7 +2821,7 @@ F:卷积后的特征图，接下来会有用
 # transform predicted rpn to cordinates of boxes
 R = rpn_to_boxes.rpn_to_roi(Y1, Y2, C, K.image_dim_ordering(), use_regr=True, overlap_thresh=0.7)
 ```
-![image](https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/FYP/pic_rois.png)
+![image](https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/FYP/pic_rois.png)
 
 将预选框的坐标由(x1,y1,x2,y2) 改到 (x,y,w,h)
 ```python
@@ -2903,7 +2903,7 @@ ROIS:处理得到的区域预选框
         cls_num = np.argmax(P_cls[0, ii, :])
 ```
 这样符合条件的预选框以及对应的分类类别和概率就可以画在图片上了
-![iamge](https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/FYP/pic_cls1.png)
+![iamge](https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/FYP/pic_cls1.png)
 
 根据类别编号得到该类的边框回归梯度
 对回归梯度进行规整化
@@ -2928,7 +2928,7 @@ ROIS:处理得到的区域预选框
         probs[cls_name].append(np.max(P_cls[0, ii, :]))
 ```
 这样修正过的框可以画在图上：
-![image](https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/FYP/pic_cls2.png)
+![image](https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/FYP/pic_cls2.png)
 
 遍历bboxes里的类，取出某一类的bbox，合并一些重合度较高的选框
 No Max Supression
@@ -2942,63 +2942,63 @@ for key in bboxes:
     new_boxes, new_probs = rpn_to_boxes.non_max_suppression_fast(bbox, np.array(probs[key]), overlap_thresh=0.5)
 ```
 最终的图：
-![image](https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/FYP/pic_cls3.png)
+![image](https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/FYP/pic_cls3.png)
 
 [Jupyter notebook](https://github.com/Trouble404/Object-Detection-System-Based-on-CNN-and-Capsule-Network/blob/master/Faster-RCNN/test.ipynb)
 
 #### result
 Small img, only 8k
 <div align="center">
-<img src="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/FYP/test/test1.jpg" height="200px"  ><img src="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/FYP/test/test1.png" height="200px"  >   
+<img src="https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/FYP/test/test1.jpg" height="200px"  ><img src="https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/FYP/test/test1.png" height="200px"  >   
 </div>
 
 ---
 
 Overlapping img
 <div align="center">
-<img src="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/FYP/test/test2.jpg" height="200px"  ><img src="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/FYP/test/test2.png" height="200px"  >   
+<img src="https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/FYP/test/test2.jpg" height="200px"  ><img src="https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/FYP/test/test2.png" height="200px"  >   
 </div>
 
 ---
 
 Crowed People
 <div align="center">
-<img src="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/FYP/test/test3.jpg" height="260px"  ><img src="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/FYP/test/test3.png" height="260px"  >   
+<img src="https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/FYP/test/test3.jpg" height="260px"  ><img src="https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/FYP/test/test3.png" height="260px"  >   
 </div>
 
 ---
 
 cow and people
 <div align="center">
-<img src="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/FYP/test/test4.jpg" height="260px"  ><img src="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/FYP/test/test4.png" height="260px"  >   
+<img src="https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/FYP/test/test4.jpg" height="260px"  ><img src="https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/FYP/test/test4.png" height="260px"  >   
 </div>
 
 ---
 
 car and plane
 <div align="center">
-<img src="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/FYP/test/test5.jpg" height="220px"  ><img src="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/FYP/test/test5.png" height="220px"  >   
+<img src="https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/FYP/test/test5.jpg" height="220px"  ><img src="https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/FYP/test/test5.png" height="220px"  >   
 </div>
 
 ---
 
 Street img
 <div align="center">
-<img src="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/FYP/test/test6.jpg" height="270px"  ><img src="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/FYP/test/test6.png" height="270px"  >   
+<img src="https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/FYP/test/test6.jpg" height="270px"  ><img src="https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/FYP/test/test6.png" height="270px"  >   
 </div>
 
 ---
 
 Lots Dogs
 <div align="center">
-<img src="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/FYP/test/test7.jpg" height="250px"  ><img src="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/FYP/test/test7.png" height="250px"  >   
+<img src="https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/FYP/test/test7.jpg" height="250px"  ><img src="https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/FYP/test/test7.png" height="250px"  >   
 </div>
 
 ---
 
 Overlapping car and people
 <div align="center">
-<img src="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/FYP/test/test8.jpg" height="290px"  ><img src="https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/FYP/test/test8.png" height="290px"  >   
+<img src="https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/FYP/test/test8.jpg" height="290px"  ><img src="https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/FYP/test/test8.png" height="290px"  >   
 </div>
 
 直观看的话效果还不错，但是一些重叠的物体框会出现反复，或者取不到。而且分类有一点过拟合。
@@ -3051,16 +3051,16 @@ for each in all_imgs:
         det = {'x1': x1, 'x2': x2, 'y1': y1, 'y2': y2, 'class': key, 'prob': new_probs[jk]}
         all_dets.append(det)
 ```
-![image](https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/FYP/014_1.JPG)
+![image](https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/FYP/014_1.JPG)
 
 然后读取标注的框的真实数值：
-![image](https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/FYP/014_2.JPG)
+![image](https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/FYP/014_2.JPG)
 
 遍历真实信息里面的每一个狂，将bbox_matched这个属性标注为FALSE，之后如果预测框和标注框对应上的话，这个属性就会被设置为True
-![image](https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/FYP/14_3.JPG)
+![image](https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/FYP/14_3.JPG)
 
 获取预测框里面的分类对应概率，并且按照概率从大到小得到idx位置：
-![image](https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/FYP/014_3.JPG)
+![image](https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/FYP/014_3.JPG)
 
 按照概率大小，对每一个对应的预测框，对比每一个标注的框，如果预测的类与当前标注框的类相同并且没有被匹配过，计算两个框的iou，如果大于0.5的话就表明预测框匹配当前标注框，保存预测概率以及对应的是否匹配：
 
@@ -3117,7 +3117,7 @@ for box_idx in box_idx_sorted_by_prob:
     # 1 means this position's bbox correct match with orignal image
     T[pred_class].append(int(found_match))
 ```
-![image](https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/FYP/014_4.JPG)
+![image](https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/FYP/014_4.JPG)
 
 遍历每一个标注框，如果没有被匹配到并且diffcult属性不是true的话，说明这个框漏检了，在之前保存的概率以及对应是否有概率里面加入物体1以及对应概率0
 ```python
@@ -3132,10 +3132,10 @@ for gt_box in gt:
         T[gt_box['class']].append(1)
         P[gt_box['class']].append(0)
 ```
-![image](https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/FYP/014_5.JPG)
+![image](https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/FYP/014_5.JPG)
 
 把当前信息存入到总的一个词典里面，就可以使用average_precision_score这个sklearn里面的函数计算ap了。与此同时，保存得到的结果并且显示总的map：
-![image](https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/FYP/014_6.JPG)
+![image](https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/FYP/014_6.JPG)
 
 [jupyter notebook](https://github.com/Trouble404/Object-Detection-System-Based-on-CNN-and-Capsule-Network/blob/master/Faster-RCNN/map.ipynb)
 
@@ -3221,11 +3221,11 @@ VOC2012的数据莫名没有了，因为之前测试过的原因，一直以为�
 传统的非最大抑制算法首先在被检测图片中产生一系列的检测框B以及对应的分数S。当选中最大分数的检测框M，它被从集合B中移出并放入最终检测结果集合D。于此同时，集合B中任何与检测框M的重叠部分大于重叠阈值Nt的检测框也将随之移除。非最大抑制算法中的最大问题就是它将相邻检测框的分数均强制归零。在这种情况下，如果一个真实物体在重叠区域出现，则将导致对该物体的检测失败并降低了算法的平均检测率（average precision, AP）。
 
 换一种思路，如果我们只是通过一个基于与M重叠程度相关的函数来降低相邻检测框的分数而非彻底剔除。虽然分数被降低，但相邻的检测框仍在物体检测的序列中。图二中的实例可以说明这个问题。
-![image](https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/FYP/018_1.JPG)
+![image](https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/FYP/018_1.JPG)
 针对NMS存在的这个问题，我们提出了一种新的Soft-NMS算法（图三），它只需改动一行代码即可有效改进传统贪心NMS算法。在该算法中，我们基于重叠部分的大小为相邻检测框设置一个衰减函数而非彻底将其分数置为零。**简单来讲，如果一个检测框与M有大部分重叠，它会有很低的分数；而如果检测框与M只有小部分重叠，那么它的原有检测分数不会受太大影响**。在标准数据集PASCAL VOC 和 MS-COCO等标准数据集上，Soft-NMS对现有物体检测算法在多个重叠物体检测的平均准确率有显著的提升。同时，Soft-NMS不需要额外的训练且易于实现，因此，它很容易被集成到当前的物体检测流程中。
 
 伪代码：
-![image](https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/FYP/018_2.JPG)
+![image](https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/FYP/018_2.JPG)
 
 公式：
 NMS
@@ -3251,7 +3251,7 @@ $$
 但是，上述分数重置函数并不是一个连续函数，在重叠程度超过重叠阈值Nt时，该分数重置函数产生突变，从而可能导致检测结果序列产生大的变动，因此我们更希望找到一个连续的分数重置函数。它对没有重叠的检测框的原有检测分数不产生衰减，同时对高度重叠的检测框产生大的衰减。综合考虑这些因素，我们进一步对soft-NMS中的分数重置函数进行了改进：
 
 Gaussian penalty:
-![image](https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/FYP/018_3.JPG)
+![image](https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/FYP/018_3.JPG)
 
 根据这个伪代码以及公式，实现代码：
 ```python

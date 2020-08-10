@@ -7,7 +7,7 @@ comments: false
 ---
 # 爱生活  爱 LeBron James
 
-![image](https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/about/LBJ1.gif)
+![image](https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/about/LBJ1.gif)
 
 ---
 

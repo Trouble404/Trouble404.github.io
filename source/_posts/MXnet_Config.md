@@ -40,7 +40,7 @@ categories: Machine Learning
   在根目录创建build文件夹  (补充操作 目前未使用： 打开make文件夹的config.mk 文件 修改USE_CUDNN = 0 to USE_CUDNN = 1, 修改USE_BLAS = openBLAS )
 
 * Step 8: Install Cmake Configure and Genreate VS工程 **mxnet.sln**  Configure的配置选择如下图
-![image](https://raw.githubusercontent.com/Trouble404/Kaggle-Dog-breed-Identification/master/readme_pic_add/cmake.PNG)
+![image](https://cdn.jsdelivr.net/gh/Trouble404/Kaggle-Dog-breed-Identification/readme_pic_add/cmake.PNG)
 
 * Step 9: 使用VS2015 打开mxnet.sln 切换成release模式 64位 然后启动编译 编译完成后，在mxnet_build\Release目录下生成了**libmxnet.dll**文件
 
@@ -58,7 +58,7 @@ categories: Machine Learning
 
 * Step 12: cd 至mxnet文件夹的python文件夹里， 拷贝如图的各个文件到该文件夹 
 
-  ![iamge](https://raw.githubusercontent.com/Trouble404/Kaggle-Dog-breed-Identification/master/readme_pic_add/dll.PNG)
+  ![iamge](https://cdn.jsdelivr.net/gh/Trouble404/Kaggle-Dog-breed-Identification/readme_pic_add/dll.PNG)
 
   然后使用
   {% codeblock %}
@@ -76,6 +76,6 @@ categories: Machine Learning
 
   激活这个虚拟环境到juptyer notebook里面  打开jupyter book就可以进行测试了
 
-![iamge](https://raw.githubusercontent.com/Trouble404/Kaggle-Dog-breed-Identification/master/readme_pic_add/test.png)
+![iamge](https://cdn.jsdelivr.net/gh/Trouble404/Kaggle-Dog-breed-Identification/readme_pic_add/test.png)
 
 

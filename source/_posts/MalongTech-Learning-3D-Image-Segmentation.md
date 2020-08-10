@@ -7,7 +7,7 @@ categories: 实习
 
 # 医学相关的图像分割技术
 
-<center>![image](https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/3D-Segmentation/1.png)</center>
+<center>![image](https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/3D-Segmentation/1.png)</center>
 
 | 医学2D | 医学3D|
 | ---------- | -----------|
@@ -37,7 +37,7 @@ categories: 实习
 **方法**
 * **Data Augmentation:** 使用基于生物学的肿瘤生长模型(PDE)模拟合成的肿瘤，在使用一个辅助的神经网络修正模拟肿瘤到correct intensities distribution对比真实的MR图像(会通过强加循环一致性限制分布情况)
 * 
-* **Extened segmentation:** 扩展分割到健康的薄壁组织。先使用(in-house diffeomorphic registration code)微分同胚技术(是一种光滑可逆的变换，在MRI图像配准中可以保证形变后的拓扑结构保持不变，同时避免出现不合理的物理现象)处理过的数据进行训练。<center>![image](https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/3D-Segmentation/2.png)</center>
+* **Extened segmentation:** 扩展分割到健康的薄壁组织。先使用(in-house diffeomorphic registration code)微分同胚技术(是一种光滑可逆的变换，在MRI图像配准中可以保证形变后的拓扑结构保持不变，同时避免出现不合理的物理现象)处理过的数据进行训练。<center>![image](https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/3D-Segmentation/2.png)</center>
 
   然后再使用DNN去分割健康的组织(神经胶质，脑脊液，灰质和白质)，结果如上图。 这样可以增加健康组织的轮廓作为重要的训练信息并且改进了原来的类不平衡的问题。
   
@@ -54,7 +54,7 @@ categories: 实习
   2. U-Net(在前一章节讲过)
 
     使用2D的U-Net以及domain adaptation results获得最终的分割结果
-    <center>![image](https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/3D-Segmentation/3.png)</center>
+    <center>![image](https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/3D-Segmentation/3.png)</center>
     
 * **缺点**
 
@@ -69,7 +69,7 @@ categories: 实习
 在生物医学领域，3D数据是很多的，一层一层转化为2D数据去标注训是不现实的(及其耗时)，而且用整个3D体积的全部数据去训练既低效又极有可能过拟合(相邻切片的数据是非常相近的)。这篇文章提出的3D Unet只需要少部分2D的标注切片就可以生成密集的立体的分割。此网络主要有两个不同的作用方式:
 * Semi-automated setup: 在一个少量稀疏标注的数据集上训练并在此数据集的图像上预测其他未标注的地方。
 * Fully-automated setup: 在representative的稀疏标注的数据集训练，然后用来切割新的图像。
-<center>![image](https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/3D-Segmentation/4.png)</center>
+<center>![image](https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/3D-Segmentation/4.png)</center>
 
 **改进**
 * 在2D U-Net的基础上，仍然使用encoder去分析整个图片, 但是扩展了decoder来产生full-resolution的切割。
@@ -77,7 +77,7 @@ categories: 实习
 * 避免使用bottlenecks结构因为输入的数据不会很多，避免丢失重要的信息。
 
 **网络**
-<center>![image](https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/3D-Segmentation/5.png)</center>
+<center>![image](https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/3D-Segmentation/5.png)</center>
 
 * Encoder部分: 每层包含两个$3 \times 3 \times 3$卷积和ReLU, 然后是一个strides为2的$2 \times 2 \times 2$的最大池化层。
 * Decoder部分: 每层包含strides为2的$2 \times 2 \times 2$的upconvolution以及两个$3 \times 3 \times 3$卷积和ReLU
@@ -90,7 +90,7 @@ categories: 实习
 
 [论文地址](https://arxiv.org/pdf/1704.07754.pdf)
 
-<center>![image](https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/3D-Segmentation/9.png)</center>
+<center>![image](https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/3D-Segmentation/9.png)</center>
 
 目前对于定位肿瘤的难点在于：
 1. 肿瘤形状各异，例如神经胶质瘤与胶质母细胞瘤形状不同
@@ -102,7 +102,7 @@ MRI也是跟CT一样断层扫描的过程且包含4种模态(Modality)，就是�
 
 
 **模型**
-<center>![image](https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/3D-Segmentation/6.png)</center>
+<center>![image](https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/3D-Segmentation/6.png)</center>
 
 这个方法的framework大概是这样的，从左到右看。
 
@@ -115,14 +115,14 @@ MRI也是跟CT一样断层扫描的过程且包含4种模态(Modality)，就是�
 *   然后再加上convolution LSTM把2D的切割、2D和2D之间的dependency描述出来之后就形成了3D的切割，然后再做一下decoder，展现成最后这种形式。在最中间有一个切割出来的东西，其他没被切割到的background。
 
 **方法**
-<center>![image](https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/3D-Segmentation/7.png)</center>
+<center>![image](https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/3D-Segmentation/7.png)</center>
 
 1. **MME(Multi-Modal Encoder)**
 
   类似于SegNet里的编码器结构, 因为数据集比较小，因此网络也简化了，使用四个卷积核，通过batch-normalization，然后加一个非线性变换，在后面有四个最大池化层。
   
 2. **MRF(Multi-Resolution Fusion)**
-    <center>![image](https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/3D-Segmentation/8.png)</center>
+    <center>![image](https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/3D-Segmentation/8.png)</center>
     结合多尺度多模态的信息，通过在不同的尺度的encoder和decoder中进行feature multiplication代替级联因此不会增加特征映射的大小。
     
 3. **CMC(Cross-Modality COnvolution)**
@@ -153,4 +153,4 @@ MRI也是跟CT一样断层扫描的过程且包含4种模态(Modality)，就是�
   * 第二阶段：去除median frequency策略并且调低学习率，在真实的肿瘤分布概率下进行训练
 
 **结果**
-<center>![image](https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/3D-Segmentation/10.png)</center>
+<center>![image](https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/3D-Segmentation/10.png)</center>

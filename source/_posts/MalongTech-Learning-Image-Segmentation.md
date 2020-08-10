@@ -7,7 +7,7 @@ categories: 实习
 
 # Image Segmentation
 
-![image](https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Image-Segmentation-Learning/1.jpg)
+![image](https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/Image-Segmentation-Learning/1.jpg)
 
 ## Introduction
 在计算机视觉领域，图像分割（Segmentation）指的是将数字图像细分为多个图像子区域（像素的集合）（也被称作超像素）的过程。图像分割的目的是简化或改变图像的表示形式，使得图像更容易理解和分析。图像分割通常用于定位图像中的物体和边界（线，曲线等）。更精确的，图像分割是对图像中的每个像素加标签的一个过程，这一过程使得具有相同标签的像素具有某种共同视觉特性。<!-- more -->
@@ -52,7 +52,7 @@ $$FWIoU = \frac{1}{\sum_{i=0}^{k}\sum_{j=0}^{k}p_{ij}}\sum_{i=0}^{k}\frac{p_{ii}
 传统神经网络做分类的步骤是，首先是一个图像进来之后经过多层卷积得到降维之后的特征图，这个特征图经过全连接层变成一个分类器，最后输出一个类别的向量，这就是分类的结果。
 
 而 FCN 是把所有的全连接层换成卷基层，原来只能输出一个类别分类的网络可以在特征图的每一个像素输出一个分类结果。这样就把分类的向量，变成了一个分类的特征图。
-<center>![image](https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Image-Segmentation-Learning/2.png)</center>
+<center>![image](https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/Image-Segmentation-Learning/2.png)</center>
 
 上图中的猫, 输入AlexNet, 得到一个长为1000的输出向量, 表示输入图像属于每一类的概率, 其中在“tabby cat”这一类统计概率最高。而FCN对图像进行像素级的分类，从而解决了语义级别的图像分割（semantic segmentation）问题。FCN可以接受任意尺寸的输入图像，采用反卷积层对最后一个卷积层的feature map进行上采样, 使它恢复到输入图像相同的尺寸，从而可以对每个像素都产生了一个预测, 同时保留了原始输入图像中的空间信息, 最后在上采样的特征图上进行逐像素分类。最后逐个像素计算softmax分类的损失, 相当于每一个像素对应一个训练样本。
 
@@ -66,10 +66,10 @@ $$FWIoU = \frac{1}{\sum_{i=0}^{k}\sum_{j=0}^{k}p_{ij}}\sum_{i=0}^{k}\frac{p_{ii}
 * 对最后一个全连接层也做类似的，令其F=1，最终输出为[1x1x1000]
 
 **end to end, pixels to pixels network**
-![image](https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Image-Segmentation-Learning/3.png)
+![image](https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/Image-Segmentation-Learning/3.png)
 经过多次卷积和pooling以后，得到的图像越来越小，分辨率越来越低。其中图像到$\frac{H}{32} \times \frac{W}{32}$的时候图片是最小的一层时，所产生图叫做heatmap热图，热图就是最重要的高维特征图，得到高维特征的heatmap之后就是最重要的一步也是最后的一步对原图像进行upsampling，把图像进行放大、放大、放大，到原图像的大小。最后的输出是1000张heatmap经过upsampling变为原图大小的图片，为了对每个像素进行分类预测label成最后已经进行语义分割的图像，这里有一个小trick，就是最后通过逐个像素地求其在1000张图像该像素位置的最大数值描述（概率）作为该像素的分类。因此产生了一张已经分类好的图片，如上图右侧有狗狗和猫猫的图。
 
-![image](https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Image-Segmentation-Learning/4.png)
+![image](https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/Image-Segmentation-Learning/4.png)
 
 现在我们有1/32尺寸的heatMap，1/16尺寸的featureMap和1/8尺寸的featureMap，1/32尺寸的heatMap进行upsampling操作之后，因为这样的操作还原的图片仅仅是conv5中的卷积核中的特征，限于精度问题不能够很好地还原图像当中的特征，因此在这里向前迭代。把conv4中的卷积核对上一次upsampling之后的图进行反卷积补充细节（相当于一个插值过程），最后把conv3中的卷积核对刚才upsampling之后的图像进行再次反卷积补充细节，最后就完成了整个图像的还原。
 
@@ -81,12 +81,12 @@ $$FWIoU = \frac{1}{\sum_{i=0}^{k}\sum_{j=0}^{k}p_{ij}}\sum_{i=0}^{k}\frac{p_{ii}
 上采样upsampling的主要目的是放大图像，几乎都是采用内插值法，即在原有图像像素的基础上，在像素点值之间采用合适的**插值算法**插入新的元素。
 * 线性插值法：
 使用连接两个已知量的直线来确定在这个两个已知量之间的一个未知量的值的方法。
-<center>![image](https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Image-Segmentation-Learning/5.png)</center>
+<center>![image](https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/Image-Segmentation-Learning/5.png)</center>
 该直线方程可表示为：$\frac{y-y_{0}}{y_{1}-y_{0}}=\frac{x-x_{0}}{x_{1}-x_{0}}$ 假设方程两边的值是$\alpha$，那么这个值就是插值系数，即$\alpha =\frac{y-y_{0}}{y_{1}-y_{0}}=\frac{x-x_{0}}{x_{1}-x_{0}}$. 所以y可以表示为: $y=(1-\alpha)y_{0}+\alpha y_{1} = (1-\frac{x-x_{0}}{x_{1}-x_{0}})y_{0}+\frac{x-x_{0}}{x_{1}-x_{0}}y_{1}=\frac{x_{1}-x}{x_{1}-x_{0}}y_{0}+\frac{x-x_{0}}{x_{1}-x_{0}}y_{1}=\frac{x_{1}-x}{x_{1}-x_{0}}f(x_{1})+\frac{x-x_{0}}{x_{1}-x_{0}}f(x_{0})$
 
 * 双线性插值
 双线性插值是插值算法中的一种，是线性插值的扩展。利用原图像中目标点四周的四个真实存在的像素值来共同决定目标图中的一个像素值，其核心思想是在两个方向分别进行一次线性插值。
-<center>![image](https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Image-Segmentation-Learning/6.png)</center>
+<center>![image](https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/Image-Segmentation-Learning/6.png)</center>
 
 X方向的线性插值：在$Q_{12}$,$Q_{22}$中插入蓝色点$R_{2}$，$Q_{11}$，$Q_{21}$中插入蓝色点$R_{1}$
 
@@ -107,7 +107,7 @@ $f(P)=\frac{y_{2}-y}{y_{2}-y_{1}}f(R_{1})+\frac{y-y_{1}}{y_{2}-y_{1}}f(R_{2})$
 第一，它很慢，因为这个网络必须训练每个patch，并且因为patch间的重叠有很多的冗余,造成资源的浪费，减慢训练时间和效率; 第二，定位准确性和获取上下文信息不可兼得。大的patches需要更多的max-pooling层这样减小了定位准确性,小的patches只能看到很小的局部信息，包含的背景信息不够。
 
 **U-Net Architecture**
-<center>![image](https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Image-Segmentation-Learning/7.jpg)</center>
+<center>![image](https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/Image-Segmentation-Learning/7.jpg)</center>
 
 1. 使用全卷积神经网络。(全卷积神经网络就是卷积取代了全连接层，全连接层必须固定图像大小而卷积不用，所以这个策略使得，你可以输入任意尺寸的图片，而且输出也是图片，所以这是一个端到端的网络。)
 2. 左边的网络是收缩路径：使用卷积和maxpooling。
@@ -115,7 +115,7 @@ $f(P)=\frac{y_{2}-y}{y_{2}-y_{1}}f(R_{1})+\frac{y-y_{1}}{y_{2}-y_{1}}f(R_{2})$
 4. 最后再经过两次反卷积操作，生成特征图，再用两个1X1的卷积做分类得到最后的两张heatmap,例如第一张表示的是第一类的得分，第二张表示第二类的得分heatmap,然后作为softmax函数的输入，算出概率比较大的softmax类，选择它作为输入给交叉熵进行反向传播训练。
 
 **Overlap-tile strategy**
-<center>![image](https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Image-Segmentation-Learning/8.png)</center>
+<center>![image](https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/Image-Segmentation-Learning/8.png)</center>
 
 医学图像是一般相当大，但是分割时候不可能将原图太小输入网络，所以必须切成一张一张的小patch，在切成小patch的时候，Unet由于网络结构原因适合有overlap的切图，可以看图，红框是要分割区域，但是在切图时要包含周围区域，overlap另一个重要原因是周围overlap部分可以为分割区域边缘部分提供文理等信息。可以看黄框的边缘，分割结果并没有受到切成小patch而造成分割情况不好。 
 
@@ -154,7 +154,7 @@ DCNN在图像标记任务中存在两个技术障碍：
 **CRF->语义分割**
 
 对于每个像素位置$i$具有隐变量$x_{i}$(这里隐变量就是像素的真实类别标签，如果预测结果有21类，则$(i \in 1,2,..,21)$ 还有对应的观测值 $y_{i}$(即像素点对应的颜色值)。以像素为节点，像素与像素间的关系作为边，构成了一个条件随机场(CRF)。通过观测变量$y_{i}$来推测像素位置$i$应的类别标签$x_{i}$.条件随机场示意图如下:
-<center>![image](https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Image-Segmentation-Learning/9.png)</center>
+<center>![image](https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/Image-Segmentation-Learning/9.png)</center>
 
 条件随机场符合吉布斯分布(x是上面的观测值，下面省略全局观测I):
 $$p(x|I)=\frac{1}{Z}exp(-E(x|I))$$
@@ -202,7 +202,7 @@ DeepLabv2 是相对于 DeepLabv1 基础上的优化。DeepLabv1 在三个方向�
 3. 最后，通过组合DCNN和概率图模型，改进分割边界结果。在DCNN中最大池化和下采样组合实现可平移不变性，但这对精度是有影响的。通过将最终的DCNN层响应与全连接的CRF结合来克服这个问题。
 
 **步骤**
-<center>![image](https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Image-Segmentation-Learning/10.png)</center>
+<center>![image](https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/Image-Segmentation-Learning/10.png)</center>
 
 *   输入经过改进的DCNN(带空洞卷积和ASPP模块)得到粗略预测结果，即`Aeroplane Coarse Score map`
 *   通过双线性插值扩大到原本大小，即`Bi-linear Interpolation`
@@ -214,23 +214,23 @@ DeepLabv2 是相对于 DeepLabv1 基础上的优化。DeepLabv1 在三个方向�
   首先考虑一维信号，空洞卷积输出为$y[i]$, 输入为$x[i]$, 长度K的滤波器为$w[k]$, 则定义为：
   $$y[k]=\sum_{k=1}^{K}x[i+r\cdot k]w[k]$$
   输入采样的步幅为参数r, 标准采样率是$r=1$如图(a); 图(b)是采样率$r=2$的时候：
-  <center>![image](https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Image-Segmentation-Learning/11.png)</center>
+  <center>![image](https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/Image-Segmentation-Learning/11.png)</center>
   
   二维信号(图片)上使用空洞卷积的表现,给定一个图像：
   * 上分支：首先下采样将分辨率降低2倍，做卷积。再上采样得到结果。本质上这只是在原图片的1/4内容上做卷积响应。
   * 下分支：如果将全分辨率图像做空洞卷积(采样率为2，核大小与上面卷积核相同)，直接得到结果。这样可以计算出整张图像的响应，如下图所示，这样做效果更佳。
-  <center>![image](https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Image-Segmentation-Learning/12.png)</center>
+  <center>![image](https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/Image-Segmentation-Learning/12.png)</center>
   
   空洞卷积能够放大滤波器的感受野，速率r引入$r-1$个零，有效将感受野从$k\times k$扩展到$k_{e}=k+(k-1)(r-1)$而不增加参数和计算量。在DCNN中，常见的做法是混合使用空洞卷积以高的分辨率(理解为采样密度)计算最终的DCNN网络响应。
 2. **使用ASPP模块表示多尺度图像**
 
   DeepLabv2的做法与SPPNet类似，并行的采用多个采样率的空洞卷积提取特征，再将特征融合，类似于空间金字塔结构，形象的称为Atrous Spatial Pyramid Pooling (ASPP)。示意图如下：
-  <center>![image](https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Image-Segmentation-Learning/13.png)</center>
+  <center>![image](https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/Image-Segmentation-Learning/13.png)</center>
   
   在同一Input Feature Map的基础上，并行的使用4个空洞卷积，空洞卷积配置为$r=6,12,18,24$, 核大小为$3 \times 3$. 最终将不同卷积层得到的结果做像素加融合到一起.
 3. **使用全连接CRF做结构预测用于恢复边界精度**
 
-  <center>![image](https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Image-Segmentation-Learning/14.png)</center>
+  <center>![image](https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/Image-Segmentation-Learning/14.png)</center>
   
 **训练**
 
@@ -263,20 +263,20 @@ DeepLabv3的主要贡献在于：
 1. **空洞卷积应用于密集的特征提取**
 2. **深层次的空洞卷积**
 
-  <center>![image](https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Image-Segmentation-Learning/15.png)</center>
+  <center>![image](https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/Image-Segmentation-Learning/15.png)</center>
   
-  <center>![image](https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Image-Segmentation-Learning/18.png)</center>
+  <center>![image](https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/Image-Segmentation-Learning/18.png)</center>
 
   将空洞卷积应用在级联模块, 取ResNet中最后一个block，在上图中为block4，并在其后面增加级联模块。图(a)所示，整体图片的信息总结到后面非常小的特征映射上，使用步幅越长的特征映射，得到的结果反倒会差，结果最好的out_stride = 8 需要占用较多的存储空间。因为连续的下采样会降低特征映射的分辨率，细节信息被抽取，这对语义分割是有害的。上图(b)所示，可使用不同采样率的空洞卷积保持输出步幅的为out_stride = 16.这样不增加参数量和计算量同时有效的缩小了步幅。
   
 3. **Atrous Spatial Pyramid Pooling**
 
   对于在DeepLabv2中提出的ASPP模块，其在特征顶部映射图并行使用了四种不同采样率的空洞卷积。这表明以不同尺度采样是有效的，在DeepLabv3中向ASPP中添加了BN层。不同采样率的空洞卷积可以有效的捕获多尺度信息，但是，随着采样率的增加，滤波器的有效权重(权重有效的应用在特征区域，而不是填充0)逐渐变小。如下图所示：
-  <center>![image](https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Image-Segmentation-Learning/16.png)</center>
+  <center>![image](https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/Image-Segmentation-Learning/16.png)</center>
   
   当不同采样率的$3 \times 3$卷积核应用在$65 \times 65$的特征映射上，采样率接近特征映射大小时，$3 \times 3$的滤波器不是捕捉全图像的上下文，而是退化为简单的$1 \times 1$滤波器，只有滤波器中心点的权重起了作用。
   
-  <center>![image](https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Image-Segmentation-Learning/17.png)</center>
+  <center>![image](https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/Image-Segmentation-Learning/17.png)</center>
   为了克服这个问题，改进了ASPP结构如上图：
   1. 一个$1 \times 1$卷积和三个$3 \times 3$卷积的采样率为$rate = (6,12,18)$的空洞卷积，滤波器数量为256，包含BN层。针对output_stride=16的情况。（当output_stride=8的时候，采样率会加倍，所有的特征会通过$1 \times 1$卷积级联到一起）
   2. 使用了图片级特征。具体来说，在模型最后的特征映射上应用全局平均，将结果经过$1 \times 1$的卷积，再双线性上采样得到所需的空间维度。
@@ -300,7 +300,7 @@ DeepLabv3的主要贡献在于：
 因为深度网络存在pooling or convolutions with stride的层，会导致feature分辨率下降，从而导致预测精度降低，而造成的边界信息丢失问题. 这个问题可以通过使用空洞卷积替代更多的pooling层来获取分辨率更高的feature。但是feature分辨率更高会极大增加运算量。
 
 **方法**
-<center>![image](https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Image-Segmentation-Learning/19.png)</center>
+<center>![image](https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/Image-Segmentation-Learning/19.png)</center>
 
 所以DeepLabV$3^{+}$中通过采用了encoder-decoder结构，在DeepLab V3中加入了一个简单有效的decoder模块来改善物体边缘的分割结果(图c)：先上采样4倍，在与encoder中的特征图concatenate，最后在上采样4倍恢复到原始图像大小。除此之外还尝试使用Xception作为encoder，在Atrous Spatial Pyramid Pooling和decoder中应用depth-wise separable convolution得到了更快精度更高的网络。
 
@@ -312,7 +312,7 @@ DeepLabv3的主要贡献在于：
     * 网络深度与Aligned Xception相同，不同的地方在于为了快速计算和有效的使用内存而不修改entry flow network的结构。
     * 所有的max pooling操作替换成带stride的separable convolution，这能使得对任意分辨率的图像应用atrous separable convolution提取特征。
     * 在每个3×3的depath-wise convolution后增加BN层和ReLU。
-<center>![image](https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Image-Segmentation-Learning/21.png)</center>
+<center>![image](https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/Image-Segmentation-Learning/21.png)</center>
 
 2. **Decoder**
 
@@ -322,11 +322,11 @@ DeepLabv3的主要贡献在于：
     * 用来获得更锋利的边界的3×3的卷积。最后采用了2个3×3的卷积
     * 使用的encoder的低级特征（Conv2）
 
-<center>![image](https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Image-Segmentation-Learning/20.png)</center>
+<center>![image](https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/Image-Segmentation-Learning/20.png)</center>
 
 **结果**：
 
 * **Aligned Xception改**
-  <center>![image](https://raw.githubusercontent.com/Trouble404/Blog_Pics/master/Image-Segmentation-Learning/22.png)</center>
+  <center>![image](https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/Image-Segmentation-Learning/22.png)</center>
   
   当train_stride=16和eval_stride=8的时候mIOU最好达到了84.56% 然而计算量比较高。使用train_stride和eval_stride都为16的时候，结果下降了1.53%但是计算量下降了60倍。

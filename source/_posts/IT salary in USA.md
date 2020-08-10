@@ -10,9 +10,9 @@ categories: Data Visualisation
 
 **Website: SALARY DISTRIBUTION OF DIFFERENT JOBS IN USA**
 
-![image](https://raw.githubusercontent.com/Trouble404/IT-Salary-in-USA/master/readme_add_pic/page1.PNG)<!-- more -->
-![image](https://raw.githubusercontent.com/Trouble404/IT-Salary-in-USA/master/readme_add_pic/page2.PNG)
-![image](https://raw.githubusercontent.com/Trouble404/IT-Salary-in-USA/master/readme_add_pic/page3.PNG)
+![image](https://cdn.jsdelivr.net/gh/Trouble404/IT-Salary-in-USA/readme_add_pic/page1.PNG)<!-- more -->
+![image](https://cdn.jsdelivr.net/gh/Trouble404/IT-Salary-in-USA/readme_add_pic/page2.PNG)
+![image](https://cdn.jsdelivr.net/gh/Trouble404/IT-Salary-in-USA/readme_add_pic/page3.PNG)
 ---
 
 ---
@@ -32,16 +32,16 @@ categories: Data Visualisation
 ### Chart 1: Map chart of average salay of 3 types jobs
 [Tableau address](https://public.tableau.com/profile/j.zhang#!/vizhome/chart1_23/dashborad1)
 
-<img src="https://raw.githubusercontent.com/Trouble404/IT-Salary-in-USA/master/chart/chart1/Chart1.png" width="1000px" />
+<img src="https://cdn.jsdelivr.net/gh/Trouble404/IT-Salary-in-USA/chart/chart1/Chart1.png" width="1000px" />
 
 ### Chart 2: Bubble chart of average salay of 3 types jobs
 [Tableau address](https://public.tableau.com/profile/j.zhang#!/vizhome/chart2_10/dasbord1)
 
-<img src="https://raw.githubusercontent.com/Trouble404/IT-Salary-in-USA/master/chart/chart2/Chart2.png" width="500px" />
+<img src="https://cdn.jsdelivr.net/gh/Trouble404/IT-Salary-in-USA/chart/chart2/Chart2.png" width="500px" />
 
 ### Chart 3 : Cloud words chart of skills used in IT-jobs
 [Cloud words tool](https://timdream.org/wordcloud/#wikipedia:Cloud)
 
-<img src="https://raw.githubusercontent.com/Trouble404/IT-Salary-in-USA/master/chart/chart3/Chart3.png" width="500px" />
+<img src="https://cdn.jsdelivr.net/gh/Trouble404/IT-Salary-in-USA/chart/chart3/Chart3.png" width="500px" />
 
 ---
