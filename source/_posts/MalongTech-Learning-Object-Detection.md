@@ -104,20 +104,58 @@ Confidence计算：$Pr(Object) * IOU_{pred}^{turth} $
 
 ### YOLO V3
 [论文地址](https://pjreddie.com/media/files/papers/YOLOv3.pdf)
+**模型**:
+![image](https://cdn.jsdelivr.net/gh/Trouble404/Image/blog20201022194457.jpeg)
 
-改进：
+**改进**：
 1. 将YOLO V3替换了V2中的Softmax loss变成Logistic loss(每个类一个logistic)，而且每个GT只匹配一个先验框.
 2. Anchor bbox prior不同：V2用了5个anchor，V3用了9个anchor，提高了IOU.
 3. Detection的策略不同：V2只有一个detection，V3设置有3个，分别是一个下采样的，Feature map为13\*13，还有2个上采样的eltwise sum(feature pyramid networks)，Feature map分别为26*\26和52\*52，也就是说，V3的416版本已经用到了52的Feature map，而V2把多尺度考虑到训练的data采样上，最后也只是用到了13的Feature map，这应该是对小目标影响最大的地方。
 总结：![image](https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/Object-detection-learning/11.png)
 4. 网络改进 DarkNet-53: 融合了YOLOv2、Darknet-19以及其他新型残差网络，由连续的3×3和1×1卷积层组合而成，当然，其中也添加了一些shortcut connection，整体体量也更大。因为一共有53个卷积层。![image](https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/Object-detection-learning/12.png)
-5. YOLO V3在Pascal Titan X上处理608x608图像速度达到20FPS，在 COCO test-dev 上 mAP@0.5 达到 57.9%，与RetinaNet的结果相近，并且速度快了4倍。  YOLO V3的模型比之前的模型复杂了不少，可以通过改变模型结构的大小来权衡速度与精度。  速度对比如下：![image](https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/Object-detection-learning/13.png)
-6. 失败的尝试：
+5. LOSS: 除了w, h的损失函数依然采用总方误差之外，其他部分的损失函数用的是二值交叉熵。最后加到一起
+```python
+xy_loss = object_mask * box_loss_scale * K.binary_crossentropy(raw_true_xy, raw_pred[..., 0:2], from_logits=True)
+wh_loss = object_mask * box_loss_scale * 0.5 * K.square(raw_true_wh - raw_pred[..., 2:4])
+confidence_loss = object_mask * K.binary_crossentropy(object_mask, raw_pred[..., 4:5], from_logits=True) + (1 - object_mask) * K.binary_crossentropy(object_mask, raw_pred[..., 4:5], from_logits=True) * ignore_mask
+class_loss = object_mask * K.binary_crossentropy(true_class_probs, raw_pred[..., 5:], from_logits=True)
+
+xy_loss = K.sum(xy_loss) / mf
+wh_loss = K.sum(wh_loss) / mf
+confidence_loss = K.sum(confidence_loss) / mf
+class_loss = K.sum(class_loss) / mf
+loss += xy_loss + wh_loss + confidence_loss + class_loss
+```
+
+**结果**:
+1. YOLO V3在Pascal Titan X上处理608x608图像速度达到20FPS，在 COCO test-dev 上 mAP@0.5 达到 57.9%，与RetinaNet的结果相近，并且速度快了4倍。  YOLO V3的模型比之前的模型复杂了不少，可以通过改变模型结构的大小来权衡速度与精度。  速度对比如下：![image](https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/Object-detection-learning/13.png)
+2. 失败的尝试：
     * Anchor box坐标的偏移预测
     * 用线性方法预测x,y，而不是使用逻辑方法
     * focal loss
     * 双IOU阈值和真值分配
 
+### YOLO V4
+[论文地址](https://arxiv.org/pdf/2004.10934.pdf)
+**模型**:
+![image](https://cdn.jsdelivr.net/gh/Trouble404/Image/blog20201022194538.png)
+
+1. **CBM**: Yolov4网络结构中的最小组件，由Conv+Bn+Mish激活函数三者组成。
+2. **CBL**: 由Conv+Bn+Leaky_relu激活函数三者组成。
+3. **Res unit**: 借鉴Resnet网络中的残差结构，让网络可以构建的更深。
+4. **CSPX**: 借鉴CSPNet网络结构，由卷积层和X个Res unint模块Concate组成。
+5. **SPP**: 采用1×1，5×5，9×9，13×13的最大池化的方式，进行多尺度融合。
+
+每个CSPX中包含3+2*X个卷积层，因此整个主干网络Backbone中一共包含2+（3+2*1）+2+（3+2*2）+2+（3+2*8）+2+（3+2*8）+2+（3+2*4）+1=72。
+
+**改进**:
+1. **输入端**: Mosaic数据增强、cmBN、SAT自对抗训练
+2. **Backbone**: CSPDarknet53、Mish激活函数、Dropblock
+3. **Nect**: SPP模块、FPN+PAN结构
+4. **Prediction**: CIOU_Loss，DIOU_nms
+
+**结果**:
+![image](https://cdn.jsdelivr.net/gh/Trouble404/Image/blog20201022195126.png)
 
 ### SSD: Single Shot MultiBox Detector
 [论文地址](https://arxiv.org/pdf/1512.02325.pdf)
