@@ -154,6 +154,59 @@ loss += xy_loss + wh_loss + confidence_loss + class_loss
 3. **Nect**: SPP模块、FPN+PAN结构
 4. **Prediction**: CIOU_Loss，DIOU_nms
 
+**IOU LOSS**:
+Bounding Box Regeression的Loss近些年的发展过程是：Smooth L1 Loss-> IoU Loss（2016）-> GIoU Loss（2019）-> DIoU Loss（2020）->CIoU Loss（2020）
+
+1. [IOU loss](https://arxiv.org/pdf/1608.01471.pdf)
+![image](https://cdn.jsdelivr.net/gh/Trouble404/Image/blog20201109144545.png)
+
+**pro**:
+* IoU损失将位置信息作为一个整体进行训练, 对比L2损失对4个独立变量进行训练能得到更为准确的效果.
+
+**con**:
+* 当预测框和目标框不相交时，IoU(A,B)=0时，不能反映A,B距离的远近，此时损失函数不可导，IoU Loss 无法优化两个框不相交的情况。
+* 假设预测框和目标框的大小都确定，只要两个框的相交值是确定的，其IoU值是相同时，IoU值不能反映两个框是如何相交的。
+![image](https://cdn.jsdelivr.net/gh/Trouble404/Image/blog20201109151903.png)
+
+
+2. [GIOU loss](https://arxiv.org/pdf/1902.09630.pdf)
+![image](https://cdn.jsdelivr.net/gh/Trouble404/Image/blog20201109153716.png)
+找到一个最小的外接矩形C，让C可以将A和B包围在里面，然后我们计算C中没有覆盖A和B的面积占C总面积的比例，然后用A和B的IOU值减去这个比值
+
+**pro**:
+* 预测框和目标不相交的情况下也可以进行优化，且对物体的尺度大小不敏感(因为比值的原因)
+
+**con**:
+* 当目标框完全包裹预测框的时候，IoU和GIoU的值都一样，此时GIoU退化为IoU, 无法区分其相对位置关系
+![image](https://cdn.jsdelivr.net/gh/Trouble404/Image/blog20201109153852.png)
+
+
+3. [DIOU loss](https://arxiv.org/pdf/1911.08287.pdf)
+![image](https://cdn.jsdelivr.net/gh/Trouble404/Image/blog20201109164442.png)
+通常基于IoU-based的loss可以定义为$L=1-IOU+R(B,B^{gt})$其中$R(B,B^{gt})$)定义为预测框$B$和目标框$B^{gt}$的惩罚项。
+$DIoU=IoU - \frac{p^{2}(b,b^{gt})}{c^{2}}$
+其中，$b$和$b^{gt}$分别代表了预测框和真实框的中心点，且代表的是计算两个中心点间的欧式距离。$c$代表的是能够同时包含预测框和真实框的最小闭包区域的对角线距离。
+
+**pro**:
+* 即使目标框完全包裹预测框的时候也可以进行优化
+* 将目标与anchor之间的距离，重叠率以及尺度都考虑进去，使得目标框回归变得更加稳定，不会像IoU和GIoU一样出现训练过程中发散等问题
+* DIoU还可以替换普通的IoU评价策略，应用于NMS中，使得NMS得到的结果更加合理和有效。
+
+**con**:
+* 没有考虑预测框的长宽比，当预测框与目标框中心点距离相同时无法进行优化
+![image](https://cdn.jsdelivr.net/gh/Trouble404/Image/blog20201109170205.png)
+
+
+4. [CIOU loss](https://arxiv.org/pdf/1911.08287.pdf)
+$CIoU=IoU - \frac{p^{2}(b,b^{gt})}{c^{2}} - \alpha v$
+$v=\frac{4}{\pi^{2}(arctan(w^{gt}/h^{gt})-arctan(w/h))^{2}}$
+$\alpha = v / ((1-IoU)+v)$
+其中，$\alpha$是用于做trade-off的权重函数，$v$是用来衡量长宽比一致性的参数
+
+**pro**:
+* 目标框回归函数应该考虑三个重要几何因素：重叠面积、中心点距离，长宽比全都考虑进去了
+
+
 **结果**:
 ![image](https://cdn.jsdelivr.net/gh/Trouble404/Image/blog20201022195126.png)
 
