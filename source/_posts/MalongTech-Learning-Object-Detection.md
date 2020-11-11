@@ -146,13 +146,52 @@ loss += xy_loss + wh_loss + confidence_loss + class_loss
 4. **CSPX**: 借鉴CSPNet网络结构，由卷积层和X个Res unint模块Concate组成。
 5. **SPP**: 采用1×1，5×5，9×9，13×13的最大池化的方式，进行多尺度融合。
 
-每个CSPX中包含3+2*X个卷积层，因此整个主干网络Backbone中一共包含2+（3+2*1）+2+（3+2*2）+2+（3+2*8）+2+（3+2*8）+2+（3+2*4）+1=72。
+每个CSPX中包含3+2*X个卷积层，因此整个主干网络Backbone中一共包含$2+（3+2*1）+2+（3+2*2）+2+（3+2*8）+2+（3+2*8）+2+（3+2*4）+1=72$。
 
 **改进**:
 1. **输入端**: Mosaic数据增强、cmBN、SAT自对抗训练
 2. **Backbone**: CSPDarknet53、Mish激活函数、Dropblock
-3. **Nect**: SPP模块、FPN+PAN结构
+3. **Nect**: SPP模块、PAN结构
 4. **Prediction**: CIOU_Loss，DIOU_nms
+
+**mosaic**:
+![image](https://cdn.jsdelivr.net/gh/Trouble404/Image/blog20201111174653.png)
+pro:
+* 丰富数据集：随机使用4张图片，随机缩放，再随机分布进行拼接，大大丰富了检测数据集，特别是随机缩放增加了很多小目标，让网络的鲁棒性更好。
+
+**CSPNet**:
+![image](https://cdn.jsdelivr.net/gh/Trouble404/Image/blog20201110164131.png)
+CSPNet的作者认为推理计算过高的问题是由于网络优化中的梯度信息重复导致的。
+
+因此采用CSP模块先将基础层的特征映射划分为两部分，然后通过跨阶段层次结构将它们合并，在减少了计算量的同时可以保证准确率。
+
+因此Yolov4在主干网络Backbone采用CSPDarknet53网络结构，主要有三个方面的优点：
+* 增强CNN的学习能力，使得在轻量化的同时保持准确性。
+* 降低计算瓶颈
+* 降低内存成本
+
+**Mish**:
+![image](https://cdn.jsdelivr.net/gh/Trouble404/Image/blog20201111175218.png)
+正值可以达到任何高度, 避免了由于封顶而导致的饱和。理论上对负值的轻微允许更好的梯度流，而不是像ReLU中那样的硬零边界。
+
+**Dropblock**:
+![image](https://cdn.jsdelivr.net/gh/Trouble404/Image/blog20201110170309.png)
+卷积层对于dropout丢弃并不敏感，因为卷积层通常是三层连用：卷积+激活+池化层，池化层本身就是对相邻单元起作用。而且即使随机丢弃，卷积层仍然可以从相邻的激活单元学习到相同的信息。
+
+**SPP**:
+采用SPP模块的方式，比单纯的使用k*k最大池化的方式，更有效的增加主干特征的接收范围，显著的分离了最重要的上下文特征。
+在SPP模块中，使用$k=[1*1, 5*5, 9*9, 13*13]$的最大池化的方式，再将不同尺度的特征图进行Concat操作。
+
+**PAN**:
+PAN模型也叫金字塔注意力模型，只要由FPA(特征金字塔注意力模块)和GAU两个模型组成
+* FPA
+该模块能够融合来自 U 型网络 (如特征金字塔网络 FPN) 所提取的三种不同尺度的金字塔特征
+![image](https://cdn.jsdelivr.net/gh/Trouble404/Image/blog20201111173615.png)
+* GAU
+GAU是用在decode时候的单元，并且引入注意力机制
+![image](https://cdn.jsdelivr.net/gh/Trouble404/Image/blog20201111173723.png)
+
+yolov4包含两个PAN结构，并且只取最后一个特征图，FPN层自顶向下传达强语义特征，而特征金字塔则自底向上传达强定位特征，两两联手，从不同的主干层对不同的检测层进行参数聚合。
 
 **IOU LOSS**:
 Bounding Box Regeression的Loss近些年的发展过程是：Smooth L1 Loss-> IoU Loss（2016）-> GIoU Loss（2019）-> DIoU Loss（2020）->CIoU Loss（2020）
