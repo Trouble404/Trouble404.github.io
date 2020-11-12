@@ -148,11 +148,14 @@ loss += xy_loss + wh_loss + confidence_loss + class_loss
 
 每个CSPX中包含3+2*X个卷积层，因此整个主干网络Backbone中一共包含$2+（3+2*1）+2+（3+2*2）+2+（3+2*8）+2+（3+2*8）+2+（3+2*4）+1=72$。
 
+**评估过的技术**
+![image](https://cdn.jsdelivr.net/gh/Trouble404/Image/blog20201112153043.png)
+
 **改进**:
-1. **输入端**: Mosaic数据增强、cmBN、SAT自对抗训练
+1. **输入端**: Mosaic数据增强、cmBN、SAT自对抗训练、类别标签平滑化
 2. **Backbone**: CSPDarknet53、Mish激活函数、Dropblock
 3. **Nect**: SPP模块、PAN结构
-4. **Prediction**: CIOU_Loss，DIOU_nms
+4. **Prediction**: CmBN、最优超参数、CIOU_Loss，DIOU_nms
 
 **mosaic**:
 ![image](https://cdn.jsdelivr.net/gh/Trouble404/Image/blog20201111174653.png)
@@ -183,7 +186,7 @@ CSPNet的作者认为推理计算过高的问题是由于网络优化中的梯�
 在SPP模块中，使用$k=[1*1, 5*5, 9*9, 13*13]$的最大池化的方式，再将不同尺度的特征图进行Concat操作。
 
 **PAN**:
-PAN模型也叫金字塔注意力模型，只要由FPA(特征金字塔注意力模块)和GAU两个模型组成
+PAN模型也叫金字塔注意力模型，主要由FPA(特征金字塔注意力模块)和GAU两个模型组成
 * FPA
 该模块能够融合来自 U 型网络 (如特征金字塔网络 FPN) 所提取的三种不同尺度的金字塔特征
 ![image](https://cdn.jsdelivr.net/gh/Trouble404/Image/blog20201111173615.png)
