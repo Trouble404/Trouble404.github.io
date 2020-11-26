@@ -9,16 +9,137 @@ categories: 实习
 
 ![image](https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/Object-detection-learning/14.png)
 
-| one-stage系  | two-stage系|
-| ---------- | -----------|
-| YOLO V1,V2,V3   | FPN   |
-| SSD   | RFCN   |
-| RetinalNet | LIghthead |
+| one-stage系       | two-stage系| anchor-free系 |
+| ----------        | -----------| ------------ |
+| YOLO V1,V2,V3,V4  | FPN        | ATSS         |
+| SSD               | RFCN       | GFocal Loss  |
+| RetinalNet        | LIghthead  |
 <!-- more -->
-## One Stage
 
+## Anchor Free
+
+### ATSS
+[PAPER ADDRESS](https://arxiv.org/abs/1912.02424)
+
+**出发点**
+Anchor-based和anchor-free检测器主要的差异是**如何定义正负样本**
+
+Anchor-based和anchor-free检测器有三点不同：
+- 特征图上每个位置的anchor数量不同
+    - RetinaNet每个位置多个预设的anchor，FCOS每个位置一个anchor point
+- 定义正负样本的方式不同
+    - RetinaNet通过IOU来选择正负样本，FCOS利用空间和尺度约束来选择正负样本
+    - FCOS相比RetinaNet的AP更高，但**如果选择了相似的正负样本采样方法，anchor-based和anchor-free的方法没有显著的差异**
+![image](https://cdn.jsdelivr.net/gh/Trouble404/Image/blog20201126111454.png)
+- 回归的开始状态不同
+    - RetinaNet通过anchor来回归目标，FCOS通过anchor point来回归目标（回归的开始状态并不是造成结果差异的原因）
+![image](https://cdn.jsdelivr.net/gh/Trouble404/Image/blog20201126111717.png)
+
+**Adaptive Training Sample Selection (ATSS)**
+* **基于anchor和GT之间的中心距离来选择候选框**
+* **使用anchor和GT之间的IoU的mean和std的和作为IoU阈值**
+
+一个目标（GT）的IOU mean用于衡量和这个目标关联的anchor对它的匹配度。mean越高，表示这个目标拥有很多高质量的候选框；一个目标的IOU std用于衡量哪个层适合检测这个目标。高std表示存在某个特征层特别适合这个目标，低std表示存在多个特征层适合检测这个目标。
+
+将mean和std加在一起作为IOU阈值，可以自适应的从合适的特征层级为每个目标选择正样本
+
+* **限制正样本的中心在GT内**
+
+如果anchor的中心在GT外，那么它会使用目标外的特征来预测，对于训练帮助不大
+
+* **维持不同目标采样数量的公平性**
+
+常规的采样方法倾向于采样更多的正样本，而ATSS对于每个目标大约采样$0.2*K*L$个正样本
+
+![image](https://cdn.jsdelivr.net/gh/Trouble404/Image/blog20201126112032.png)
+
+
+
+### GFocal Loss
+[PAPER ADDRESS](https://arxiv.org/pdf/2006.04388.pdf)
+
+![image](https://cdn.jsdelivr.net/gh/Trouble404/Image/blog20201126113053.png)
+
+**出发点**
+
+- **classification score 和 IoU/centerness score 训练测试不一致**
+    - **用法不一致**
+    训练的时候，分类和质量估计各自训记几个儿的，但测试的时候却又是乘在一起作为NMS score排序的依据，这个操作显然没有end-to-end，必然存在一定的gap。
+
+    - **对象不一致**
+    借助Focal Loss的力量，分类分支能够使得少量的正样本和大量的负样本一起成功训练，但是质量估计通常就只针对正样本训练。
+
+那么，对于one-stage的检测器而言，在做NMS score排序的时候，所有的样本都会将分类score和质量预测score相乘用于排序，那么必然会存在一部分分数较低的“负样本”的质量预测是没有在训练过程中有监督信号的，有就是说对于大量可能的负样本，他们的质量预测是一个未定义行为。
+
+这就很有可能引发这么一个情况：一个分类score相对低的真正的负样本，由于预测了一个不可信的极高的质量score，而导致它可能排到一个真正的正样本（分类score不够高且质量score相对低）的前面。
+
+- **bbox regression 采用的表示不够灵活，没有办法建模复杂场景下的uncertainty**
+在复杂场景中，边界框的表示具有很强的不确定性，而现有的框回归本质都是建模了非常单一的狄拉克分布，非常不flexible。我们希望用一种general的分布去建模边界框的表示。如图所示（比如被水模糊掉的滑板，以及严重遮挡的大象）
+![image](https://cdn.jsdelivr.net/gh/Trouble404/Image/blog20201126113312.png)
+
+
+**Generalized Focal Loss**
+为了保证training和test一致，同时还能够兼顾分类score和质量预测score都能够训练到所有的正负样本，那么一个方案呼之欲出：就是将两者的表示进行联合。这个合并也非常有意思，从物理上来讲，我们依然还是保留分类的向量，但是对应类别位置的置信度的物理含义不再是分类的score，而是改为质量预测的score。这样就做到了两者的联合表示
+* Focal Loss
+$
+FL(p)=-(1-p_{t})^{\gamma}log(p_{t}),\  p_{t}=
+\left\{\begin{matrix}
+p, when \ y=1 & \\ 
+1-p, when \ y=0 & 
+\end{matrix}\right.
+$
+
+* Quality Focal Loss
+$
+QFL(\sigma)=-\left |y-\sigma  \right |^{\beta}((1-y)log(1-\sigma)+ylog(\sigma))
+$
+
+对于框的表示我们选择直接回归一个任意分布来建模框的表示。当然，在连续域上回归是不可能的，所以可以用离散化的方式，通过softmax来实现即可。这里面涉及到如何从狄拉克分布的积分形式推导到一般分布的积分形式来表示框
+```python
+class Project(nn.Module):
+    """
+    A fixed project layer for distribution
+    """
+
+    def __init__(self, reg_max=16):
+        super(Project, self).__init__()
+        self.reg_max = reg_max
+        self.register_buffer("project", torch.linspace(0, self.reg_max, self.reg_max + 1))
+
+    def forward(self, x):
+        """Forward feature from the regression head to get integral result of
+        bounding box location.
+        Args:
+            x (Tensor): Features of the regression head, shape (N, 4*(n+1)),
+                n is self.reg_max.
+        Returns:
+            x (Tensor): Integral result of box locations, i.e., distance
+                offsets from the box center in four directions, shape (N, 4).
+        """
+        x = F.softmax(x.reshape(-1, self.reg_max + 1), dim=1)
+        x = F.linear(x, self.project.type_as(x)).reshape(-1, 4)
+        return x
+```
+对于任意分布来建模框的表示，它可以用积分形式嵌入到任意已有的和框回归相关的损失函数上，例如最近比较流行的GIoU Loss。但是如果分布过于任意，网络学习的效率可能会不高，原因是一个积分目标可能对应了无穷多种分布模式。
+![image](https://cdn.jsdelivr.net/gh/Trouble404/Image/blog20201126143136.png)
+
+考虑到真实的分布通常不会距离标注的位置太远，所以我们又额外加了个loss，希望网络能够快速地聚焦到标注位置附近的数值，使得他们概率尽可能大。
+* Distribution Focal Loss
+$DFL(S_{i}, S_{i+1})=-((y_{i+1}-y)log(S_{i})+(y-y_{i})log(S_{i+1}))$
+
+其形式上与QFL的右半部分很类似，含义是以类似交叉熵的形式去优化与标签y最接近的一左一右两个位置的概率，从而让网络快速地聚焦到目标位置的邻近区域的分布中去。
+
+**extra**
+![image](https://cdn.jsdelivr.net/gh/Trouble404/Image/blog20201126143711.png)
+有一些分布式表示学到了多个峰，比如伞这个物体，它的伞柄被椅子严重遮挡。如果我们不看伞柄，那么可以按照白色框（gt）来定位伞，但如果我们算上伞柄，我们又可以用绿色框（预测）来定位伞。
+
+在分布上，它也的确呈现一个双峰的模式（bottom），它的两个峰的概率会集中在底部的绿线和白线的两个位置。这个观察还是相当有趣的。
+
+这可能带来一个妙用，就是我们可以通过分布shape的情况去找哪些图片可能有界定很模糊的边界，从而再进行一些标注的refine或一致性的检查等等。
+
+## One Stage
 ### YOLO V1
-** You only look once unified real-time object detection**
+**You only look once unified real-time object detection**
 
 [PAPER ADDRESS](https://www.cv-foundation.org/openaccess/content_cvpr_2016/papers/Redmon_You_Only_Look_CVPR_2016_paper.pdf)
 
@@ -183,7 +304,7 @@ CSPNet的作者认为推理计算过高的问题是由于网络优化中的梯�
 
 **SPP**:
 采用SPP模块的方式，比单纯的使用k*k最大池化的方式，更有效的增加主干特征的接收范围，显著的分离了最重要的上下文特征。
-在SPP模块中，使用$k=[1*1, 5*5, 9*9, 13*13]$的最大池化的方式，再将不同尺度的特征图进行Concat操作。
+在SPP模块中，使用k=[1x1, 5x5, 9x9, 13x13]的最大池化的方式，再将不同尺度的特征图进行Concat操作。
 
 **PAN**:
 PAN模型也叫金字塔注意力模型，主要由FPA(特征金字塔注意力模块)和GAU两个模型组成
