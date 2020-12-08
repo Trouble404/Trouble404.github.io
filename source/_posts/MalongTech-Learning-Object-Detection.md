@@ -9,11 +9,11 @@ categories: 实习
 
 ![image](https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/Object-detection-learning/14.png)
 
-| one-stage系       | two-stage系| anchor-free系 |
-| ----------        | -----------| ------------ |
-| YOLO V1,V2,V3,V4  | FPN        | ATSS         |
-| SSD               | RFCN       | GFocal Loss  |
-| RetinalNet        | LIghthead  |
+| one-stage系          | two-stage系| anchor-free系       |
+| ----------           | -----------| ------------       |
+| YOLO V1,V2,V3,V4,V5  | FPN        | ATSS               |
+| SSD                  | RFCN       | GFocal Loss v1,v2  |
+| RetinalNet           | LIghthead  | Auto Assign        |
 <!-- more -->
 
 ## Anchor Free
@@ -54,8 +54,55 @@ Anchor-based和anchor-free检测器有三点不同：
 ![image](https://cdn.jsdelivr.net/gh/Trouble404/Image/blog20201126112032.png)
 
 
+### AutoAssign
+[PAPER ADDRESS](https://arxiv.org/pdf/2007.03496.pdf)
 
-### GFocal Loss
+通过生成正负权重图来动态地修改每个位置的预测，从而自动地确定正负样本。具体来说，作者提出了一个中心加权模块来调整特定类别的先验分布，并用了一个置信度加权模块来适应每个实例特定的分配策略。整个标签分配过程不需要额外的修改即可在不同数据集和任务上使用
+
+ 现有检测器对正负位置采样主要是根据的人工先验:
+ 1. 基于anchor的检测器如RetinaNet是在每个位置预置几个不同尺度和高宽比的anchor，根据IoU值在不同空间和尺度特征图进行正负样本采样
+ 2. FCOS等anchor-free检测器是选取固定比例的中心区域作为每个目标的空间正位置，并根据预定义的尺度约束选取FPN的某一层级。这些检测器都是根据目标的先验分布来设计的分配策略。
+
+但是在现实世界中，目标外观在不同类别和场景之间差异很大。固定的中心采样策略可能会导致目标外部位置分为正值，因为在目标上采样会比在背景采样更容易得到高分类置信度。另一方面，尽管CNN可以学习偏移，但是当将背景标为正样本时，特征移动带来的干扰可能会降低性能。
+![image](https://cdn.jsdelivr.net/gh/Trouble404/Image/blog20201208151030.png)
+
+因此，固定的采样策略可能并不能在空间和尺度维度上选到最合适的位置。作者提出了一种新的标签分配策略。首先遵循FCOS等anchor free方法不使用人工设计的anchor，直接预测每个位置上的目标。为了保留足够多的位置用于进一步的优化，先处理所有尺度层级的边界框（正样本+负样本）中的所有位置。然后生成正负权重图来修正训练损失中的预测。为适应不同类别和域的分布，作者提出了一个类别加权模块，**center weighting**，用来学习数据中每个类别的分布。为适应每个实例的外观和比例，作者又提出一个**置信度加权模块(Confidence weighting)**，在空间和尺度维度上修改各个位置的正、负置信度。然后将两个模块结合起来，生成所有位置的正、负权重图进行加权，加权过程是可微的，可通过反向传播进行优化。
+
+![image](https://cdn.jsdelivr.net/gh/Trouble404/Image/blog20201208151255.png)
+
+- **Center Weighting**
+先验分布是标签分配的基本要素，尤其是在训练早期。通常目标的分布会倾向于中心先验，但不同类别的目标可能会有不同的分布。保持采样中心无法去更好地捕捉现实世界中不同实例的不同分布。对不同类别的目标，更需要一种自适应的中心分布。
+因此基于中心先验作者提出了一种带可学习参数的高斯形状的类别级加权函数G，每一类别都有其独有的参数(μ，σ)，相同类别的目标共享这一组参数
+![image](https://cdn.jsdelivr.net/gh/Trouble404/Image/blog20201208151600.png)
+
+- **Confidence Weighting**
+    - Classification confidence
+    给定空间位置i，其分类置信度定义为Pi(cls|θ)，目标类别概率由网络直接预测，θ表示模型参数。为确保有考虑到所有合适的位置，作者先考虑了框内所有空间位置。由于一个目标很难完全占满预测框，所以初始正集中往往会包含一部分背景。如果一个位置实际是背景，那么该位置所有的类别预测都是不合理的，将这些背景位作为正样本会有损检测性能。
+    为了抑制来自劣质位的false positives，作者引入了一个Implicit-Obiectness分支。它的工作原理类似于RPN 和YOLO中的Objectness，主要进行前景、背景的二分类任务，但是其存在缺少显式标签的问题。RPN和YOLO采用预定义分配方式，分配一致的正标签，而Autoassign需要动态地去找到并强调那些合适的positive。Implicit-Obiectness分支会和分类分支一起去优化Objectness，因此它不需要显式标签，其实也就是用一个隐式的前景背景二分类对分类预测做一个相乘，这个分支没有额外监督，就只是单纯地去放缩一下分类的预测。
+    ![image](https://cdn.jsdelivr.net/gh/Trouble404/Image/blog20201208152640.png)
+
+    - Joint confidence modeling
+    了生成每个位置的正负无偏估计，除了分类外，还应该考虑到定位置信度。定位分支的输出是框的偏移量，这很难直接用于度量回归置信度。因此作者将定位损失$L_{i}^{cls}(\theta)$
+    转换为回归似然Pi(loc|θ)，然后将分类和回归似然结合起来得到联合置信度Pi(θ)，联合置信度可由损失转换得到。为了不失泛化性，作者使用二元交叉篇损失（BCE）用于分类，λ用来平衡两个损失。
+    ![image](https://cdn.jsdelivr.net/gh/Trouble404/Image/blog20201208152547.png)
+
+- **Weighting function**
+    - positive weights
+        对于一个目标i，应该只关注其边界框内合适的位置做出更精准的预测。但是在训练刚开始网络参数是随机初始化的，其预测的置信度值可能并不合理。因此来自先验的指导信息也很重要。对于位置i∈Sn，作者结合了置信度权重模块C(Pi)以及中心加权模块中特定类别的先验$G(di)$来生成positive weights wi+
+        ![image](https://cdn.jsdelivr.net/gh/Trouble404/Image/blog20201208153103.png)
+        如果一开始质量较差的位置的分类和回归置信度预测出来都不错，那么它的w+就会很高，也就是它权重会较大，监督训练对它的关照会不断增大，这样会导致一些好的位置没有机会翻盘，让网络学成了一个过拟合的模样。所以作者引入了G(d)，由于大部分情况下质量较高的正样本都会在框的中心，作者为每个大类学习了一个公共的高斯先验，形状基本是从物体的大致中心区域向外渐渐变弱。引入这一项可学习先验后，那些更有潜力的位置就可能能翻盘。不过这个可学习的先验仅与类别有关，可能会造成对旋转目标的不匹配。为保证竞争和合理的数值范围，还有一个类似softmax的操作，因为本来一个gt框里面也只有一部分是真正地落在物体上的，这些位置应当对应那些较大的w+值。
+
+    - negative weights
+     边界框内通常会包含一定数量的背景位置，因此我们需要使用加权的negative loss来抑制这些位置，消除false positive。此外，由于边界框内的位置一般会预测得到较高的positive置信度，作者倾向于使用定位置信度来生成false positives的无偏指标。但是负分类并没有参与回归，也就是不应该对其定位置信度做进一步优化。因此作者使用每个位置预测的proposal和GT之间的IoUs来生成负权值wi-
+     ![image](https://cdn.jsdelivr.net/gh/Trouble404/Image/blog20201208153234.png)
+     $iou_{i}$表示位置i的propos与所有GT的IOU最大值。为作为有效权重使用，作者通过函数f归一化1/(1-ioui)到0-1之间。这种转换锐化了权值分布，并确保了IoU最高值位置的负损失为0，边界框以外所有位置的wi-设置为1，因为是背景。
+
+- **Loss function**
+通过生成正负权重图，作者实现了为每个实例动态分配更合适的空间位置且自动选择合适的FPN层级。由于权重图会对训练损失做贡献，AutoAssign以可微的方式处理标签分配，损失函数为：
+![image](https://cdn.jsdelivr.net/gh/Trouble404/Image/blog20201208153413.png)
+
+
+### GFocal Loss V1
 [PAPER ADDRESS](https://arxiv.org/pdf/2006.04388.pdf)
 
 ![image](https://cdn.jsdelivr.net/gh/Trouble404/Image/blog20201126113053.png)
@@ -136,6 +183,31 @@ $DFL(S_{i}, S_{i+1})=-((y_{i+1}-y)log(S_{i})+(y-y_{i})log(S_{i+1}))$
 在分布上，它也的确呈现一个双峰的模式（bottom），它的两个峰的概率会集中在底部的绿线和白线的两个位置。这个观察还是相当有趣的。
 
 这可能带来一个妙用，就是我们可以通过分布shape的情况去找哪些图片可能有界定很模糊的边界，从而再进行一些标注的refine或一致性的检查等等。
+
+### GFocal Loss V2
+[PAPER ADDRESS](https://arxiv.org/pdf/2011.12885.pdf)
+
+![image](https://cdn.jsdelivr.net/gh/Trouble404/Image/blog20201208120031.png)
+
+用**边界框的不确定性**的统计量来**高效**地指导**定位质量估计**
+
+![image](https://cdn.jsdelivr.net/gh/Trouble404/Image/blog20201208141900.png)
+
+**出发点**
+在GFocalV1中，对边界框进行一个一般化的分布表示建模后基本上那些非常清晰明确的边界，它的分布都很尖锐；而模糊定义不清的边界，它们学习到的分布基本上会平下来，而且有的时候还经常出现双峰的情况。
+
+既然分布的形状和真实的定位质量非常相关，因此用能够表达分布形状的统计量去指导最终定位质量的估计。
+
+对GFLV1做了一些统计分析，具体把预测框的分布的top-1值和其真实的IoU定位质量做了一个散点图，可以看出，整个散点图还是有一个明显地倾向于y=x的趋势的，也就是说，在统计意义上，“分布的形状与真实的定位质量具有较强的相关性”这个假设是基本成立的
+
+**v2**
+直接取学习到的分布（分布是用离散化的多个和为1的回归数值表示的Topk数值。因为所有数值和为1，如果分布非常尖锐的话，Topk这几个数通常就会很大；反之Topk就会比较小。选择Topk还有一个重要的原因就是它可以使得特征与对象的scale尽可能无关，如下图所示
+![image](https://cdn.jsdelivr.net/gh/Trouble404/Image/blog20201208142603.png)
+简单来说就是长得差不多形状的分布要出差不多结果的数值，不管它峰值时落在小scale还是大scale。把4条边的分布的Topk concat在一起形成一个维度非常低的输入特征向量（可能只有10+或20+），用这个向量再接一个非常小的fc层（通常维度为32、64），最后再变成一个Sigmoid之后的scalar乘到原来的分类表征中就可以了
+
+![image](https://cdn.jsdelivr.net/gh/Trouble404/Image/blog20201208142833.png)
+
+其他算法里面也有非常准的预测框，但是它们的score通常都排到了第3第4的位置，而score排第一的框质量都比较欠佳。相反，GFLV2也有预测不太好的框，但是质量较高的框都排的非常靠前
 
 ## One Stage
 ### YOLO V1
@@ -372,6 +444,64 @@ $\alpha = v / ((1-IoU)+v)$
 
 **结果**:
 ![image](https://cdn.jsdelivr.net/gh/Trouble404/Image/blog20201022195126.png)
+
+
+### YOLO V5
+[代码地址](https://github.com/ultralytics/yolov5)
+**模型**:
+![image](https://cdn.jsdelivr.net/gh/Trouble404/Image/blog20201208113635.png)
+
+- **Backbone**
+    - Focus结构
+    ![image](https://cdn.jsdelivr.net/gh/Trouble404/Image/blog20201208114022.png)
+    这个其实就是yolov2里面的ReOrg+Conv操作，也是亚像素卷积的反向操作版本，简单来说就是把数据切分为4份，每份数据都是相当于2倍下采样得到的，然后在channel维度进行拼接，最后进行卷积操作。以Yolov5s的结构为例，原始$608*608*3$的图像输入Focus结构，采用切片操作，先变成$304*304*12$的特征图，再经过一次32个卷积核的卷积操作，最终变成$304*304*32$的特征图
+
+    - CSP结构
+    Yolov5与Yolov4不同点在于，Yolov4中只有主干网络使用了CSP结构。而Yolov5中设计了两种CSP结构，以**Yolov5s**网络为例，**CSP1_X**结构应用于**Backbone**主干网络，另一种**CSP2_X**结构则应用于**Neck**中。
+
+    - Neck结构
+    ![image](https://cdn.jsdelivr.net/gh/Trouble404/Image/blog20201208114452.png)
+    Yolov5和Yolov4的不同点在于，Yolov4的Neck结构中，采用的都是普通的卷积操作。而Yolov5的Neck结构中，采用借鉴CSPnet设计的CSP2结构，加强网络特征融合的能力。
+
+- **结构参数**
+yolov5通过灵活的配置参数，可以得到不同复杂度的模型
+    - Yolov5s
+    depth_multiple: 0.33
+    width_multiple: 0.50
+
+    - Yolov5m
+    depth_multiple: 0.67
+    width_multiple: 0.75
+
+    - Yolov5l
+    depth_multiple: 1.0
+    width_multiple: 1.0
+
+    - Yolov5x
+    depth_multiple: 1.33
+    width_multiple: 1.25
+
+- **Anchor匹配策略**
+在诸多论文研究中表明，例如FCOS和ATSS：**增加高质量正样本anchor可以显著加速收敛**。
+yolov5也采用了增加正样本anchor数目的做法来加速收敛，这其实也是yolov5在实践中表明收敛速度非常快的原因。其核心匹配规则为：
+
+1. 对于任何一个输出层，抛弃了基于max iou匹配的规则，而是直接采用shape规则匹配，也就是该bbox和当前层的anchor计算宽高比，如果宽高比例大于设定阈值，则说明该bbox和anchor匹配度不够，将该bbox过滤暂时丢掉，在该层预测中认为是背景
+
+2. 对于剩下的bbox，计算其落在哪个网格内，同时利用四舍五入规则，找出最近的两个网格，将这三个网格都认为是负责预测该bbox的，可以发现粗略估计正样本数相比前yolo系列，至少增加了三倍
+
+    因此不同于yolov3和v4，
+    * 其gt bbox可以跨层预测即有些bbox在多个预测层都算正样本
+    * 其gt bbox的匹配数范围从3-9个,明显增加了很多正样本
+    * *有些gt bbox由于和anchor匹配度不高，而变成背景
+    **虽然可以加速收敛，但是由于引入了很多低质量anchor，对最终结果还是有影响的**
+
+- **自适应anchor计算**
+在Yolo算法中，针对不同的数据集，都会有初始设定长宽的锚框。
+在网络训练中，网络在初始锚框的基础上输出预测框，进而和真实框groundtruth进行比对，计算两者差距，再反向更新，迭代网络参数。
+
+**结果**:
+![image](https://cdn.jsdelivr.net/gh/Trouble404/Image/blog20201208115712.png)
+
 
 ### SSD: Single Shot MultiBox Detector
 [论文地址](https://arxiv.org/pdf/1512.02325.pdf)
