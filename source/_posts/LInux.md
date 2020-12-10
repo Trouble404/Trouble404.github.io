@@ -27,8 +27,26 @@ Reboot your computer so that the new driver is loaded.
 <!-- more -->
 ### CUDA+Cudnn
 1. 下载对应驱动版本的cuda以及cudnn
+```shell
+chmod 755 cuda_%version%_linux.run
+sudo sh cuda_%version%_linux.run
+```
 2. 安装cuda后配置环境变量
+```shell
+export CUDA_HOME=/usr/local/cuda 
+export PATH=$PATH:$CUDA_HOME/bin 
+export LD_LIBRARY_PATH=/usr/local/cuda-10.2/lib64${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
+```
 3. 把cudnn对应文件移入 /usr/local/cuda/ 中
+```shell
+sudo cp cuda/include/cudnn.h /usr/local/cuda/include/
+sudo cp cuda/lib64/libcudnn.so.7.6.5 /usr/local/cuda/lib64/
+sudo cp cuda/lib64/libcudnn_static.a /usr/local/cuda/lib64/
+sudo chmod a+r /usr/local/cuda/include/cudnn.h
+sudo chmod a+r /usr/local/cuda/lib64/libcudnn*
+sudo ln -s /usr/local/cuda/lib64/libcudnn.so.7.6.5 /usr/local/cuda/lib64/libcudnn.so.7
+sudo ln -s /usr/local/cuda/lib64/libcudnn.so.7 /usr/local/cuda/lib64/libcudnn.so
+```
 
 
 ### Vim
