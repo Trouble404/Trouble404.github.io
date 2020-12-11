@@ -227,6 +227,24 @@ $DFL(S_{i}, S_{i+1})=-((y_{i+1}-y)log(S_{i})+(y-y_{i})log(S_{i+1}))$
 
 ## Transformer
 
+### OneNet
+**an effective baseline for endto-end one-stage object detection**
+[PAPER ADDRESS](https://peizesun.github.io/OneNet.pdf)
+
+![image](https://cdn.jsdelivr.net/gh/Trouble404/Image/blog20201211165648.png)
+
+* OneNet将classification cost加入到location cost中，可以去除后续的NMS；
+* 样本匹配策略是one-to-one，即一个gt一个正样本，其他都是负样本；
+
+**Backbone**: Backbone是先bottom-up再top-down的结构。其中，bottom-up结构是resnet，top-down结构是FPN。
+**Head**: Head是两个并行的conv，分类conv预测类别，回归conv预测到物体框的4个边界的距离。
+**Output**: 直接取top-k高分框，没有NMS，也没有类似CenterNet中max-pooling的操作
+
+**Label Assignment**
+Label Assignment（样本选择策略）的cost定义为样本与gt的classification cost(loss)和location cost(loss)之和，即：
+![image](https://cdn.jsdelivr.net/gh/Trouble404/Image/blog20201211165611.png)
+
+
 ### POTO
 **End-to-End Object Detection with Fully Convolutional Network**
 [PAPER ADDRESS](https://arxiv.org/pdf/2012.03544.pdf)
