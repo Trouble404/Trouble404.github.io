@@ -9,9 +9,9 @@ categories: 实习
 
 ![image](https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/Object-detection-learning/14.png)
 
-| one-stage系          | two-stage系| anchor-free系       |
-| ----------           | -----------| ------------       |
-| YOLO V1,V2,V3,V4,V5  | FPN        | ATSS               |
+| one-stage系          | two-stage系| anchor-free系       | Transform系  |
+| ----------           | -----------| ------------       | -------------
+| YOLO V1,V2,V3,V4,V5  | FPN        | ATSS               | POTO         |
 | SSD                  | RFCN       | GFocal Loss v1,v2  |
 | RetinalNet           | LIghthead  | Auto Assign        |
 <!-- more -->
@@ -190,6 +190,21 @@ $DFL(S_{i}, S_{i+1})=-((y_{i+1}-y)log(S_{i})+(y-y_{i})log(S_{i+1}))$
 ![image](https://cdn.jsdelivr.net/gh/Trouble404/Image/blog20201208120031.png)
 
 用**边界框的不确定性**的统计量来**高效**地指导**定位质量估计**
+![image](https://cdn.jsdelivr.net/gh/Trouble404/Image/blog20201211112255.png)
+
+* a.**point**:单点特征做增强
+
+* b.**region**:用ROIAlign提取框内所有特征来增强
+
+* c.**boder**:使用边界上所有点的特征来增强
+
+* d.**middle border**:只用边界中心点来增强
+
+* e.**border align**:边界极限点特征对边界框的定位
+
+* f.**regular sampling points**: 
+
+* g.**deformable sampling points**: 使用可变性卷积
 
 ![image](https://cdn.jsdelivr.net/gh/Trouble404/Image/blog20201208141900.png)
 
@@ -207,7 +222,54 @@ $DFL(S_{i}, S_{i+1})=-((y_{i+1}-y)log(S_{i})+(y-y_{i})log(S_{i+1}))$
 
 ![image](https://cdn.jsdelivr.net/gh/Trouble404/Image/blog20201208142833.png)
 
-其他算法里面也有非常准的预测框，但是它们的score通常都排到了第3第4的位置，而score排第一的框质量都比较欠佳。相反，GFLV2也有预测不太好的框，但是质量较高的框都排的非常靠前
+其他算法里面也有非常准的预测框，但是它们的score通常都排到了第3第4的位置，而score排第一的框质量都比较欠佳。相反，GFLV2也有预测不太好的框，但是质量较高的框都排的非常靠前.
+
+
+## Transformer
+
+### POTO
+**End-to-End Object Detection with Fully Convolutional Network**
+[PAPER ADDRESS](https://arxiv.org/pdf/2012.03544.pdf)
+
+![image](https://cdn.jsdelivr.net/gh/Trouble404/Image/blog20201211120148.png)
+
+基于全卷积网络的主流目标检测器大多数仍然需要非最大抑制(NMS)后处理，在这篇文章中，我们**不再使用NMS**，为此，对于完全卷积检测器，我们引入了**Prediction-aware One-To-One：POTO** label assignment for classification，以实现端到端检测，获得与NMS相当的性能。此外，提出了一种简单的**3D Max Filtering**（3DMF），利用多尺度特征，提高局部区域卷积的可分辨性。
+
+- **Prediction-aware One-to-one Label Assignment**
+    使用固定的hand-designed one-to-one label assignment得到的location往往不是最优的，因此，这种强迫式地分配会使得网络收敛难度增加，同时造成更多的False-positive预测。作者这里根据Prediction的质量来进行label assignment。
+
+    目标检测的损失函数为:
+    ![image](https://cdn.jsdelivr.net/gh/Trouble404/Image/blog20201211140855.png)
+
+    其中，$\Psi$表示所有预测的索引集(the index set of all the predictions), $N$ 和 $G$分别表示Prediction bounding boxes的数量，Ground Truth bounding boxes 的数量, $L_{fg}$表示前景损失，$L_{bg}$表示背景损失。$c_{i}$, $b_{i}$分别是Ground Truth的类别标签以及回归坐标，与之对应着的$\hat{p}_{\hat{\pi}(i)}$和$\hat{b}_{\hat{\pi}(i)}$是预测类别分数以及预测的bounding boxes坐标。
+
+    **作者这里选取label assignment的指标为**：
+    ![image](https://cdn.jsdelivr.net/gh/Trouble404/Image/blog20201211141800.png)
+
+    前人的工作中通过使用foreground loss将其看成是一个biparticle matching problem(二分匹配问题)，使用Hungarian algorithm求解,但是foreground loss通常需要额外的权重来减轻优化问题
+
+    这里，作者采用的方式是(**POTO**）来获得一个更好的assignment
+    ![image](https://cdn.jsdelivr.net/gh/Trouble404/Image//blog20201211141953.png)
+
+    其中，$Q_{i, \pi(i)} \in [0,1]$表示第i个Ground-Truth 和我们选择的作为第i个label assignment $\pi(i)$之间的匹配质量。其中考虑了空间先验，分类的置信度以及回归的质量。$\Omega_{i}$表示第i个地面真值的候选预测集，即空间先验,同时对classification和regression利用$\alpha$进行了加权几何平均数
+
+
+- **3D Max Filtering**
+    作者发现重复预测主要来自最可靠预测的邻近空间区域
+    ![image](https://cdn.jsdelivr.net/gh/Trouble404/Image//blog20201211143130.png)
+    **3D Max Filtering**能够变换FPN多个尺度的特征，特征图中的每一个通道分别采用3D最大值滤波。
+    ![image](https://cdn.jsdelivr.net/gh/Trouble404/Image//blog20201211143030.png)
+
+
+- **Auxiliary Loss**
+  使用了POTO以及3DMF得到的表现性能依旧不如FCOS baseline，这种现象可能是由于一对一的标签分配提供较少的监督，使得网络难以学习强有力的特征表示造成的.作者这里引入auxiliary loss来增强学习特征表示的能力。
+  auxiliary loss采用Focal loss和改进的一对多标签分配，具体来说，根据之前公式(4)$Q_{i, \pi(i)} \in [0,1]$建议的匹配质量， one-to-many label assignment 首先选出前9个预测作为每个FPN阶段的候选，然后，它将候选对象指定为匹配质量超过统计阈值的前景样本，这个统计阈值是通过the summation of the mean and the standard deviation of all the candidate matching qualities来计算出来的.  
+
+
+![image](https://cdn.jsdelivr.net/gh/Trouble404/Image//blog20201211143638.png)
+
+从上图中可以看出，FCOS baseline有一对多的分配中心输出大量的重复预测，很多位置的置信度分数较高，这些重复的预测被评估为假阳性样本，并极大地影响性能。相反，通过使用所提出的POTO规则，重复样本的分数被显著抑制。在引入3DMF后，达到更好的效果，这是由于3DMF模块引入了多尺度竞争机制，检测器可以在不同的FPN阶段很好地执行独特的预测
+
 
 ## One Stage
 ### YOLO V1
