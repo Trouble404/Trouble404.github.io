@@ -11,6 +11,8 @@ categories: System
 1. 驱动删除
 ```
 sudo apt --purge autoremove nvidia*
+or
+sudo /usr/bin/nvidia-uninstall
 ```
 
 2. 驱动安装
@@ -31,22 +33,54 @@ Reboot your computer so that the new driver is loaded.
 chmod 755 cuda_%version%_linux.run
 sudo sh cuda_%version%_linux.run
 ```
+
 2. 安装cuda后配置环境变量
 ```shell
 export CUDA_HOME=/usr/local/cuda 
 export PATH=$PATH:$CUDA_HOME/bin 
-export LD_LIBRARY_PATH=/usr/local/cuda-10.2/lib64${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
+export LD_LIBRARY_PATH=/usr/local/cuda/lib64${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
 ```
+
 3. 把cudnn对应文件移入 /usr/local/cuda/ 中
-```shell
-sudo cp cuda/include/cudnn.h /usr/local/cuda/include/
-sudo cp cuda/lib64/libcudnn.so.7.6.5 /usr/local/cuda/lib64/
-sudo cp cuda/lib64/libcudnn_static.a /usr/local/cuda/lib64/
-sudo chmod a+r /usr/local/cuda/include/cudnn.h
-sudo chmod a+r /usr/local/cuda/lib64/libcudnn*
-sudo ln -s /usr/local/cuda/lib64/libcudnn.so.7.6.5 /usr/local/cuda/lib64/libcudnn.so.7
-sudo ln -s /usr/local/cuda/lib64/libcudnn.so.7 /usr/local/cuda/lib64/libcudnn.so
-```
+- **cudnn7.6.3**
+    ```shell
+    sudo cp cuda/include/cudnn.h /usr/local/cuda/include/
+    sudo cp cuda/lib64/libcudnn.so.7.6.5 /usr/local/cuda/lib64/
+    sudo cp cuda/lib64/libcudnn_static.a /usr/local/cuda/lib64/
+    sudo chmod a+r /usr/local/cuda/include/cudnn.h
+    sudo chmod a+r /usr/local/cuda/lib64/libcudnn*
+    sudo ln -s /usr/local/cuda/lib64/libcudnn.so.7.6.5 /usr/local/cuda/lib64/libcudnn.so.7
+    sudo ln -s /usr/local/cuda/lib64/libcudnn.so.7 /usr/local/cuda/lib64/libcudnn.so
+    ```
+
+- **cudnn8.0.5**
+    ```shell
+    sudo cp cuda/include/cudnn* /usr/local/cuda/include/
+    sudo cp cuda/lib64/libcudnn.so.8.0.5 /usr/local/cuda/lib64/
+    sudo cp cuda/lib64/libcudnn_adv_infer.so.8.0.5 /usr/local/cuda/lib64/
+    sudo cp cuda/lib64/libcudnn_adv_train.so.8.0.5 /usr/local/cuda/lib64/
+    sudo cp cuda/lib64/libcudnn_cnn_infer.so.8.0.5 /usr/local/cuda/lib64/
+    sudo cp cuda/lib64/libcudnn_cnn_train.so.8.0.5 /usr/local/cuda/lib64/
+    sudo cp cuda/lib64/libcudnn_ops_infer.so.8.0.5 /usr/local/cuda/lib64/
+    sudo cp cuda/lib64/libcudnn_ops_train.so.8.0.5 /usr/local/cuda/lib64/
+    sudo cp cuda/lib64/libcudnn_static.a /usr/local/cuda/lib64/
+    sudo chmod a+r /usr/local/cuda/include/cudnn*
+    sudo chmod a+r /usr/local/cuda/lib64/libcudnn*
+    sudo ln -s /usr/local/cuda/lib64/libcudnn.so.8.0.5 /usr/local/cuda/lib64/libcudnn.so.8
+    sudo ln -s /usr/local/cuda/lib64/libcudnn.so.8 /usr/local/cuda/lib64/libcudnn.so
+    sudo ln -s /usr/local/cuda/lib64/libcudnn_adv_infer.so.8.0.5 /usr/local/cuda/lib64/libcudnn_adv_infer.so.8
+    sudo ln -s /usr/local/cuda/lib64/libcudnn_adv_infer.so.8 /usr/local/cuda/lib64/libcudnn_adv_infer.so
+    sudo ln -s /usr/local/cuda/lib64/libcudnn_adv_train.so.8.0.5 /usr/local/cuda/lib64/libcudnn_adv_train.so.8
+    sudo ln -s /usr/local/cuda/lib64/libcudnn_adv_train.so.8 /usr/local/cuda/lib64/libcudnn_adv_train.so
+    sudo ln -s /usr/local/cuda/lib64/libcudnn_cnn_infer.so.8.0.5 /usr/local/cuda/lib64/libcudnn_cnn_infer.so.8
+    sudo ln -s /usr/local/cuda/lib64/libcudnn_cnn_infer.so.8 /usr/local/cuda/lib64/libcudnn_cnn_infer.so
+    sudo ln -s /usr/local/cuda/lib64/libcudnn_cnn_train.so.8.0.5 /usr/local/cuda/lib64/libcudnn_cnn_train.so.8
+    sudo ln -s /usr/local/cuda/lib64/libcudnn_cnn_train.so.8 /usr/local/cuda/lib64/libcudnn_cnn_train.so
+    sudo ln -s /usr/local/cuda/lib64/libcudnn_ops_infer.so.8.0.5 /usr/local/cuda/lib64/libcudnn_ops_infer.so.8
+    sudo ln -s /usr/local/cuda/lib64/libcudnn_ops_infer.so.8 /usr/local/cuda/lib64/libcudnn_ops_infer.so
+    sudo ln -s /usr/local/cuda/lib64/libcudnn_ops_train.so.8.0.5 /usr/local/cuda/lib64/libcudnn_ops_train.so.8
+    sudo ln -s /usr/local/cuda/lib64/libcudnn_ops_train.so.8 /usr/local/cuda/lib64/libcudnn_ops_train.so
+    ```
 
 
 ### Vim
