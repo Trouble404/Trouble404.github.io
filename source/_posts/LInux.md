@@ -41,7 +41,12 @@ export PATH=$PATH:$CUDA_HOME/bin
 export LD_LIBRARY_PATH=/usr/local/cuda/lib64${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
 ```
 
-3. 把cudnn对应文件移入 /usr/local/cuda/ 中
+3. 查看cuda版本
+```shell
+nvcc --version
+```
+
+4. 把cudnn对应文件移入 /usr/local/cuda/ 中
 - **cudnn7.6.3**
     ```shell
     sudo cp cuda/include/cudnn.h /usr/local/cuda/include/
@@ -82,6 +87,10 @@ export LD_LIBRARY_PATH=/usr/local/cuda/lib64${LD_LIBRARY_PATH:+:${LD_LIBRARY_PAT
     sudo ln -s /usr/local/cuda/lib64/libcudnn_ops_train.so.8 /usr/local/cuda/lib64/libcudnn_ops_train.so
     ```
 
+5. 查看cudnn安装
+```shell
+cat /usr/local/cuda/include/cudnn_version.h | grep CUDNN_MAJOR -A 2
+```
 
 ### Vim
 1. 升级vim到8.0以上
@@ -163,6 +172,9 @@ sudo apt-get install tmux
 set-option -g update-environment "SSH_ASKPASS SSH_AUTH_SOCK SSH_AGENT_PID SSH_CONNECTION WINDOWID XAUTHORITY"
 ```
 上面命令放到 tmux.conf 中
+```shell
+tmux source-file ~/.tmux.conf
+```
 
 
 ### Anaconda3
@@ -256,9 +268,11 @@ export LIBRARY_PATH=$LIBRARY_PATH:<TensorRT-${version}/lib>
 5. 安装
 ```
 cd TensorRT-${version}/python
-pip install tensorrt-*-cp3x-none-linux_x86_64.whl
+sudo pip install tensorrt-*-cp3x-none-linux_x86_64.whl
 cd TensorRT-${version}/graphsurgeon
-pip install graphsurgeon-0.4.4-py2.py3-none-any.whl
+sudo pip install graphsurgeon-0.4.4-py2.py3-none-any.whl
+cd TensorRT-${version}/onnx_graphsurgeon
+sudo pip install onnx_graphsurgeon-0.2.6-py2.py3-none-any.whl
 ```
 6. 重启虚拟环境
 ```
@@ -278,6 +292,35 @@ builder = trt.Builder()
 network = builder.create_network(EXPLICIT_BATCH)
 ```
 ---
+
+### Docker
+使用脚本自动安装
+```shell
+curl -fsSL get.docker.com -o get-docker.sh
+sudo sh get-docker.sh --mirror Aliyun
+sudo systemctl enable docker
+sudo systemctl start docker
+sudo groupadd docker
+sudo usermod -aG docker $USER
+sudo gpasswd -a $USER docker
+newgrp docker
+```
+
+退出当前终端并重新登录，进行如下测试
+```shell
+docker run hello-world
+```
+
+### Cmake
+官网下载Cmake压缩包，解压后
+```shell
+sudo apt-get install libssl-dev
+./bootstrap --prefix=/usr
+make
+sudo make install
+cmake --version
+```
+
 
 ### OpenCV
 1. 安装
