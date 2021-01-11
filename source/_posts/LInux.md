@@ -321,7 +321,6 @@ sudo make install
 cmake --version
 ```
 
-
 ### OpenCV
 1. 安装
 ```
