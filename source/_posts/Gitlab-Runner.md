@@ -1,6 +1,6 @@
 ---
 title: 使用Docker部署GitLab-CI-Runner
-date: 2020-01-11 12:00:00
+date: 2021-01-11 12:00:00
 tags: [Linux]
 categories: System
 ---
