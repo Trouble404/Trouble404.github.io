@@ -9,11 +9,11 @@ categories: 实习
 
 ![image](https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/Object-detection-learning/14.png)
 
-| one-stage系          | two-stage系| anchor-free系       | Transform系  |
-| ----------           | -----------| ------------       | -------------
-| YOLO V1,V2,V3,V4,V5  | FPN        | ATSS               | POTO         |
-| SSD                  | RFCN       | GFocal Loss v1,v2  |
-| RetinalNet           | LIghthead  | Auto Assign        |
+| one-stage系          | two-stage系| anchor-free系       | Transform  | Weakly Supervised |
+| ----------           | -----------| ------------       | -----------| -------------     |
+| YOLO V1,V2,V3,V4,V5  | FPN        | ATSS               | POTO       | Co-Mining         |     
+| SSD                  | RFCN       | GFocal Loss v1,v2  |            |                   |
+| RetinalNet           | LIghthead  | Auto Assign        |            |                   |
 <!-- more -->
 
 ## Anchor Free
@@ -224,6 +224,28 @@ $DFL(S_{i}, S_{i+1})=-((y_{i+1}-y)log(S_{i})+(y-y_{i})log(S_{i+1}))$
 
 其他算法里面也有非常准的预测框，但是它们的score通常都排到了第3第4的位置，而score排第一的框质量都比较欠佳。相反，GFLV2也有预测不太好的框，但是质量较高的框都排的非常靠前.
 
+## Weakly Supervised
+### Co-Mining
+**Self-Supervised Learning for Sparsely Annotated Object Detection**
+[PAPER ADDRESS](https://arxiv.org/abs/2012.01950)
+
+![image](https://cdn.jsdelivr.net/gh/Trouble404/Image/blog20210121155528.png)
+
+在训练阶段使用**共享参数**的双检测器分别对原始图片以及增强图片做预测后使用各自预测的**正样本**(Co-Generation)交叉生成更**复杂(完整)的GT**来指导网络学习, 属于半监督中解决SAOD问题的。
+
+SAOD: Sparsely Annotated Object Detection
+SSOD: Semi-Supervised Object Detection
+
+在coco数据集中进行了标注的随机擦除
+easy类标注随机删除一个, hard类随机删除一半, extrme类保留一个标注
+
+在SAOD中的增强仅在色域上进行
+
+![image](https://cdn.jsdelivr.net/gh/Trouble404/Image/blog20210121160849.png)
+
+![image](https://cdn.jsdelivr.net/gh/Trouble404/Image/blog20210121161355.png)
+
+![image](https://cdn.jsdelivr.net/gh/Trouble404/Image/blog20210121161435.png)
 
 ## Transformer
 
