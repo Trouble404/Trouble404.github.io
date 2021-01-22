@@ -12,7 +12,7 @@ categories: 实习
 | one-stage系          | two-stage系| anchor-free系       | Transform  | Weakly Supervised |
 | ----------           | -----------| ------------       | -----------| -------------     |
 | YOLO V1,V2,V3,V4,V5  | FPN        | ATSS               | POTO       | Co-Mining         |     
-| SSD                  | RFCN       | GFocal Loss v1,v2  |            |                   |
+| SSD                  | RFCN       | GFocal Loss v1,v2  |            | SFOD              |
 | RetinalNet           | LIghthead  | Auto Assign        |            |                   |
 <!-- more -->
 
@@ -246,6 +246,25 @@ easy类标注随机删除一个, hard类随机删除一半, extrme类保留一�
 ![image](https://cdn.jsdelivr.net/gh/Trouble404/Image/blog20210121161355.png)
 
 ![image](https://cdn.jsdelivr.net/gh/Trouble404/Image/blog20210121161435.png)
+
+### SFOD
+**A Free Lunch for Unsupervised Domain Adaptive Object Detection without Source Data**
+[PAPER ADDRESS](https://arxiv.org/abs/2012.05400)
+
+![image](https://cdn.jsdelivr.net/gh/Trouble404/Image/blog20210122175312.png)
+
+本文首次提出了一种data-free 域自适应目标检测（SFOD）框架，方法是将其建模为带有噪声标签的学习问题。
+
+方法是将其建模为带有噪声标签的学习问题。由于目标域中没有可用的标签，因此很难评估伪标签的质量。在本文中，自熵下降（SED）是一种度量标准，旨在在不使用任何手工标签的情况下搜索适当的置信度阈值以可靠地生成伪标签。尽管如此，仍然无法获得完全清洁的标签。经过全面的实验分析，发现false negatives在所产生的噪声标签中占主导地位。毫无疑问，挖掘FN有助于提高性能，通过像Mosaic这样的数据增强将简单TP其简化为FN Simulation。在四个有代表性的适应任务中进行的广泛实验表明，所提出的框架可以轻松实现最新性能。
+
+* SED
+噪声数据是难以拟合的，可以通过计算SED来判断当前的伪标签是否具有置信度。
+![image](https://cdn.jsdelivr.net/gh/Trouble404/Image/blog20210122175725.png)
+
+* False Negatives Simulation
+马赛克增强
+
+项目中如果有大量未标注数据，可以在标注数据预训练好检测模型后使用SFOD在大量的未标注数据中进行无监督的域自适应训练，或者用于快速拟合相似场景的模型
 
 ## Transformer
 
