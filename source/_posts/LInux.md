@@ -93,73 +93,25 @@ cat /usr/local/cuda/include/cudnn_version.h | grep CUDNN_MAJOR -A 2
 ```
 
 ### Vim
+
+![image](https://cdn.jsdelivr.net/gh/Trouble404/Image/blog20210125154655.png)
+
 1. 升级vim到8.0以上
 
-2. 下载Vundl管理插件
-```
-git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
-```
+2. 使用 ```Droid Sans Mono Nerd Font``` 作为终端字体: [download](https://drive.google.com/file/d/1aWA6edSaMiG6cGV0tyQnt012Ub-CoUCO/view?usp=sharing)  
 
-3. 配置 .vimrc
-```bash
-vim  ~/.vimrc
-
-set nocompatible              " be iMproved, required
-filetype off                  " required
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-Plugin 'VundleVim/Vundle.vim'
-Plugin 'tpope/vim-fugitive'
-Plugin 'git://git.wincent.com/command-t.git'
-Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
-Plugin 'davidhalter/jedi-vim'
-call vundle#end()            " required
-filetype plugin indent on    " required
-let g:jedi#completions_enabled = 1
-set backspace=indent,eol,start
-" 设置utf8编码
-set fileencodings=utf-8,gbk,cp936
-set fileencoding=utf-8
-set encoding=utf-8
-set termencoding=utf-8
-" 设置标签栏
-set showtabline=2
-
-" 去除启动界面
-set shortmess=atI
-
-" 设置帮助信息为中文
-set helplang=cn
-
-" 设置自动对齐
-set autoindent
-set smartindent
-
-" 设置c系缩进方式
-set cindent
-set tabstop=4
-
-" 空格替换Tab
-set expandtab
-set shiftwidth=4
-set softtabstop=4
-set smarttab
-
-" 增强命令补全
-set wildmenu
-" 设置语法高亮
-syntax enable
-"
-" 显示行数
-" set nu
+3. 安装
+```sh
+git clone https://github.com/chxuan/vimplus.git ~/.vimplus
+cd ~/.vimplus
+./install.sh //不加sudo
 ```
 
-3. 安装插件
+4. 更新
+```sh
+cd ~/.vimplus
+./update.sh
 ```
-vim ~/.vimrc
-:PluginInstall ##插入模式下输入
-```
-
 
 ### Tmux
 1. 安装
