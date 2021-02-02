@@ -2,7 +2,7 @@
 title: 【转】论文阅读 - Semantic Soft Segmentation
 date: 2018-11-29 11:00:00
 tags: [Deep Learning]
-categories: 实习
+categories: 学习
 ---
 
 # 论文阅读 - Semantic Soft Segmentation

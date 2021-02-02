@@ -2,7 +2,7 @@
 title: MalongTech 学习内容:目标检测
 date: 2018-11-12 11:00:00
 tags: [Deep Learning]
-categories: 实习
+categories: 学习
 ---
 
 # Object detection
