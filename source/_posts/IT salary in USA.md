@@ -1,7 +1,7 @@
 ---
 title: IT salary in USA
 date: 2018-01-28 08:23:32
-tags: [data analysis]
+tags: [data analysis, Machine Learning]
 categories: Data Visualisation
 ---
 

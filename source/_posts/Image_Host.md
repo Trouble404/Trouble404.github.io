@@ -1,7 +1,7 @@
 ---
 title: PickGo 搭建图床
 date: 2020-10-19 19:30:00
-tags: [Deep Learning]
+tags: [Tool]
 categories: System
 ---
 

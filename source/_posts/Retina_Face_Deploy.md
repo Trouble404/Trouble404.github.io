@@ -1,7 +1,7 @@
 ---
 title: Deploy by TensorRT
 date: 2020-06-18 20:08:19
-tags: [Deep Learning]
+tags: [Deep Learning, Object Detection]
 categories: TensorRT
 ---
 

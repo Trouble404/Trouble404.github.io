@@ -1,7 +1,7 @@
 ---
 title: 图像分割-3D or 医学领域
 date: 2018-11-30 11:00:00
-tags: [Deep Learning]
+tags: [Deep Learning, Image Segmentation]
 categories: 学习
 ---
 

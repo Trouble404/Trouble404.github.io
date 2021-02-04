@@ -1,7 +1,7 @@
 ---
 title: 目标检测
 date: 2018-11-12 11:00:00
-tags: [Deep Learning]
+tags: [Deep Learning, Object Detection]
 categories: 学习
 ---
 

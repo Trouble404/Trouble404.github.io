@@ -1,7 +1,7 @@
 ---
 title: 图像分割-2D
 date: 2018-11-26 11:00:00
-tags: [Deep Learning]
+tags: [Deep Learning, Image Segmentation]
 categories: 学习
 ---
 

@@ -2,7 +2,7 @@
 title: MXnet 配置
 date: 2018-01-28 20:04:14
 tags: [MXnet]
-categories: Machine Learning
+categories: System
 ---
 
 
