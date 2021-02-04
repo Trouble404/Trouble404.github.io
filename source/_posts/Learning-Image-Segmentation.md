@@ -1,5 +1,5 @@
 ---
-title: MalongTech 学习内容:图像分割-2D
+title: 图像分割-2D
 date: 2018-11-26 11:00:00
 tags: [Deep Learning]
 categories: 学习

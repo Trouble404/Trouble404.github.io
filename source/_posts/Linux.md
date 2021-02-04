@@ -1,5 +1,5 @@
 ---
-title: Ubuntu
+title: Ubuntu服务器配置
 date: 2018-11-12 09:04:14
 tags: [Linux]
 categories: System

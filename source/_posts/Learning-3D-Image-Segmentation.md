@@ -1,5 +1,5 @@
 ---
-title: MalongTech 学习内容:图像分割-3D or 医学领域
+title: 图像分割-3D or 医学领域
 date: 2018-11-30 11:00:00
 tags: [Deep Learning]
 categories: 学习
