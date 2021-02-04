@@ -12,6 +12,11 @@ Disallow: /css/
 Disallow: /fonts/
 Disallow: /vendors/
 Disallow: /fancybox/
+Disallow: /uploads/
+Disallow: /live2dw/
+Disallow: /lib/
+Disallow: /images/
+Disallow: /about/
 
 Sitemap: https://trouble404.github.io//search.xml
 Sitemap: https://trouble404.github.io//sitemap.xml
