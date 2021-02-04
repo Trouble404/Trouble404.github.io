@@ -1,0 +1,18 @@
+#hexo robots.txt
+User-agent: *
+
+Allow: /
+Allow: /archives/
+Allow: /categories/
+Allow: /tags/
+
+Disallow: /vendors/
+Disallow: /js/
+Disallow: /css/
+Disallow: /fonts/
+Disallow: /vendors/
+Disallow: /fancybox/
+
+Sitemap: https://trouble404.github.io//search.xml
+Sitemap: https://trouble404.github.io//sitemap.xml
+Sitemap: https://trouble404.github.io//baidusitemap.xml

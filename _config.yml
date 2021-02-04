@@ -4,7 +4,7 @@
 
 # Site
 title: KAMISAMA'S SPACE
-subtitle:
+subtitle: Someting for Noting
 description: Someting for Noting
 keywords:
 author: Junming Zhang
@@ -22,7 +22,7 @@ search:
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
 url: https://trouble404.github.io/
 root: /
-permalink: :year/:month/:day/:title/
+permalink: :title.html
 permalink_defaults:
 
 # 自动生成sitemap
