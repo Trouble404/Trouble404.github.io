@@ -123,4 +123,28 @@ sudo apt-get install libjpeg-dev zlib1g-dev libpython3-dev libavcodec-dev libavf
 # 2. python setup.py bdist_wheel
 # 3. 在dist中找到编译好的whl文件进行安装
 
+# 升级cmake
+sudo apt-get install software-properties-common
+sudo add-apt-repository ppa:george-edison55/cmake-3.x
+sudo apt-get update
+apt-get install libprotobuf-dev protobuf-compiler
+
+# ONNX-TENSORRT
+git clone https://github.com.cnpmjs.org/onnx/onnx-tensorrt.git
+cd onnx-tensorrt
+git checkout 7.1
+rm -r third_party/onnx
+cd third_party
+git clone https://github.com.cnpmjs.org/onnx/onnx.git
+cd onnx
+git checout 553df22
+cd ../../
+mkdir build
+cd build
+cmake .. -DTENSORRT_ROOT=/usr/src/tensorrt
+export LD_LIBRARY_PATH=/home/nvidia/workspace/thrid_party/whl/pytorch/onnx-tensorrt/build:$LD_LIBRARY_PATH
+sudo sh -c "echo '/usr/local/cuda/lib64' > /etc/ld.so.conf.d/cuda.conf"
+sudo ldconfig
+sudo make
+sudo make install
 ```
