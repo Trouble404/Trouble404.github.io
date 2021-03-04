@@ -1,5 +1,5 @@
 ---
-title: NVIDIA边缘段设备刷机
+title: NVIDIA边缘端设备刷机
 date: 2021-03-03 17:00:00
 tags: [Deep Learning]
 categories: TensorRT
@@ -61,6 +61,7 @@ jtop
 ### 工作模式
 TX2:
 ![image](https://cdn.jsdelivr.net/gh/Trouble404/Image/blog20210303165137.png)
+支持FP32, FP16推理
 ```sh
 # 查看当前工作模式
 sudo nvpmodel -q verbose
@@ -70,6 +71,7 @@ sudo nvpmodel -m 0
 
 Xavier:
 ![](https://raw.githubusercontent.com/Trouble404/Image/master/blog20210303165241.png)
+支持FP32, FP16， INT8推理
 ```sh
 # 查看当前工作模式
 sudo nvpmodel --query
@@ -147,4 +149,7 @@ sudo sh -c "echo '/usr/local/cuda/lib64' > /etc/ld.so.conf.d/cuda.conf"
 sudo ldconfig
 sudo make
 sudo make install
+
+# fix Illegal instruction (core dumped) -> numpy 1.19.5 issue
+pip install numpy==1.19.4
 ```
