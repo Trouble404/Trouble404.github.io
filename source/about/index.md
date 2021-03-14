@@ -15,6 +15,5 @@ comments: false
 # 简历/Resume
 
 [中文简历](resume_cn.pdf)
-[Resume_En](resume_en.pdf)
 
 ---
