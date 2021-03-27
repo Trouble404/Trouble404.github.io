@@ -16,6 +16,74 @@ categories: 学习
 
 ![image](https://cdn.jsdelivr.net/gh/Trouble404/Image/blog20201209143009.png)
 
+颜色法判断是否为二分图
+```c++
+#include <iostream>
+#include <cstring>
+
+using namespace std;
+
+const int N = 1e6 + 10, M = 2 * N;
+
+int h[N], e[M], ne[M], idx;
+int color[N];
+int n, m;
+
+// 头插法
+void add(int a, int b)
+{
+    e[idx] = b;
+    ne[idx] = h[a];
+    h[a] = idx ++;
+}
+
+bool dfs(int u, int c)
+{
+    color[u] = c;
+    
+    for (int i = h[u]; i != -1; i = ne[i])
+    {
+        int j = e[i];
+        if (!color[j])
+        {
+            if (!dfs(j, 3 - c)) return false; // 给下一个点相反的颜色
+        }
+        else if (color[j] == c) return false; // 相邻点不能为同一颜色
+    }
+    
+    return true;
+}
+
+int main()
+{
+    memset(h, -1, sizeof h); // init
+    
+    cin >> n >> m;
+    for (int i = 0; i < m; i ++)
+    {
+        int a, b;
+        cin >> a >> b;
+        add(a, b), add(b, a); // 头插法连接图
+    }
+    
+    bool flag = true; // 是否为二分图
+    for (int i = 1; i <= n; i ++) // 数据从1开始
+        if (!color[i])
+        {
+            if (!dfs(i, 1))
+            {
+                flag = false;
+                break;
+            }
+        }
+    
+    if (flag) puts("Yes");
+    else puts("No");
+    
+    return 0;
+}
+```
+
 **匹配**:
 在图论中，一个「匹配」（matching）是一个边的集合，其中任意两条边都没有公共顶点。例如，图 3、图 4 中红色的边就是图 2 的匹配。
 
@@ -50,6 +118,7 @@ categories: 学习
 
 这棵树存在一个叶子节点为非匹配点（7 号），但是匈牙利树要求所有叶子节点均为匹配点，因此这不是一棵匈牙利树。如果原图中根本不含 7 号节点，那么从 2 号节点出发就会得到一棵匈牙利树。这种情况如图 9 所示（顺便说一句，图 8 中根节点 2 到非匹配叶子节点 7 显然是一条增广路，沿这条增广路扩充后将得到一个完美匹配）。
 
+**Python**
 ```python
 M=[]
 
@@ -97,6 +166,72 @@ if __name__ == '__main__':
     visited = {'E': 0, 'F': 0, 'G': 0,'H':0}
 
     print(DFS_hungary(nx, ny, edge, cx, cy, visited).max_match())
+```
+
+**C++**
+```c++
+#include <iostream>
+#include <cstring>
+
+using namespace std;
+
+const int N = 510, M = 100010;
+
+int h[N], e[M], ne[M], idx;
+int match[N];
+bool st[N];
+int n1, n2, m;
+
+void add(int a, int b)
+{
+    e[idx] = b;
+    ne[idx] = h[a];
+    h[a] = idx ++;
+}
+
+bool find(int u)
+{
+    for (int i = h[u]; i != -1; i = ne[i])
+    {
+        int j = e[i];
+        if (!st[j])
+        {
+            st[j] = true;
+            if (match[j] == 0 || find(match[j])) // 当前匹配到的另一边未匹配，或者已经匹配的人有其他匹配选择
+            {
+                match[j] = u; //更新匹配给u
+                return true;
+            }
+        }
+    }
+    
+    return false;
+}
+
+int main()
+{
+    memset(h, -1, sizeof h);
+
+    cin >> n1 >> n2 >> m;
+    while(m --)
+    {
+        int a, b;
+        cin >> a >> b;
+        add(a, b);
+    }
+    
+    int res = 0;
+    // 选择一边进行匹配
+    for (int i = 1; i <= n1; i ++)
+    {
+        memset(st, false, sizeof st);
+        if (find(i)) res ++;
+    }
+    
+    printf("%d\n", res);
+    
+    return 0;
+}
 ```
 
 **匈牙利算法的要点如下**:
