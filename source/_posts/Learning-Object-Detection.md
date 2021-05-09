@@ -9,14 +9,47 @@ categories: 学习
 
 ![image](https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/Object-detection-learning/14.png)
 
-| one-stage系          | two-stage系| anchor-free系       | Transform  | Weakly Supervised |
-| ----------           | -----------| ------------       | -----------| -------------     |
-| YOLO V1,V2,V3,V4,V5  | FPN        | ATSS               | POTO       | Co-Mining         |     
-| SSD                  | RFCN       | GFocal Loss v1,v2  |            | SFOD              |
-| RetinalNet           | LIghthead  | Auto Assign        |            |                   |
+| one-stage系         | two-stage系| anchor-free系     | Transform  | Weakly Supervised|
+| ----------          | -----------| ------------      | -----------| -------------    |
+| YOLO V1,V2,V3,V4,V5 | FPN        | FCOS              | POTO       | Co-Mining        |     
+| SSD                 | RFCN       | ATSS              | OneNet     | SFOD             |
+| RetinalNet          | Lighthead  | GFocal Loss v1,v2 |            |                  |
+|                     |            | AutoAssign        |            |                  |
+|                     |            | BorderDet         |            |                  |
+|                     |            | TTFNet            |            |                  |
+|                     |            |                   |            |                  |
+
 <!-- more -->
 
 ## Anchor Free
+
+### FCOS
+[PAPER ADDRESS](https://arxiv.org/abs/1904.01355)
+
+**出发点**
+解决 Anchor based 算法的缺点:
+* 检测性能对于anchor的大小，数量，长宽比都非常敏感
+* 为了去匹配GT，需要生成大量的anchor, 造成了样本间的不平衡
+* 在训练中，需要计算所有anchor与真实框的IOU，这样就会消耗大量**内存**和时间
+
+![image](https://cdn.jsdelivr.net/gh/Trouble404/Image/20210510012556.PNG)
+
+
+**正负样本采样方法**
+* FCOS直接对不同feature level限制bbox不同的范围（为了解决像素点目标重叠）
+* 每个FPN层负责不同大小框的回归, m2, m2, m4, m5, m6, m7负责0, 64, 128, 256, 512, ∞尺寸的GT
+* 如果一个location(x, y)落到了任何一个GT box中，那么它就为正样本
+* 如果在同一图层仍然出现了重合问题，那么还是按照该点所在最小面积ground truth检测框进行分配
+
+![image](https://cdn.jsdelivr.net/gh/Trouble404/Image/20210510013956.PNG)
+
+
+**Center-ness**
+
+FCOS存在大量的低质量的检测框。这是由于我们把中心点的区域扩大到整个物体的边框，经过模型优化后可能有很多中心离GT box中心很远的预测框，为了增加更强的约束，作者提出了Center-ness的方法来解决这个问题，使用BCE loss对center-ness进行优化
+![image](https://cdn.jsdelivr.net/gh/Trouble404/Image/20210510014238.PNG)
+当loss越小时，centerness就越接近1，也就是说回归框的中心越接近真实框
+
 
 ### ATSS
 [PAPER ADDRESS](https://arxiv.org/abs/1912.02424)
@@ -52,6 +85,27 @@ Anchor-based和anchor-free检测器有三点不同：
 常规的采样方法倾向于采样更多的正样本，而ATSS对于每个目标大约采样$0.2*K*L$个正样本
 
 ![image](https://cdn.jsdelivr.net/gh/Trouble404/Image/blog20201126112032.png)
+
+
+### BorderDet
+[PAPER ADDRESS](https://arxiv.org/abs/2007.11056)
+
+**出发点**
+
+对于dense object detector(e.g. FCOS、FPN的RPN)，都是使用simple point特征去预测框的分类和回归，但是发现只用一个点的特征是不够的，很难去捕捉到物体边界的信息来精准定位。这些年有很多研究通过级联的方式，希望通过引入更强的特征来增加simple point特征，主要包括GA-RPN、RepPoints等。但这些工作可能存在两个问题。
+* 一些操作(e.g. Deformable Conv)来增强特征，但这些操作可能是**冗余的**，甚至会引入“有害”的背景信息。
+* 这些方法没有显示的提取边界特征，**边界极限点**特征对边界框的定位比较重要。
+
+如下图，这个运动员中心的五角星位置即为anchor点，但是确定该物体边界框的主要是边界上的四个橘色圆点，这个运动员的边界框的位置主要由四个极限点来确定。用其他的方法可能会引入一些有害的信息，且不能直接有效的提取到真正有用的边界极限点。
+![image](https://cdn.jsdelivr.net/gh/Trouble404/Image/20210510022230.PNG)
+
+**BAM(Border Alignment Module)**
+
+![image](https://cdn.jsdelivr.net/gh/Trouble404/Image/20210510022438.PNG)
+
+对于一个特征图，通道个数为5xC，这是一个**border-sensitive**的特征图，分别对应物体4个边界特征和原始anchor点位置的特征。对于一个anchor点预测的一个框，我们把这个框的4个border对应在特征图上的特征分别做pooling操作。且由于框的位置是小数，所以该操作使用双线性插值取出每个border上的特征。如图所示，我们每条边会先选出5个待采样点，再对这5个待采样点取最大的值，作为该条边的特征，即每条边最后只会选出一个采样点作为输出。那么每个anchor点都会采样5个点的特征作为输出，即输出的通道数也为5xC个。
+
+BAM模块需要将FCOS的框位置的输出作为输入，显示的提取该框边界上的特征。最终BAM会分别预测一个border score和border reg，和原始密集检测器的输出组合成为最后的输出。
 
 
 ### AutoAssign
@@ -223,6 +277,35 @@ $DFL(S_{i}, S_{i+1})=-((y_{i+1}-y)log(S_{i})+(y-y_{i})log(S_{i+1}))$
 ![image](https://cdn.jsdelivr.net/gh/Trouble404/Image/blog20201208142833.png)
 
 其他算法里面也有非常准的预测框，但是它们的score通常都排到了第3第4的位置，而score排第一的框质量都比较欠佳。相反，GFLV2也有预测不太好的框，但是质量较高的框都排的非常靠前.
+
+
+### TTFNet
+[PAPER ADDRESS](https://arxiv.org/abs/1909.00700)
+
+**出发点**
+现有的目标检测很少能同时达到训练时间短、推理速度快、精度高等目的:
+* 由于模型简化而难以训练，在很大程度上依赖于数据增强和较长的训练时间。例如centernet需要在公共数据集MSCOCO上进行140个epochs训练。
+
+![image](https://cdn.jsdelivr.net/gh/Trouble404/Image/20210510020854.PNG)
+
+
+**正负样本采样方法**
+
+**从BBOX框中编码更多的训练样本，主要是增加高质量正样本数，与增加批量大小具有相似的作用，这有助于扩大学习速度并加快训练过程。**
+主要是通过高斯核函数实现。其实很简单，我们知道centernet的回归分支仅仅在中心点位置计算loss，其余位置忽略，这种做法就是本文说的训练样本太少了，导致收敛很慢，需要特别长的训练时间，而本文采用高斯核编码形式，对中心点范围内满足高斯分布范围的点都当做正样本进行训练，可以极大的加速收敛。本文做法和FCOS非常类似，但是没有多尺度输出，也没有FPN等复杂结构，比较像简化版本的FCOS，属于实践性很强的算法。
+
+**将高斯分布概率作为样本权重来加权那些靠近目标中心的样本**
+
+![image](https://cdn.jsdelivr.net/gh/Trouble404/Image/20210510021108.PNG)
+
+**结构**
+
+TTFNet使用ResNet和DarkNet作为主干网络。 主干网络提取的特征被采样到原始图像的1/4分辨率，这是通过Modulated Deformable Convolution(MDCN)和上采样层实现的。在MDCN层之后是批归一化(BN)和ReLU。上采样的特征然后分别通过两个头部为不同的目标。 
+
+检测头在物体中心附近的位置产生高激活，而回归头直接预测从这些位置到box四面的距离。由于目标中心对应于特征映射处的局部最大值，因此可以在2D最大池的帮助下安全地抑制非最大值。然后利用局部最大值的位置来收集回归结果。 
+
+最后，可以得到检测结果。 新提出的方法有效地使用了大中型目标中包含的注释信息，但对于包含很少信息的小目标，推广是有限的。为了在较短的训练计划中提高小目标的检测性能，添加了shortcut connections来引入高分辨率但低级别的特征。shortcut connections从主干的2级，3级和4级引入特征，每个连接由3×3卷积层实现。第二、第三和第四阶段的层数设置为3、2和1，除了shortcut connections中的最后一层外，ReLU遵循在每个层。
+
 
 ## Weakly Supervised
 ### Co-Mining
