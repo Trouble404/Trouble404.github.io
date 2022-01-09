@@ -1,0 +1,1731 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="Deep Learning,Image Segmentation,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.2">
+
+
+
+
+
+
+<meta name="description" content="Image Segmentation Introduction在计算机视觉领域，图像分割（Segmentation）指的是将数字图像细分为多个图像子区域（像素的集合）（也被称作超像素）的过程。图像分割的目的是简化或改变图像的表示形式，使得图像更容易理解和分析。图像分割通常用于定位图像中的物体和边界（线，曲线等）。更精确的，图像分割是对图像中的每个像素加标签的一个过程，这一过程使得具有相同标签的像素">
+<meta name="keywords" content="Deep Learning,Image Segmentation">
+<meta property="og:type" content="article">
+<meta property="og:title" content="图像分割-2D">
+<meta property="og:url" content="https://trouble404.github.io/Learning-Image-Segmentation.html">
+<meta property="og:site_name" content="KAMISAMA&#39;S SPACE">
+<meta property="og:description" content="Image Segmentation Introduction在计算机视觉领域，图像分割（Segmentation）指的是将数字图像细分为多个图像子区域（像素的集合）（也被称作超像素）的过程。图像分割的目的是简化或改变图像的表示形式，使得图像更容易理解和分析。图像分割通常用于定位图像中的物体和边界（线，曲线等）。更精确的，图像分割是对图像中的每个像素加标签的一个过程，这一过程使得具有相同标签的像素">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/Image-Segmentation-Learning/1.jpg">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/Image-Segmentation-Learning/2.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/Image-Segmentation-Learning/3.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/Image-Segmentation-Learning/4.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/Image-Segmentation-Learning/5.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/Image-Segmentation-Learning/6.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/Image-Segmentation-Learning/7.jpg">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/Image-Segmentation-Learning/8.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/Image-Segmentation-Learning/9.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/Image-Segmentation-Learning/10.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/Image-Segmentation-Learning/11.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/Image-Segmentation-Learning/12.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/Image-Segmentation-Learning/13.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/Image-Segmentation-Learning/14.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/Image-Segmentation-Learning/15.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/Image-Segmentation-Learning/18.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/Image-Segmentation-Learning/16.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/Image-Segmentation-Learning/17.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/Image-Segmentation-Learning/19.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/Image-Segmentation-Learning/21.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/Image-Segmentation-Learning/20.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/Image-Segmentation-Learning/22.png">
+<meta property="og:updated_time" content="2022-01-09T14:00:16.371Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="图像分割-2D">
+<meta name="twitter:description" content="Image Segmentation Introduction在计算机视觉领域，图像分割（Segmentation）指的是将数字图像细分为多个图像子区域（像素的集合）（也被称作超像素）的过程。图像分割的目的是简化或改变图像的表示形式，使得图像更容易理解和分析。图像分割通常用于定位图像中的物体和边界（线，曲线等）。更精确的，图像分割是对图像中的每个像素加标签的一个过程，这一过程使得具有相同标签的像素">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/Image-Segmentation-Learning/1.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://trouble404.github.io/Learning-Image-Segmentation.html">
+
+
+
+
+
+  <title>图像分割-2D | KAMISAMA'S SPACE</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?14798f1d1a9de82a174c7d52dd582793";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">KAMISAMA'S SPACE</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">Someting for Noting</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://trouble404.github.io/Learning-Image-Segmentation.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Junming Zhang">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="KAMISAMA'S SPACE">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">图像分割-2D</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-26T11:00:00+08:00">
+                2018-11-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/学习/" itemprop="url" rel="index">
+                    <span itemprop="name">学习</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/Learning-Image-Segmentation.html" class="leancloud_visitors" data-flag-title="图像分割-2D">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  7,591
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Image-Segmentation"><a href="#Image-Segmentation" class="headerlink" title="Image Segmentation"></a>Image Segmentation</h1><p><img src="https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/Image-Segmentation-Learning/1.jpg" alt="image"></p>
+<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>在计算机视觉领域，图像分割（Segmentation）指的是将数字图像细分为多个图像子区域（像素的集合）（也被称作超像素）的过程。图像分割的目的是简化或改变图像的表示形式，使得图像更容易理解和分析。图像分割通常用于定位图像中的物体和边界（线，曲线等）。更精确的，图像分割是对图像中的每个像素加标签的一个过程，这一过程使得具有相同标签的像素具有某种共同视觉特性。<a id="more"></a></p>
+<p>图像分割的结果是图像上子区域的集合（这些子区域的全体覆盖了整个图像），或是从图像中提取的轮廓线的集合（例如边缘检测）。一个子区域中的每个像素在某种特性的度量下或是由计算得出的特性都是相似的，例如颜色、亮度、纹理。邻接区域在某种特性的度量下有很大的不同。</p>
+<p><strong>应用</strong></p>
+<ul>
+<li>医学影像：1. 肿瘤和其他病理的定位；2. 组织体积的测量；3. 计算机引导的手术；4. 诊断；5. 治疗方案的定制；6. 解剖学结构的研究</li>
+<li>卫星图像中定位物体</li>
+<li>人脸识别</li>
+<li>指纹识别</li>
+<li>交通控制系统</li>
+</ul>
+<h2 id="Tranditional-Methods"><a href="#Tranditional-Methods" class="headerlink" title="Tranditional Methods"></a>Tranditional Methods</h2><p><a href="https://zhuanlan.zhihu.com/p/30732385" target="_blank" rel="noopener">参考</a></p>
+<ul>
+<li><strong>基于阙值的分割方法</strong>: 1. 固定阙值分割；2. 直方图双峰法；3. 迭代阙值图像分割；自适应阙值图像分割（最大分类方差法，均值法，最佳阙值）.</li>
+<li><strong>基于边缘的分割方法</strong>: 1. Canny边缘检测器；2. Harris角点检测器；3. SIFT检测器；3. SURF检测器.</li>
+<li><strong>基于区域的分割方法</strong>: 1. 种子区域生长法；2. 区域分裂合并法；3. 分水岭法.</li>
+<li><strong>基于图论的分割方法</strong>: 1. GraphCut; 2. GrabCut; 3. Random Walk.</li>
+<li><strong>基于能量泛函的分割方法</strong>: 参数活动轮廓模型（1. Snake模型；2. Active Shape Model; 3. Active Apperance Models; 4. Constrained local model）；几何活动轮廓模型.</li>
+</ul>
+<h2 id="Datasets"><a href="#Datasets" class="headerlink" title="Datasets"></a>Datasets</h2><ol>
+<li>Pascal VOC: 20个类别，6929张标注图片</li>
+<li>CityScapes：道路驾驶场景，30个类别，5000张精细标注，20000张粗糙标注</li>
+<li>MS COCO：80类，33万张图片，超过20万张有标注，150万个物体的个体</li>
+<li>医学影像领域的ImageNet: <a href="https://www.52cv.net/?p=883" target="_blank" rel="noopener">DeepLesion</a>, 10000多个病例研究的超过32000个病变标注</li>
+</ol>
+<h2 id="图像分割的度量标准"><a href="#图像分割的度量标准" class="headerlink" title="图像分割的度量标准"></a>图像分割的度量标准</h2><p>假设共有$k+1$个类（从$L_{o}$到$L_{k}$,其中包含一个空类或背景）, $P_{ij}$表示本属于类<strong>i</strong>但被预测为类<strong>j</strong>的像素数量。即，$p_{ii}$表示<strong>真正</strong>的数量，而$p_{ij}$和$p_{ji}$则分别被解释为假正和假负，尽管两者都是假正与假负之和。</p>
+<ol>
+<li>Pixel Accuracy(PA, 像素精度): 最简单的度量，为标记正确的像素占总像素的比例。<br>$$PA=\frac{\sum_{i=0}^{k}p_{ii}}{\sum_{i=0}^{k}\sum_{j=0}^{k}p_{ij}}$$</li>
+<li>Mean Pixel Accuracy(MAP,均像素精度): PA的一种简单提升，计算每个类内被正确分类像素数的比例，之后求所有类的平均。<br>$$MAP=\frac{1}{k+1}\sum_{i=0}^{k}\frac{p_{ii}}{\sum_{j=0}^{k}p_{ij}}$$</li>
+<li>Mean Intersection over Union(MIoU, 均交并比): 为语义分割的标准度量。其计算两个集合的交集和并集之比，这两个集合为真实值(ground truth)和预测值(predicted segmentation). 这个比例可以变形为正真数(intersection)比上真正、假负、假正(并集)之和，之后在每个类上计算IoU再平均。<br>$$MIoU = \frac{1}{k+1}\sum_{i=0}^{k}\frac{p_{ii}}{\sum_{j=0}^{k}p_{ij}+\sum_{j=0}^{k}(p_{ji}-p_{ii})}$$</li>
+<li>Frequency Weighted Intersection over Union(FWIoU, 频权交并比): 为MIoU的一种提升，根据每个类出现的频率为其设置权重。<br>$$FWIoU = \frac{1}{\sum_{i=0}^{k}\sum_{j=0}^{k}p_{ij}}\sum_{i=0}^{k}\frac{p_{ii}}{\sum_{j=0}^{k}p_{ij}+\sum_{j=0}^{k}(p_{ji}-p_{ii})}$$</li>
+</ol>
+<h1 id="深度学习算法"><a href="#深度学习算法" class="headerlink" title="深度学习算法"></a>深度学习算法</h1><h2 id="Fully-Convolutional-Networks"><a href="#Fully-Convolutional-Networks" class="headerlink" title="Fully Convolutional Networks"></a>Fully Convolutional Networks</h2><p><a href="https://people.eecs.berkeley.edu/~jonlong/long_shelhamer_fcn.pdf" target="_blank" rel="noopener">论文地址</a><br>传统神经网络做分类的步骤是，首先是一个图像进来之后经过多层卷积得到降维之后的特征图，这个特征图经过全连接层变成一个分类器，最后输出一个类别的向量，这就是分类的结果。</p>
+<p>而 FCN 是把所有的全连接层换成卷基层，原来只能输出一个类别分类的网络可以在特征图的每一个像素输出一个分类结果。这样就把分类的向量，变成了一个分类的特征图。</p>
+<center><img src="https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/Image-Segmentation-Learning/2.png" alt="image"></center>
+
+<p>上图中的猫, 输入AlexNet, 得到一个长为1000的输出向量, 表示输入图像属于每一类的概率, 其中在“tabby cat”这一类统计概率最高。而FCN对图像进行像素级的分类，从而解决了语义级别的图像分割（semantic segmentation）问题。FCN可以接受任意尺寸的输入图像，采用反卷积层对最后一个卷积层的feature map进行上采样, 使它恢复到输入图像相同的尺寸，从而可以对每个像素都产生了一个预测, 同时保留了原始输入图像中的空间信息, 最后在上采样的特征图上进行逐像素分类。最后逐个像素计算softmax分类的损失, 相当于每一个像素对应一个训练样本。</p>
+<p><strong>全连接-&gt;卷积层</strong>：</p>
+<p>一个 K=4096 的全连接层，输入数据体的尺寸是 7∗7∗512，这个全连接层可以被等效地看做一个 F=7,P=0,S=1,K=4096 的卷积层.</p>
+<p>假设一个卷积神经网络的输入是 224x224x3 的图像，一系列的卷积层和下采样层将图像数据变为尺寸为 7x7x512 的激活数据体。AlexNet使用了两个尺寸为4096的全连接层，最后一个有1000个神经元的全连接层用于计算分类评分。我们可以将这3个全连接层中的任意一个转化为卷积层：</p>
+<ul>
+<li>针对第一个连接区域是[7x7x512]的全连接层，令其滤波器尺寸为F=7，这样输出数据体就为[1x1x4096]了。</li>
+<li>针对第二个全连接层，令其滤波器尺寸为F=1，这样输出数据体为[1x1x4096]。</li>
+<li>对最后一个全连接层也做类似的，令其F=1，最终输出为[1x1x1000]</li>
+</ul>
+<p><strong>end to end, pixels to pixels network</strong><br><img src="https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/Image-Segmentation-Learning/3.png" alt="image"><br>经过多次卷积和pooling以后，得到的图像越来越小，分辨率越来越低。其中图像到$\frac{H}{32} \times \frac{W}{32}$的时候图片是最小的一层时，所产生图叫做heatmap热图，热图就是最重要的高维特征图，得到高维特征的heatmap之后就是最重要的一步也是最后的一步对原图像进行upsampling，把图像进行放大、放大、放大，到原图像的大小。最后的输出是1000张heatmap经过upsampling变为原图大小的图片，为了对每个像素进行分类预测label成最后已经进行语义分割的图像，这里有一个小trick，就是最后通过逐个像素地求其在1000张图像该像素位置的最大数值描述（概率）作为该像素的分类。因此产生了一张已经分类好的图片，如上图右侧有狗狗和猫猫的图。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/Image-Segmentation-Learning/4.png" alt="image"></p>
+<p>现在我们有1/32尺寸的heatMap，1/16尺寸的featureMap和1/8尺寸的featureMap，1/32尺寸的heatMap进行upsampling操作之后，因为这样的操作还原的图片仅仅是conv5中的卷积核中的特征，限于精度问题不能够很好地还原图像当中的特征，因此在这里向前迭代。把conv4中的卷积核对上一次upsampling之后的图进行反卷积补充细节（相当于一个插值过程），最后把conv3中的卷积核对刚才upsampling之后的图像进行再次反卷积补充细节，最后就完成了整个图像的还原。</p>
+<p><strong>缺点</strong>：</p>
+<ul>
+<li>是得到的结果还是不够精细。进行8倍上采样虽然比32倍的效果好了很多，但是上采样的结果还是比较模糊和平滑，对图像中的细节不敏感。</li>
+<li>是对各个像素进行分类，没有充分考虑像素与像素之间的关系。忽略了在通常的基于像素分类的分割方法中使用的空间规整（spatial regularization）步骤，缺乏空间一致性。</li>
+</ul>
+<p><strong>补充：插值法</strong><br>上采样upsampling的主要目的是放大图像，几乎都是采用内插值法，即在原有图像像素的基础上，在像素点值之间采用合适的<strong>插值算法</strong>插入新的元素。</p>
+<ul>
+<li><p>线性插值法：<br>使用连接两个已知量的直线来确定在这个两个已知量之间的一个未知量的值的方法。<br><center><img src="https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/Image-Segmentation-Learning/5.png" alt="image"></center><br>该直线方程可表示为：$\frac{y-y_{0}}{y_{1}-y_{0}}=\frac{x-x_{0}}{x_{1}-x_{0}}$ 假设方程两边的值是$\alpha$，那么这个值就是插值系数，即$\alpha =\frac{y-y_{0}}{y_{1}-y_{0}}=\frac{x-x_{0}}{x_{1}-x_{0}}$. 所以y可以表示为: $y=(1-\alpha)y_{0}+\alpha y_{1} = (1-\frac{x-x_{0}}{x_{1}-x_{0}})y_{0}+\frac{x-x_{0}}{x_{1}-x_{0}}y_{1}=\frac{x_{1}-x}{x_{1}-x_{0}}y_{0}+\frac{x-x_{0}}{x_{1}-x_{0}}y_{1}=\frac{x_{1}-x}{x_{1}-x_{0}}f(x_{1})+\frac{x-x_{0}}{x_{1}-x_{0}}f(x_{0})$</p>
+</li>
+<li><p>双线性插值<br>双线性插值是插值算法中的一种，是线性插值的扩展。利用原图像中目标点四周的四个真实存在的像素值来共同决定目标图中的一个像素值，其核心思想是在两个方向分别进行一次线性插值。</p>
+<center><img src="https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/Image-Segmentation-Learning/6.png" alt="image"></center>
+
+</li>
+</ul>
+<p>X方向的线性插值：在$Q_{12}$,$Q_{22}$中插入蓝色点$R_{2}$，$Q_{11}$，$Q_{21}$中插入蓝色点$R_{1}$</p>
+<p>$f(R_{1}=\frac{x_{2}-x}{x_{2}-x_{1}}f(Q_{11})+\frac{x-x_{1}}{x_{2}-x_{1}}f(Q_{21})$; $f(R_{2}=\frac{x_{2}-x}{x_{2}-x_{1}}f(Q_{12})+\frac{x-x_{1}}{x_{2}-x_{1}}f(Q_{22})$</p>
+<p>Y方向的线性插值：通过第一步计算出的$R_{1$}与$R_{2}$在y方向上插值计算出P点</p>
+<p>$f(P)=\frac{y_{2}-y}{y_{2}-y_{1}}f(R_{1})+\frac{y-y_{1}}{y_{2}-y_{1}}f(R_{2})$</p>
+<hr>
+<h2 id="U-Net-Convolutional-Networks-for-Biomedical-Image-Segmentation"><a href="#U-Net-Convolutional-Networks-for-Biomedical-Image-Segmentation" class="headerlink" title="U-Net: Convolutional Networks for Biomedical Image Segmentation"></a>U-Net: Convolutional Networks for Biomedical Image Segmentation</h2><p><a href="https://arxiv.org/pdf/1505.04597.pdf" target="_blank" rel="noopener">论文地址</a><br>卷积网络被大规模应用在分类任务中，输出的结果是整个图像的类标签。然而，在许多视觉任务，尤其是生物医学图像处理领域，目标输出应该包括目标类别的位置，并且每个像素都应该有类标签。另外，在生物医学图像往往缺少训练图片。所以，Ciresan等人训练了一个卷积神经网络，用滑动窗口提供像素的周围区域（patch）作为输入来预测每个像素的类标签。这个网络有两个优点： 第一，输出结果可以定位出目标类别的位置； 第二，由于输入的训练数据是patches，这样就相当于进行了数据增广，解决了生物医学图像数量少的问题。</p>
+<p>但是，这个方法也有两个很明显缺点。</p>
+<p>第一，它很慢，因为这个网络必须训练每个patch，并且因为patch间的重叠有很多的冗余,造成资源的浪费，减慢训练时间和效率; 第二，定位准确性和获取上下文信息不可兼得。大的patches需要更多的max-pooling层这样减小了定位准确性,小的patches只能看到很小的局部信息，包含的背景信息不够。</p>
+<p><strong>U-Net Architecture</strong></p>
+<center><img src="https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/Image-Segmentation-Learning/7.jpg" alt="image"></center>
+
+<ol>
+<li>使用全卷积神经网络。(全卷积神经网络就是卷积取代了全连接层，全连接层必须固定图像大小而卷积不用，所以这个策略使得，你可以输入任意尺寸的图片，而且输出也是图片，所以这是一个端到端的网络。)</li>
+<li>左边的网络是收缩路径：使用卷积和maxpooling。</li>
+<li>右边的网络是扩张路径:使用上采样产生的特征图与左侧收缩路径对应层产生的特征图进行concatenate操作。（pooling层会丢失图像信息和降低图像分辨率且是不可逆的操作，对图像分割任务有一些影响，对图像分类任务的影响不大，为什么要做上采样？因为上采样可以补足一些图片的信息，但是信息补充的肯定不完全，所以还需要与左边的分辨率比较高的图片相连接起来（直接复制过来再裁剪到与上采样图片一样大小），这就相当于在高分辨率和更抽象特征当中做一个折衷，因为随着卷积次数增多，提取的特征也更加有效，更加抽象，上采样的图片是经历多次卷积后的图片，肯定是比较高效和抽象的图片，然后把它与左边不怎么抽象但更高分辨率的特征图片进行连接）。</li>
+<li>最后再经过两次反卷积操作，生成特征图，再用两个1X1的卷积做分类得到最后的两张heatmap,例如第一张表示的是第一类的得分，第二张表示第二类的得分heatmap,然后作为softmax函数的输入，算出概率比较大的softmax类，选择它作为输入给交叉熵进行反向传播训练。</li>
+</ol>
+<p><strong>Overlap-tile strategy</strong></p>
+<center><img src="https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/Image-Segmentation-Learning/8.png" alt="image"></center>
+
+<p>医学图像是一般相当大，但是分割时候不可能将原图太小输入网络，所以必须切成一张一张的小patch，在切成小patch的时候，Unet由于网络结构原因适合有overlap的切图，可以看图，红框是要分割区域，但是在切图时要包含周围区域，overlap另一个重要原因是周围overlap部分可以为分割区域边缘部分提供文理等信息。可以看黄框的边缘，分割结果并没有受到切成小patch而造成分割情况不好。 </p>
+<p><strong>训练</strong></p>
+<p>最后一层使用了交叉熵函数与softmax：<br>$$E=\sum_{x\in \Omega}w(x)log(p_{\ell(x)}(x))$$</p>
+<p>并且为了补偿训练每个类像素的不同频率使得网络更注重学习相互接触的细胞之间的小的分割边界，引入了权重图计算$w(x)$:<br>$$w(x)=w_{c}(x)+w_{0} \times exp(-\frac{(d_{1}(x)+d_{2}(x))}{2\sigma^{2}})$$</p>
+<p><strong>Data Augmentation</strong><br>在只有少量样本的情况况下，要想尽可能的让网络获得不变性和鲁棒性，数据增加是必不可少的。因为本论文需要处理显微镜图片，我们需要平移与旋转不变性，并且对形变和灰度变化鲁棒。将训练样本进行随机弹性形变是训练分割网络的关键。使用随机位移矢量在粗糙的3*3网格上产生平滑形变(smooth deformations)。 位移是从10像素标准偏差的高斯分布中采样的。然后使用双三次插值(Bicubic interpolation)计算每个像素的位移。在contracting path的末尾采用drop-out 层更进一步增加数据。</p>
+<p><strong>双三次插值</strong><br>在这种方法中，函数f在点(x,y)的值可以通过矩形网络中最近的16个采样点加权平均得到。</p>
+<hr>
+<h2 id="DeepLab-V1"><a href="#DeepLab-V1" class="headerlink" title="DeepLab V1"></a>DeepLab V1</h2><p><a href="https://arxiv.org/pdf/1412.7062v3.pdf" target="_blank" rel="noopener">论文地址</a></p>
+<p>DeepLab是结合了深度卷积神经网络(<a href="https://www.cnblogs.com/wangxiaocvpr/p/8763510.html" target="_blank" rel="noopener">DCNNs</a>)和概率图模型(<a href="https://zhuanlan.zhihu.com/p/33397147" target="_blank" rel="noopener">DenseCRFs</a>)的方法.</p>
+<p>DCNN在图像标记任务中存在两个技术障碍：</p>
+<ul>
+<li>信号下采样</li>
+<li>空间不敏感(invariance)</li>
+</ul>
+<p>第一个问题涉及到：在DCNN中重复最大池化和下采样带来的分辨率下降问题，分辨率的下降会丢失细节。DeepLab是采用的<code>atrous</code>(带孔)算法扩展感受野，获取更多的上下文信息。</p>
+<p>第二个问题涉及到：分类器获取以对象中心的决策是需要空间变换的不变性，这天然的限制了DCNN的定位精度，DeepLab采用完全连接的条件随机场(DenseCRF)提高模型捕获细节的能力。</p>
+<p>除空洞卷积和 CRFs 之外，论文使用的 tricks 还有 Multi-Scale features。其实就是 U-Net 和 FPN 的思想，在输入图像和前四个最大池化层的输出上附加了两层的 MLP，第一层是 128 个 3×3 卷积，第二层是 128 个 1×1 卷积。最终输出的特征与主干网的最后一层特征图融合，特征图增加 5×128=640 个通道。实验表示多尺度有助于提升预测结果，但是效果不如 CRF 明显。</p>
+<p><strong>CRF-&gt;语义分割</strong></p>
+<p>对于每个像素位置$i$具有隐变量$x_{i}$(这里隐变量就是像素的真实类别标签，如果预测结果有21类，则$(i \in 1,2,..,21)$ 还有对应的观测值 $y_{i}$(即像素点对应的颜色值)。以像素为节点，像素与像素间的关系作为边，构成了一个条件随机场(CRF)。通过观测变量$y_{i}$来推测像素位置$i$应的类别标签$x_{i}$.条件随机场示意图如下:</p>
+<center><img src="https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/Image-Segmentation-Learning/9.png" alt="image"></center>
+
+<p>条件随机场符合吉布斯分布(x是上面的观测值，下面省略全局观测I):<br>$$p(x|I)=\frac{1}{Z}exp(-E(x|I))$$</p>
+<p>全连接的CRF模型使用的能量函数$E(x)$为:<br>$$E(x)=\sum_{i} \theta_{i}(x_{i})+\sum_{ij}\theta_{ij}(x_{i},x_{j})$$</p>
+<p>这分为一元势函数$\theta_{i}(x_{i})$和二元势函数$\theta_{ij}(x_{i},x_{j})$两部分</p>
+<ul>
+<li>一元势函数是定义在观测序列位置i的状态特征函数，用于刻画观测序列对标记变量的影响（例如在城市道路任务中，观测到像素点为黑色，对应车子的可能比天空可能要大）。这里$P(x_{i})$是取DCNN计算关于像素i的输出的标签分配概率.</li>
+</ul>
+<p>$$\theta_{i}(x_{i})=-logP(x_{i})$$</p>
+<ul>
+<li>二元势函数是定义在不同观测位置上的转移特征函数，用于刻画变量之间的相关关系以及观测序列对其影响。如果比较相似，那可能是一类，否则就裂开，这可以细化边缘。一般的二元势函数只取像素点与周围像素之间的边，这里使用的是全连接，即像素点与其他所有像素之间的关系。</li>
+</ul>
+<p>$$\theta_{ij}(x_{i},x_{j})=\mu(x_{i},x_{j})\sum_{m=1}^{K}w_{m}k^{m}(f_{i},f_{j})$$</p>
+<p>DeepLab中高斯核采用双边位置和颜色的组合（第一核取决于像素位置(p)和像素颜色强度(I),第二核取决于像素位置(p)）:<br>$$w_{1}exp(-\frac{\lVert p_{i}-p_{j} \rVert^{2}}{2\sigma_{\alpha}^{2}}-\frac{\lVert I_{i}-I_{j} \rVert^{2}}{2\sigma_{\beta}^{2}})+w_{2}exp(-\frac{\lVert p_{i}-p_{j} \rVert^{2}}{2\sigma_{\gamma}^{2}})$$</p>
+<p><strong>实验</strong></p>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>设置</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>数据集</td>
+<td>PASCAL VOC 2012 segmentation benchmark</td>
+</tr>
+<tr>
+<td>DCNN模型</td>
+<td>权重采用预训练的VGG16</td>
+</tr>
+<tr>
+<td>DCNN损失函数</td>
+<td>交叉熵</td>
+</tr>
+<tr>
+<td>训练器</td>
+<td>SGD，batch=20</td>
+</tr>
+<tr>
+<td>学习率</td>
+<td>初始为0.001，最后的分类层是0.01。每2000次迭代乘0.1</td>
+</tr>
+<tr>
+<td>权重</td>
+<td>0.9的动量， 0.0005的衰减</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="DepLab-V2"><a href="#DepLab-V2" class="headerlink" title="DepLab V2"></a>DepLab V2</h2><p><a href="https://arxiv.org/pdf/1606.00915.pdf" target="_blank" rel="noopener">论文地址</a></p>
+<p>DeepLabv2 是相对于 DeepLabv1 基础上的优化。DeepLabv1 在三个方向努力解决，但是问题依然存在：</p>
+<ol>
+<li>特征分辨率的降低</li>
+<li>物体存在多尺度</li>
+<li>DCNN 的平移不变性</li>
+</ol>
+<p>针对这三个问题, DeepLabv2做出了3个主要贡献:</p>
+<ol>
+<li>首先，强调使用空洞卷积，作为密集预测任务的强大工具。空洞卷积能够明确地控制DCNN内计算特征响应的分辨率，即可以有效的扩大感受野，在不增加参数量和计算量的同时获取更多的上下文。</li>
+<li>其次，提出了空洞空间卷积池化金字塔(atrous spatial pyramid pooling (ASPP))，以多尺度的信息得到更强健的分割结果。ASPP并行的采用多个采样率的空洞卷积层来探测，以多个比例捕捉对象以及图像上下文。</li>
+<li>最后，通过组合DCNN和概率图模型，改进分割边界结果。在DCNN中最大池化和下采样组合实现可平移不变性，但这对精度是有影响的。通过将最终的DCNN层响应与全连接的CRF结合来克服这个问题。</li>
+</ol>
+<p><strong>步骤</strong></p>
+<center><img src="https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/Image-Segmentation-Learning/10.png" alt="image"></center>
+
+<ul>
+<li>输入经过改进的DCNN(带空洞卷积和ASPP模块)得到粗略预测结果，即<code>Aeroplane Coarse Score map</code></li>
+<li>通过双线性插值扩大到原本大小，即<code>Bi-linear Interpolation</code></li>
+<li>再通过全连接的CRF细化预测结果，得到最终输出<code>Final Output</code></li>
+</ul>
+<p><strong>方法</strong></p>
+<ol>
+<li><p><strong>空洞卷积用于密集特征提取和扩大感受野</strong></p>
+<p>首先考虑一维信号，空洞卷积输出为$y[i]$, 输入为$x[i]$, 长度K的滤波器为$w[k]$, 则定义为：<br>$$y[k]=\sum_{k=1}^{K}x[i+r\cdot k]w[k]$$<br>输入采样的步幅为参数r, 标准采样率是$r=1$如图(a); 图(b)是采样率$r=2$的时候：</p>
+<center><img src="https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/Image-Segmentation-Learning/11.png" alt="image"></center>
+
+<p>二维信号(图片)上使用空洞卷积的表现,给定一个图像：</p>
+<ul>
+<li>上分支：首先下采样将分辨率降低2倍，做卷积。再上采样得到结果。本质上这只是在原图片的1/4内容上做卷积响应。</li>
+<li>下分支：如果将全分辨率图像做空洞卷积(采样率为2，核大小与上面卷积核相同)，直接得到结果。这样可以计算出整张图像的响应，如下图所示，这样做效果更佳。<center><img src="https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/Image-Segmentation-Learning/12.png" alt="image"></center>
+
+</li>
+</ul>
+<p>空洞卷积能够放大滤波器的感受野，速率r引入$r-1$个零，有效将感受野从$k\times k$扩展到$k_{e}=k+(k-1)(r-1)$而不增加参数和计算量。在DCNN中，常见的做法是混合使用空洞卷积以高的分辨率(理解为采样密度)计算最终的DCNN网络响应。</p>
+</li>
+<li><p><strong>使用ASPP模块表示多尺度图像</strong></p>
+<p>DeepLabv2的做法与SPPNet类似，并行的采用多个采样率的空洞卷积提取特征，再将特征融合，类似于空间金字塔结构，形象的称为Atrous Spatial Pyramid Pooling (ASPP)。示意图如下：</p>
+<center><img src="https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/Image-Segmentation-Learning/13.png" alt="image"></center>
+
+<p>在同一Input Feature Map的基础上，并行的使用4个空洞卷积，空洞卷积配置为$r=6,12,18,24$, 核大小为$3 \times 3$. 最终将不同卷积层得到的结果做像素加融合到一起.</p>
+</li>
+<li><p><strong>使用全连接CRF做结构预测用于恢复边界精度</strong></p>
+<center><img src="https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/Image-Segmentation-Learning/14.png" alt="image"></center>
+
+</li>
+</ol>
+<p><strong>训练</strong></p>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>设置</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DCNN模型</td>
+<td>权重采用预训练的VGG16，<strong>ResNet101</strong></td>
+</tr>
+<tr>
+<td>DCNN损失函数</td>
+<td>输出的结果与ground truth下采样8倍做像素交叉熵</td>
+</tr>
+<tr>
+<td>训练器</td>
+<td>SGD，batch=20</td>
+</tr>
+<tr>
+<td>学习率</td>
+<td>初始为0.001，最后的分类层是0.01。每2000次迭代乘0.1</td>
+</tr>
+<tr>
+<td>权重</td>
+<td>0.9的动量， 0.0005的衰减</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="DepLab-V3"><a href="#DepLab-V3" class="headerlink" title="DepLab V3"></a>DepLab V3</h2><p><a href="https://arxiv.org/pdf/1706.05587.pdf" target="_blank" rel="noopener">论文地址</a></p>
+<p>语义分割任务，在应用深度卷积神经网络中的有两个挑战：</p>
+<ul>
+<li>第一个挑战：连续池化和下采样，让高层特征具有局部图像变换的内在不变性，这允许DCNN学习越来越抽象的特征表示。但同时引起的特征分辨率下降，会妨碍密集的定位预测任务，因为这需要详细的空间信息。</li>
+<li>第二个挑战：多尺度目标的存在</li>
+</ul>
+<p>DeepLabv3的主要贡献在于：</p>
+<ul>
+<li>重新讨论了空洞卷积的使用，在级联模块和空间金字塔池化的框架下，能够获取更大的感受野从而获取多尺度信息。</li>
+<li>改进了ASPP模块：由不同采样率的空洞卷积和BN层组成，尝试以级联或并行的方式布局模块。</li>
+<li>讨论了一个重要问题：使用大采样率的空洞卷积，因为图像边界响应无法捕捉远距离信息，会退化为1×1的卷积, 因此建议将图像级特征融合到ASPP模块中。</li>
+<li>阐述了训练细节并分享了训练经验，论文提出的”DeepLabv3”改进了以前的工作，获得了很好的结果</li>
+</ul>
+<p><strong>方法</strong></p>
+<ol>
+<li><strong>空洞卷积应用于密集的特征提取</strong></li>
+<li><p><strong>深层次的空洞卷积</strong></p>
+<center><img src="https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/Image-Segmentation-Learning/15.png" alt="image"></center>
+
+<center><img src="https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/Image-Segmentation-Learning/18.png" alt="image"></center>
+
+<p>将空洞卷积应用在级联模块, 取ResNet中最后一个block，在上图中为block4，并在其后面增加级联模块。图(a)所示，整体图片的信息总结到后面非常小的特征映射上，使用步幅越长的特征映射，得到的结果反倒会差，结果最好的out_stride = 8 需要占用较多的存储空间。因为连续的下采样会降低特征映射的分辨率，细节信息被抽取，这对语义分割是有害的。上图(b)所示，可使用不同采样率的空洞卷积保持输出步幅的为out_stride = 16.这样不增加参数量和计算量同时有效的缩小了步幅。</p>
+</li>
+<li><p><strong>Atrous Spatial Pyramid Pooling</strong></p>
+<p>对于在DeepLabv2中提出的ASPP模块，其在特征顶部映射图并行使用了四种不同采样率的空洞卷积。这表明以不同尺度采样是有效的，在DeepLabv3中向ASPP中添加了BN层。不同采样率的空洞卷积可以有效的捕获多尺度信息，但是，随着采样率的增加，滤波器的有效权重(权重有效的应用在特征区域，而不是填充0)逐渐变小。如下图所示：</p>
+<center><img src="https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/Image-Segmentation-Learning/16.png" alt="image"></center>
+
+<p>当不同采样率的$3 \times 3$卷积核应用在$65 \times 65$的特征映射上，采样率接近特征映射大小时，$3 \times 3$的滤波器不是捕捉全图像的上下文，而是退化为简单的$1 \times 1$滤波器，只有滤波器中心点的权重起了作用。</p>
+<p><center><img src="https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/Image-Segmentation-Learning/17.png" alt="image"></center><br>为了克服这个问题，改进了ASPP结构如上图：</p>
+<ol>
+<li>一个$1 \times 1$卷积和三个$3 \times 3$卷积的采样率为$rate = (6,12,18)$的空洞卷积，滤波器数量为256，包含BN层。针对output_stride=16的情况。（当output_stride=8的时候，采样率会加倍，所有的特征会通过$1 \times 1$卷积级联到一起）</li>
+<li>使用了图片级特征。具体来说，在模型最后的特征映射上应用全局平均，将结果经过$1 \times 1$的卷积，再双线性上采样得到所需的空间维度。</li>
+</ol>
+</li>
+</ol>
+<p><strong>训练</strong></p>
+<table>
+<thead>
+<tr>
+<th>部分</th>
+<th>设置</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>数据集</td>
+<td>PASCAL VOC 2012</td>
+</tr>
+<tr>
+<td>工具</td>
+<td>TensorFlow</td>
+</tr>
+<tr>
+<td>裁剪尺寸</td>
+<td>采样513大小的裁剪尺寸</td>
+</tr>
+<tr>
+<td>学习率策略</td>
+<td>采用poly策略， $learning rate = base_lr(1-\frac{iter}{max_iters})^{power}$</td>
+</tr>
+<tr>
+<td><strong>BN层策略</strong></td>
+<td>当output_stride=16时，我们采用batchsize=16，同时BN层的参数做参数衰减0.9997。在增强的数据集上，以初始学习率0.007训练30K后，冻结BN层参数。采用output_stride=8时，再使用初始学习率0.001训练30K。训练output_stride=16比output_stride=8要快很多，因为中间的特征映射在空间上小四倍。但因为output_stride=16在特征映射上粗糙的是牺牲了精度。</td>
+</tr>
+<tr>
+<td><strong>上采样策略</strong></td>
+<td>在先前的工作上,将最终的输出与GroundTruth下采样8倍做比较之后发现保持GroundTruth更重要，故将最终的输出上采样8倍与完整的GroundTruth比较。</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="DepLab-V-3"><a href="#DepLab-V-3" class="headerlink" title="DepLab-V$3^{+}$"></a>DepLab-V$3^{+}$</h2><p><a href="https://arxiv.org/pdf/1802.02611.pdf" target="_blank" rel="noopener">论文地址</a></p>
+<p>因为深度网络存在pooling or convolutions with stride的层，会导致feature分辨率下降，从而导致预测精度降低，而造成的边界信息丢失问题. 这个问题可以通过使用空洞卷积替代更多的pooling层来获取分辨率更高的feature。但是feature分辨率更高会极大增加运算量。</p>
+<p><strong>方法</strong></p>
+<center><img src="https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/Image-Segmentation-Learning/19.png" alt="image"></center>
+
+<p>所以DeepLabV$3^{+}$中通过采用了encoder-decoder结构，在DeepLab V3中加入了一个简单有效的decoder模块来改善物体边缘的分割结果(图c)：先上采样4倍，在与encoder中的特征图concatenate，最后在上采样4倍恢复到原始图像大小。除此之外还尝试使用Xception作为encoder，在Atrous Spatial Pyramid Pooling和decoder中应用depth-wise separable convolution得到了更快精度更高的网络。</p>
+<ol>
+<li><p><strong>Encoder</strong></p>
+<ul>
+<li>ResNet: encoder就是DeepLab V3，通过修改ResNet101最后两(一)个block的stride，使得output stride为8(16)。之后在block4后应用改进后的Atrous Spatial Pyramid Pooling，将所得的特征图concatenate用1×1的卷积得到256个通道的特征图。</li>
+<li><p><strong>Xecption</strong>: 采用的Xception模型为MSRA team提出的改进的Xception，叫做Aligned Xception，并做了几点修改：</p>
+<ul>
+<li>网络深度与Aligned Xception相同，不同的地方在于为了快速计算和有效的使用内存而不修改entry flow network的结构。</li>
+<li>所有的max pooling操作替换成带stride的separable convolution，这能使得对任意分辨率的图像应用atrous separable convolution提取特征。</li>
+<li>在每个3×3的depath-wise convolution后增加BN层和ReLU。<center><img src="https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/Image-Segmentation-Learning/21.png" alt="image"></center>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>Decoder</strong></p>
+<ul>
+<li>在decoder中，特征图首先上采样4倍，然后与encoder中对应分辨率低级特征concatenate。在concatenate之前，由于低级特征图的通道数通常太多(256或512)，而从encoder中得到的富含语义信息的特征图通道数只有256，这样会淡化语义信息，因此在concatenate之前，需要将低级特征图通过1×1的卷积减少通道数。在concatenate之后用3×3的卷积改善特征，最后上采样4倍恢复到原始图像大小。</li>
+<li>设计： <ul>
+<li>$1 \times 1$卷积的通道数采用48</li>
+<li>用来获得更锋利的边界的3×3的卷积。最后采用了2个3×3的卷积</li>
+<li>使用的encoder的低级特征（Conv2）</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<center><img src="https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/Image-Segmentation-Learning/20.png" alt="image"></center>
+
+<p><strong>结果</strong>：</p>
+<ul>
+<li><p><strong>Aligned Xception改</strong></p>
+<center><img src="https://cdn.jsdelivr.net/gh/Trouble404/Blog_Pics/Image-Segmentation-Learning/22.png" alt="image"></center>
+
+<p>当train_stride=16和eval_stride=8的时候mIOU最好达到了84.56% 然而计算量比较高。使用train_stride和eval_stride都为16的时候，结果下降了1.53%但是计算量下降了60倍。</p>
+</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>兴趣使然</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>Donate</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechat-reward-image.jpg" alt="Junming Zhang WeChat Pay">
+        <p>WeChat Pay</p>
+      </div>
+    
+
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Deep-Learning/" rel="tag"># Deep Learning</a>
+          
+            <a href="/tags/Image-Segmentation/" rel="tag"># Image Segmentation</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/Learning-Object-Detection.html" rel="next" title="目标检测">
+                <i class="fa fa-chevron-left"></i> 目标检测
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/Learning-3D-Image-Segmentation.html" rel="prev" title="图像分割-3D or 医学领域">
+                图像分割-3D or 医学领域 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        
+  <div class="bdsharebuttonbox">
+    <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+    <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+    <a href="#" class="bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+    <a href="#" class="bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+    <a href="#" class="bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+    <a class="bds_count" data-cmd="count"></a>
+  </div>
+  <script>
+    window._bd_share_config = {
+      "common": {
+        "bdText": "",
+        "bdMini": "2",
+        "bdMiniList": false,
+        "bdPic": ""
+      },
+      "share": {
+        "bdSize": "32",
+        "bdStyle": "0"
+      },
+
+    }
+  </script>
+
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zNjA1NS8xMjU5MA=="></div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/avatar.gif" alt="Junming Zhang">
+          <p class="site-author-name" itemprop="name">Junming Zhang</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+           
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">17</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/Trouble404" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="mailto:junming.zhang84@gmail.com" target="_blank" title="E-Mail">
+                  
+                    <i class="fa fa-fw fa-envelope"></i>
+                  
+                    
+                      E-Mail
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Image-Segmentation"><span class="nav-number">1.</span> <span class="nav-text">Image Segmentation</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Introduction"><span class="nav-number">1.1.</span> <span class="nav-text">Introduction</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Tranditional-Methods"><span class="nav-number">1.2.</span> <span class="nav-text">Tranditional Methods</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Datasets"><span class="nav-number">1.3.</span> <span class="nav-text">Datasets</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#图像分割的度量标准"><span class="nav-number">1.4.</span> <span class="nav-text">图像分割的度量标准</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#深度学习算法"><span class="nav-number">2.</span> <span class="nav-text">深度学习算法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Fully-Convolutional-Networks"><span class="nav-number">2.1.</span> <span class="nav-text">Fully Convolutional Networks</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#U-Net-Convolutional-Networks-for-Biomedical-Image-Segmentation"><span class="nav-number">2.2.</span> <span class="nav-text">U-Net: Convolutional Networks for Biomedical Image Segmentation</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DeepLab-V1"><span class="nav-number">2.3.</span> <span class="nav-text">DeepLab V1</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DepLab-V2"><span class="nav-number">2.4.</span> <span class="nav-text">DepLab V2</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DepLab-V3"><span class="nav-number">2.5.</span> <span class="nav-text">DepLab V3</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DepLab-V-3"><span class="nav-number">2.6.</span> <span class="nav-text">DepLab-V$3^{+}$</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Junming Zhang</span>
+</div>
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("OCX7qN1ae9flChFhUYTRGsS8-gzGzoHsz", "iUTQuhaKI2lh81hnVNhGbHDd");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>
