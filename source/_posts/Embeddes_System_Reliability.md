@@ -1,6 +1,6 @@
 ---
-title: - Good Software Engineering Practices to Follow
-date: 2021-02-02 15:00:00
+title: Good Software Engineering Practices to Follow
+date: 2022-01-09 15:00:00
 tags: [Code Style]
 categories: 学习
 ---
