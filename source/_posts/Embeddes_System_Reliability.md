@@ -9,6 +9,12 @@ categories: 学习
 
 如果在嵌入式系统上开发自动驾驶系统。这样的系统必须安全可靠、高效地工作。对低延迟、可靠性、故障恢复等都有要求。为了生产这样的软件产品，开发过程中都应当遵循某些好的软件工程原则。
 
+
+## GitLab-CI
+<div  align="center"> 
+<img src="https://cdn.jsdelivr.net/gh/Trouble404/Image/20220111204740.jpg" width="60%" height="50%">
+</div>
+
 <!-- more -->
 
 ### Requirements
