@@ -30,14 +30,14 @@
   </url>
   
   <url>
-    <loc>https://trouble404.github.io/Nvidia-Jetson.html</loc>
+    <loc>https://trouble404.github.io/Retina_Face_Deploy.html</loc>
     
     <lastmod>2022-01-09</lastmod>
     
   </url>
   
   <url>
-    <loc>https://trouble404.github.io/Retina_Face_Deploy.html</loc>
+    <loc>https://trouble404.github.io/Nvidia-Jetson.html</loc>
     
     <lastmod>2022-01-09</lastmod>
     
@@ -100,13 +100,6 @@
   </url>
   
   <url>
-    <loc>https://trouble404.github.io/Gitlab-Runner.html</loc>
-    
-    <lastmod>2022-01-09</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://trouble404.github.io/IT%20salary%20in%20USA.html</loc>
     
     <lastmod>2022-01-09</lastmod>
@@ -115,6 +108,13 @@
   
   <url>
     <loc>https://trouble404.github.io/Image_Host.html</loc>
+    
+    <lastmod>2022-01-09</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://trouble404.github.io/Gitlab-Runner.html</loc>
     
     <lastmod>2022-01-09</lastmod>
     
@@ -172,13 +172,6 @@
   </url>
   
   <url>
-    <loc>https://trouble404.github.io/tags/Tool/</loc>
-    <lastmod>2022-01-11</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://trouble404.github.io/tags/data-analysis/</loc>
     <lastmod>2022-01-11</lastmod>
     <changefreq>daily</changefreq>
@@ -193,7 +186,7 @@
   </url>
   
   <url>
-    <loc>https://trouble404.github.io/tags/Linux/</loc>
+    <loc>https://trouble404.github.io/tags/Tool/</loc>
     <lastmod>2022-01-11</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -201,6 +194,13 @@
   
   <url>
     <loc>https://trouble404.github.io/tags/MXnet/</loc>
+    <lastmod>2022-01-11</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://trouble404.github.io/tags/Linux/</loc>
     <lastmod>2022-01-11</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -258,14 +258,14 @@
   </url>
   
   <url>
-    <loc>https://trouble404.github.io/categories/System/</loc>
+    <loc>https://trouble404.github.io/categories/Data-Visualisation/</loc>
     <lastmod>2022-01-11</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>https://trouble404.github.io/categories/Data-Visualisation/</loc>
+    <loc>https://trouble404.github.io/categories/System/</loc>
     <lastmod>2022-01-11</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
